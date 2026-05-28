@@ -1,0 +1,140 @@
+/* =========================================================
+   v2.3 UX POLISH LAYER
+   Apply on top of everything for truly delightful interactions
+   ========================================================= */
+
+/* Better focus rings - visible on keyboard nav, hidden on mouse */
+*:focus { outline: none; }
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2.5px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 6px;
+    transition: outline-offset 0.18s ease;
+}
+
+/* Smooth scroll for in-page navigation */
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
+
+/* Subtle press feedback on touchable elements */
+button:not(:disabled):active,
+.quick-action-card:active,
+.reply-card:active,
+.copyable:active,
+.coach-persona-btn:not(.active):active {
+    transform: scale(0.985);
+    transition: transform 0.08s ease;
+}
+
+/* Skeleton loading shimmer (use class .skeleton on placeholder elements) */
+.skeleton {
+    background: linear-gradient(90deg,
+        rgba(232, 220, 196, 0.35) 0%,
+        rgba(232, 220, 196, 0.65) 50%,
+        rgba(232, 220, 196, 0.35) 100%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.6s infinite ease-in-out;
+    border-radius: 6px;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 50%; }
+    100% { background-position: -200% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton { animation: none; }
+}
+
+/* Smooth tab panel transitions */
+.tab-panel.active {
+    animation: tabPanelFadeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tabPanelFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Better card hover states (only on devices with hover capability) */
+@media (hover: hover) {
+    .panel.card,
+    .quick-action-card,
+    .reply-card,
+    .community-card,
+    .leaderboard-card-item {
+        transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .quick-action-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(61, 40, 23, 0.12);
+    }
+}
+
+/* Selection color - warm not blue */
+::selection {
+    background: rgba(200, 75, 49, 0.22);
+    color: var(--primary-dark);
+}
+
+::-moz-selection {
+    background: rgba(200, 75, 49, 0.22);
+    color: var(--primary-dark);
+}
+
+/* Safe area insets for notched devices (iPhone X+) */
+@supports (padding: env(safe-area-inset-bottom)) {
+    .bottom-nav {
+        padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    }
+}
+
+/* Prevent text size adjustment on iOS landscape rotation */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* Better tap highlight on iOS Safari */
+* {
+    -webkit-tap-highlight-color: rgba(200, 75, 49, 0.15);
+}
+
+input, textarea, select, button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Print styles - clean output if user prints */
+@media print {
+    .bottom-nav,
+    .sidebar-nav,
+    .pwa-install-banner,
+    #confetti-canvas,
+    .skip-link {
+        display: none !important;
+    }
+    body {
+        position: static !important;
+        overflow: visible !important;
+    }
+    .app-content {
+        overflow: visible !important;
+        height: auto !important;
+    }
+}

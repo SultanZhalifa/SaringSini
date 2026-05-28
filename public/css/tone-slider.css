@@ -1,0 +1,237 @@
+/* =========================================================
+   AI TONE SLIDER - Realtime tone regeneration via Gemini
+   ========================================================= */
+
+.tone-slider-card {
+    background: linear-gradient(135deg, rgba(232, 168, 124, 0.1) 0%, rgba(92, 131, 116, 0.06) 100%);
+    border: 1.5px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.1rem 1.15rem;
+    margin: 1rem 0 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tone-slider-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 90% 10%, rgba(200, 75, 49, 0.06) 0, transparent 40%);
+    pointer-events: none;
+}
+
+.tone-slider-header {
+    position: relative;
+    z-index: 1;
+}
+
+.tone-slider-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.3rem;
+}
+
+.tone-slider-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--primary);
+}
+
+.tone-slider-title-row h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.tone-slider-badge {
+    background: var(--primary);
+    color: #ffffff;
+    font-size: 0.6rem;
+    font-weight: 900;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    letter-spacing: 0.06em;
+}
+
+.tone-slider-desc {
+    margin: 0;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+.tone-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tone-slider-label-left,
+.tone-slider-label-right {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+.tone-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: linear-gradient(to right, var(--secondary) 0%, var(--accent) 50%, var(--primary) 100%);
+    border-radius: 9999px;
+    outline: none;
+    cursor: pointer;
+}
+
+.tone-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid var(--primary);
+    cursor: grab;
+    box-shadow: 0 4px 10px rgba(200, 75, 49, 0.25);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.tone-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 14px rgba(200, 75, 49, 0.35);
+}
+
+.tone-slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+}
+
+.tone-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid var(--primary);
+    cursor: grab;
+    box-shadow: 0 4px 10px rgba(200, 75, 49, 0.25);
+}
+
+.tone-slider-current {
+    position: relative;
+    z-index: 1;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    transition: color 0.2s ease;
+}
+
+.tone-result-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-border);
+    border-radius: 12px;
+    padding: 0.85rem 0.95rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    position: relative;
+    z-index: 1;
+    animation: toneResultIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tone-result-card.hidden {
+    display: none;
+}
+
+@keyframes toneResultIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tone-result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.tone-result-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tone-result-actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.tone-result-copy,
+.tone-result-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--card-border);
+    background: var(--bg-secondary);
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.18s ease;
+    font-family: inherit;
+}
+
+.tone-result-copy svg,
+.tone-result-wa svg {
+    width: 13px;
+    height: 13px;
+}
+
+.tone-result-copy:hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+
+.tone-result-wa {
+    background: #25D366;
+    color: #ffffff;
+    border-color: #25D366;
+}
+
+.tone-result-wa:hover {
+    background: #1ebc59;
+    transform: translateY(-1px);
+}
+
+.tone-result-text {
+    margin: 0;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--text-primary);
+    background: var(--bg-light);
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    border-left: 3px solid var(--primary);
+    transition: opacity 0.3s ease;
+}
+
+.tone-result-text.loading {
+    opacity: 0.55;
+    font-style: italic;
+}

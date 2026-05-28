@@ -1,0 +1,16 @@
+node_modules/
+.git/
+.gitignore
+.env
+.env.example
+uploads/
+npm-debug.log
+*.log
+docs/
+data/
+survive-jobs-main/
+.vscode/
+README.md
+*.md
+.DS_Store
+Thumbs.db

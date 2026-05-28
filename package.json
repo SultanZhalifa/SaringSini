@@ -1,0 +1,33 @@
+{
+  "name": "saringsini",
+  "version": "2.3.0",
+  "description": "Asisten Filter Hoaks dan Generator Balasan Sopan Grup Keluarga WhatsApp - JuaraVibeCoding 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "start:prod": "node -e \"process.env.NODE_ENV='production';require('./server.js')\"",
+    "health": "node -e \"fetch('http://localhost:3000/api/health').then(r=>r.json()).then(d=>console.log(JSON.stringify(d,null,2)))\""
+  },
+  "keywords": [
+    "hoax-detector",
+    "gemini-ai",
+    "indonesian",
+    "whatsapp-reply",
+    "vibecoding",
+    "pwa",
+    "deepfake-detection",
+    "phishing-checker"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Sultan & Misha",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
