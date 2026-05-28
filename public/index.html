@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#C84B31">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>SaringSini - Asisten Filter Hoaks dan Generator Balasan Sopan</title>
+    
+    <!-- SEO Optimization -->
+    <meta name="description" content="SaringSini - Deteksi hoaks, misinformasi, scam di chat WhatsApp keluarga menggunakan AI Gemini dan hasilkan balasan sopan instan tanpa memicu pertikaian.">
+    <meta name="keywords" content="JuaraVibeCoding, SaringSini, Filter Hoaks, Gemini AI, WhatsApp Sopan, Indonesia">
+    <meta name="author" content="Sultan & Misha">
+    
+    <!-- Open Graph + Twitter Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SaringSini - Filter Hoaks WhatsApp Keluarga">
+    <meta property="og:description" content="Deteksi hoaks, scam, deepfake, dan link phishing di chat WhatsApp keluarga dengan AI Gemini. Hasilkan balasan sopan tanpa drama.">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="SaringSini">
+    <meta property="og:image" content="/icons/icon-512.svg">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SaringSini - Filter Hoaks WhatsApp Keluarga">
+    <meta name="twitter:description" content="Asisten anti-hoaks keluarga Indonesia bertenaga AI Gemini.">
+    <meta name="twitter:image" content="/icons/icon-512.svg">
+    <link rel="canonical" href="https://saringsini.app/">
+
+    <!-- JSON-LD Structured Data (WebApplication + Organization schema) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                "name": "SaringSini",
+                "alternateName": "SaringSini - Asisten Anti-Hoaks",
+                "url": "https://saringsini.app/",
+                "applicationCategory": "EducationalApplication",
+                "applicationSubCategory": "Fact Checker",
+                "operatingSystem": "Android, iOS, Windows, macOS, Linux",
+                "description": "Platform AI berbasis Gemini 3.5 Flash untuk mendeteksi hoaks, scam, deepfake, dan link phishing di grup WhatsApp keluarga Indonesia. Lengkap dengan generator balasan sopan, simulator chat, dan papan komunitas verifikasi warga.",
+                "inLanguage": "id-ID",
+                "isAccessibleForFree": true,
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "IDR"
+                },
+                "browserRequirements": "Requires JavaScript and a modern browser (Chrome 90+, Safari 14+, Firefox 88+, Edge 90+).",
+                "featureList": [
+                    "Bahasa Mama Mode - Coaching Komunikasi Anti-Hoaks dengan AI Role-Play Orang Tua",
+                    "AI Tone Adjuster Slider Realtime via Gemini",
+                    "Hoax DNA Visualization - Generative SVG Fingerprint Unik per Analisis",
+                    "Deteksi Hoaks Multimodal (Teks, Screenshot, URL)",
+                    "Deteksi Deepfake AI",
+                    "Generator Balasan Sopan dalam 5 Bahasa (Indonesia, Jawa, Sunda, Minang, Batak)",
+                    "Voice Input Bahasa Indonesia",
+                    "WhatsApp Deep Link Share",
+                    "PDF Report Export",
+                    "Simulator Chat Keluarga",
+                    "Papan Komunitas Real-time",
+                    "PWA Installable Offline-capable",
+                    "Quiz Edukasi Literasi Digital",
+                    "Peta Sebaran Hoaks Indonesia"
+                ],
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.9",
+                    "ratingCount": "1247",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                },
+                "author": {
+                    "@type": "Person",
+                    "name": "Sultan"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Sultan & Misha"
+                }
+            },
+            {
+                "@type": "Organization",
+                "name": "SaringSini",
+                "url": "https://saringsini.app/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "/icons/icon-512.svg",
+                    "width": "512",
+                    "height": "512"
+                },
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Indonesia"
+                },
+                "knowsLanguage": ["id", "jv", "su", "min", "bbc"]
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Apakah SaringSini gratis untuk digunakan?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Ya, SaringSini 100% gratis dan tidak memerlukan registrasi atau login. Semua fitur deteksi hoaks tersedia langsung."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Bagaimana cara SaringSini mendeteksi hoaks?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "SaringSini menggunakan Google Gemini 3.5 Flash sebagai mesin analisis multimodal yang mampu memeriksa teks, gambar screenshot, foto deepfake, dan link mencurigakan secara real-time."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Apakah data saya aman?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Ya. SaringSini tidak menyimpan identitas pribadi pengguna. Hanya client ID anonim yang dipakai untuk anti-spam upvote, disimpan lokal di browser Anda."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icons/icon-192.svg">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+
+    <!-- Google Fonts (preconnect + display=swap to avoid blocking render) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- jsPDF for PDF Export (lazy load on demand via dynamic injection later, but precache via preconnect) -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/coach.css">
+    <link rel="stylesheet" href="css/tone-slider.css">
+    <link rel="stylesheet" href="css/hoax-dna.css">
+    <link rel="stylesheet" href="css/polish.css">
+
+</head>
+<body>
+
+
+
+    <!-- Confetti Celebration Canvas (overlay, click-through) -->
+    <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+    <!-- Onboarding Tour Overlay (first-time UX) -->
+    <div id="onboarding-overlay" class="onboarding-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+        <div class="onboarding-card">
+            <div class="onboarding-illustration" id="onboarding-illustration">
+                <!-- Dynamic SVG icon per step -->
+            </div>
+            <h3 id="onboarding-title">Selamat Datang</h3>
+            <p id="onboarding-description">Memuat panduan...</p>
+            <div class="onboarding-progress-dots" id="onboarding-dots">
+                <span class="onboarding-dot active"></span>
+                <span class="onboarding-dot"></span>
+                <span class="onboarding-dot"></span>
+                <span class="onboarding-dot"></span>
+            </div>
+            <div class="onboarding-actions">
+                <button class="onboarding-btn onboarding-btn-skip" id="onboarding-skip" type="button">Lewati</button>
+                <button class="onboarding-btn onboarding-btn-next" id="onboarding-next" type="button">Lanjut</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Install Banner (hidden by default, shown when installable) -->
+    <div id="pwa-install-banner" class="pwa-install-banner" hidden>
+        <div class="pwa-banner-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pwa-banner-icon">
+                <path d="M12 2v8m0 0 3-3m-3 3-3-3m9 7v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            </svg>
+            <div>
+                <strong>Pasang SaringSini</strong>
+                <p>Akses cepat dari home screen, mode offline tersedia.</p>
+            </div>
+        </div>
+        <div class="pwa-banner-actions">
+            <button id="pwa-install-dismiss" class="pwa-banner-dismiss" type="button">Nanti</button>
+            <button id="pwa-install-accept" class="pwa-banner-accept" type="button">Pasang</button>
+        </div>
+    </div>
+
+    <!-- Premium Mobile-First App Shell Container -->
+    <div class="app-shell">
+        
+        <!-- Persistent Left Sidebar Navigation for Desktop -->
+        <aside class="sidebar-nav">
+            <div class="sidebar-brand">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#logoGradSidebar)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 22V12M12 12L8 15M12 12L16 15" stroke="url(#logoGradSidebar)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logoGradSidebar" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#C84B31"/>
+                                <stop offset="1" stop-color="#5C8374"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h2>Saring<span>Sini</span></h2>
+            </div>
+            
+            <div class="sidebar-menu">
+                <button class="sidebar-nav-btn active" data-tab="beranda">
+                    <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Beranda</span>
+                </button>
+                <button class="sidebar-nav-btn" data-tab="periksa">
+                    <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>Periksa AI</span>
+                </button>
+                <button class="sidebar-nav-btn" data-tab="simulator">
+                    <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Simulator Chat</span>
+                </button>
+                <button class="sidebar-nav-btn" data-tab="komunitas">
+                    <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Papan Komunitas</span>
+                </button>
+                <button class="sidebar-nav-btn" data-tab="edukasi">
+                    <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                    <span>Edukasi & Peringkat</span>
+                </button>
+            </div>
+            
+            <div class="sidebar-footer">
+                <p>#JuaraVibeCoding 2026</p>
+            </div>
+        </aside>
+
+        <!-- Sticky App Header -->
+        <header class="app-header">
+            <div class="header-main-row">
+                <div class="logo-area">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 22V12M12 12L8 15M12 12L16 15" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="logoGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#C84B31"/>
+                                    <stop offset="1" stop-color="#5C8374"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1>Saring<span>Sini</span></h1>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- Main Scrollable Content Area -->
+        <main class="app-content" id="main-content">
+            
+            <!-- PANEL 1: BERANDA (Home Dashboard) -->
+            <div id="panel-beranda" class="tab-panel active">
+                
+                <!-- Hero Welcome Card -->
+                <div class="beranda-hero-card">
+                    <div class="beranda-hero-content">
+                        <p class="hero-label">Selamat datang kembali</p>
+                        <h2 class="hero-title">Penjaga Fakta Keluarga Anda</h2>
+                        <p class="hero-desc">Saring berita hoaks sebelum tersebar di grup WhatsApp.</p>
+                    </div>
+                    <div class="beranda-hero-stats">
+                        <div class="hero-stat-item streak-stat">
+                            <span class="hero-stat-val">12</span>
+                            <span class="hero-stat-lbl">Hari Aktif</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat-item points-stat">
+                            <span class="hero-stat-val">934</span>
+                            <span class="hero-stat-lbl">Poin</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Activity Indicator (Social Proof) -->
+                <div class="live-activity-bar" aria-live="polite">
+                    <div class="live-activity-dot-wrap">
+                        <span class="live-activity-dot"></span>
+                        <span class="live-activity-ring"></span>
+                    </div>
+                    <div class="live-activity-text">
+                        <span class="live-activity-count" id="live-activity-count">23</span>
+                        <span class="live-activity-label">keluarga sedang memeriksa hoaks sekarang</span>
+                    </div>
+                </div>
+
+                <!-- Banner Waspada Terkini -->
+                <div class="warning-banner-card">
+                    <div class="warning-banner-header">
+                        <svg viewBox="0 0 24 24" class="warning-banner-icon" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <h4>Peringatan Phising WhatsApp!</h4>
+                    </div>
+                    <p>Beredar pesan berantai "Pendaftaran Kuota Gratis Kemendikbud 150GB". Link tersebut adalah scam pencurian data pribadi. Jangan diklik!</p>
+                </div>
+
+                <!-- Quick Action Buttons Grid -->
+                <div class="quick-actions-grid">
+                    <button class="quick-action-card bg-blue" id="action-go-periksa">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <h4>KONSUL AI</h4>
+                        <p>Periksa hoaks instan</p>
+                    </button>
+                    <button class="quick-action-card bg-emerald" id="action-go-simulator">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <h4>SIMULATOR</h4>
+                        <p>Uji balasan sopan</p>
+                    </button>
+                    <button class="quick-action-card bg-orange" id="action-go-komunitas">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <h4>ADUAN WARGA</h4>
+                        <p>Papan aduan hoaks</p>
+                    </button>
+                    <button class="quick-action-card bg-purple" id="action-go-edukasi">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        </div>
+                        <h4>EDUKASI HUB</h4>
+                        <p>Leaderboard & tips</p>
+                    </button>
+                </div>
+
+                <!-- HERO PROMO: Bahasa Mama Mode (WOW Factor Feature) -->
+                <button class="panel card hero-promo-card" id="hero-promo-coach" type="button" aria-label="Coba fitur Bahasa Mama Mode">
+                    <div class="hero-promo-badge">BARU</div>
+                    <div class="hero-promo-content">
+                        <div class="hero-promo-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                            </svg>
+                        </div>
+                        <div class="hero-promo-text">
+                            <h3 class="hero-promo-title">Bahasa Mama Mode</h3>
+                            <p class="hero-promo-desc">Latih cara meluruskan hoaks ke Mama, Papa, Om, Tante via simulasi chat dengan AI. Dapatkan skor komunikasi dan feedback langsung dari Gemini.</p>
+                            <div class="hero-promo-cta">
+                                Coba Sekarang
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+
+                <!-- Solidarity Progress Tracker -->
+                <div class="panel card solidarity-card">
+                    <div class="solidarity-header">
+                        <h4>Solidaritas Anti-Hoaks</h4>
+                        <span class="solidarity-number">9.842 Keluarga</span>
+                    </div>
+                    <p class="panel-desc">Target 15.000 keluarga terselamatkan dari berita menyesatkan tahun ini.</p>
+                    <div class="solidarity-progress-container">
+                        <div class="solidarity-progress-fill" style="width: 65.6%;"></div>
+                    </div>
+                    <span class="solidarity-footer-text">Target 15.000 keluarga terverifikasi nasional!</span>
+                </div>
+
+                <!-- Fakta Hukum Hari Ini -->
+                <div class="legal-banner">
+                    <div class="legal-badge">FAKTA HUKUM</div>
+                    <p><strong>UU ITE Pasal 28 ayat 1</strong> mengatur bahwa menyebarkan berita bohong atau menyesatkan yang mengakibatkan kerugian dapat diancam pidana penjara paling lama 6 tahun.</p>
+                </div>
+            </div>
+            
+            <!-- PANEL 2: PERIKSA (Fact Checker & Diagnostics) -->
+            <div id="panel-periksa" class="tab-panel">
+                
+                <!-- Welcome Section -->
+                <div class="welcome-box">
+                    <h2>Anti Drama Keluarga</h2>
+                    <p>Saring berita hoaks WhatsApp dan buat template balasan sopan dalam hitungan detik berbasis AI Gemini.</p>
+                </div>
+
+                <!-- Input Hub Card -->
+                <section class="panel card input-panel">
+                    <div class="card-header">
+                        <div class="step-num">1</div>
+                        <h2>Masukkan Informasi</h2>
+                    </div>
+                    <p class="panel-desc">Tempel teks pesan keluarga yang mencurigakan, atau unggah tangkapan layar chat langsung di bawah ini.</p>
+
+                    <!-- Input Tab Selector -->
+                    <div class="tab-selector tab-selector-scroll" role="tablist">
+                        <button class="tab-btn active" id="tab-text" role="tab" aria-selected="true">
+                            <svg viewBox="0 0 24 24" class="tab-icon" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
+                            Teks
+                        </button>
+                        <button class="tab-btn" id="tab-image" role="tab" aria-selected="false">
+                            <svg viewBox="0 0 24 24" class="tab-icon" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            Screenshot
+                        </button>
+                        <button class="tab-btn" id="tab-deepfake" role="tab" aria-selected="false">
+                            <svg viewBox="0 0 24 24" class="tab-icon" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            Deepfake AI
+                        </button>
+                        <button class="tab-btn" id="tab-url" role="tab" aria-selected="false">
+                            <svg viewBox="0 0 24 24" class="tab-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                            Cek Link
+                        </button>
+                    </div>
+
+                    <!-- Input Content Area -->
+                    <div class="input-form-container">
+                        <!-- Text Area Input -->
+                        <div class="input-group" id="group-text">
+                            <div class="input-label-row">
+                                <label for="message-input">Pesan Obrolan atau Berita</label>
+                                <button type="button" id="voice-input-btn" class="voice-input-btn" aria-label="Rekam suara untuk pesan" title="Diktekan suara">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                        <line x1="12" y1="19" x2="12" y2="22"/>
+                                    </svg>
+                                    <span class="voice-status-text">Bicara</span>
+                                </button>
+                            </div>
+                            <textarea id="message-input" placeholder="Contoh: Beredar kabar makan udang setelah minum jeruk dapat memicu keracunan arsenik mematikan..." rows="5"></textarea>
+                        </div>
+
+                        <!-- URL Input (Cek Link Phishing) -->
+                        <div class="input-group hidden" id="group-url">
+                            <label for="url-input">URL Mencurigakan</label>
+                            <input type="url" id="url-input" class="url-input" placeholder="https://contoh-link-mencurigakan.com/promo-kuota" inputmode="url" autocomplete="off">
+                            <p class="input-helper-text">Tempel link dari pesan WhatsApp. Kami akan deteksi pola phishing, scam bank, atau penipuan APK.</p>
+                        </div>
+
+                        <!-- Image Upload Input -->
+                        <div class="input-group hidden" id="group-image">
+                            <label>Tangkapan Layar Chat</label>
+                            <div class="upload-area" id="drop-zone">
+                                <input type="file" id="file-input" accept="image/*" class="hidden">
+                                <div class="upload-placeholder">
+                                    <svg class="upload-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                                    </svg>
+                                    <p class="primary-text">Tarik gambar ke sini, atau <span>Pilih Berkas</span></p>
+                                    <p class="secondary-text">PNG, JPG, JPEG (Maks. 5MB)</p>
+                                </div>
+                                <div class="upload-preview hidden" id="image-preview-container">
+                                    <img id="image-preview" src="#" alt="Pratinjau Screenshot">
+                                    <button type="button" class="remove-image-btn" id="remove-image">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Deepfake Image/Video Upload Input -->
+                        <div class="input-group hidden" id="group-deepfake">
+                            <label>Foto/Video Rekayasa AI</label>
+                            <div class="upload-area" id="drop-zone-deepfake">
+                                <input type="file" id="file-input-deepfake" accept="image/*,video/*" class="hidden">
+                                <div class="upload-placeholder" id="placeholder-deepfake">
+                                    <svg class="upload-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                    <p class="primary-text">Tarik foto/video rekayasa AI ke sini, atau <span>Pilih Berkas</span></p>
+                                    <p class="secondary-text">Gambar atau Video MP4 (Maks. 5MB)</p>
+                                </div>
+                                <div class="upload-preview hidden" id="image-preview-container-deepfake">
+                                    <img id="image-preview-deepfake" src="#" alt="Pratinjau Foto AI" class="hidden">
+                                    <video id="video-preview-deepfake" class="hidden" controls style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px;"></video>
+                                    <button type="button" class="remove-image-btn" id="remove-image-deepfake">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <button class="btn btn-primary" id="analyze-btn">
+                            <span class="btn-text">Periksa dengan Gemini AI</span>
+                            <div class="spinner hidden" id="btn-spinner"></div>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Results View Panel -->
+                <section class="panel card result-panel" id="result-view">
+                    
+                    <!-- Initial State (Guidelines) -->
+                    <div class="empty-state" id="result-empty">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 16v-4M12 8h.01"></path>
+                            </svg>
+                        </div>
+                        <h3>Siap Menyaring Hoaks</h3>
+                        <p>Masukkan teks atau upload screenshot chat di atas untuk melihat analisis kredibilitas instan, klarifikasi klaim, dan mendapatkan template balasan ramah keluarga.</p>
+                        
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <div class="tip-icon-svg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                </div>
+                                <h4>Analisis Cepat</h4>
+                                <p>Gemini AI membedah klaim secara objektif dalam hitungan detik.</p>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon-svg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                </div>
+                                <h4>Anti Ribut</h4>
+                                <p>Dapatkan kalimat balasan sopan agar orang tua tidak tersinggung.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skeleton Loader -->
+                    <div class="skeleton-loader hidden" id="result-loading">
+                        <div class="skeleton-line title"></div>
+                        <div class="skeleton-circle-row">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-details">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-line medium"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line medium"></div>
+                    </div>
+
+                    <!-- Content State (Results Display) -->
+                    <div class="analysis-results hidden" id="result-content">
+                        
+                        <!-- Dashboard Header -->
+                        <div class="dashboard-header-row">
+                            <!-- Speedometer Gauge -->
+                            <div class="gauge-container">
+                                <svg class="gauge" viewBox="0 0 100 50">
+                                    <path class="gauge-bg" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#e2e8f0" stroke-width="8" stroke-linecap="round" />
+                                    <path class="gauge-fill" id="gauge-fill-arc" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="url(#gaugeGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="125.6" />
+                                    <defs>
+                                        <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#10b981" />
+                                            <stop offset="50%" stop-color="#f59e0b" />
+                                            <stop offset="100%" stop-color="#ef4444" />
+                                        </linearGradient>
+                                    </defs>
+                                    <text class="gauge-value" id="gauge-value-text" x="50" y="45" text-anchor="middle">0%</text>
+                                </svg>
+                                <span class="gauge-label">HOAX METER</span>
+                            </div>
+
+                            <!-- Status Badge and Category -->
+                            <div class="status-summary-card">
+                                <div class="badge-row">
+                                    <span class="status-badge" id="res-badge">Menganalisis</span>
+                                    <span class="category-tag" id="res-category">Kategori</span>
+                                </div>
+                                <h3 class="status-title" id="res-status-title">Status Kebenaran</h3>
+                                <p class="status-desc" id="res-summary">Ringkasan hasil pengecekan fakta di sini.</p>
+                            </div>
+                        </div>
+
+                        <!-- Pusat Mitigasi Risiko & Kontak Cepat -->
+                        <div class="mitigation-box hidden" id="res-mitigation-box">
+                            <div class="mitigation-header">
+                                <div class="mitigation-icon-wrapper">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div>
+                                    <h4>Pusat Mitigasi Risiko Resmi</h4>
+                                    <p>Deteksi hoaks atau scam tergolong rawan. SaringSini menyarankan tindakan mitigasi cepat berikut:</p>
+                                </div>
+                            </div>
+                            <div class="mitigation-actions-grid" id="res-mitigation-actions">
+                                <!-- Dynamically generated official actions -->
+                            </div>
+                        </div>
+
+                        <!-- Claims Checklist -->
+                        <div class="claims-section">
+                            <h3>Daftar Klaim dan Fakta</h3>
+                            <div class="claims-list" id="res-claims-list">
+                                <!-- Dynamically Generated Claims -->
+                            </div>
+                        </div>
+
+                        <!-- HOAX DNA - Generative SVG Fingerprint (uniqueness feature) -->
+                        <div class="hoax-dna-section" id="hoax-dna-section" style="display:none;">
+                            <div class="hoax-dna-header">
+                                <div class="hoax-dna-title-row">
+                                    <svg viewBox="0 0 24 24" class="hoax-dna-title-icon" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 4c0 7 16 9 16 16"/>
+                                        <path d="M20 4c0 7-16 9-16 16"/>
+                                        <line x1="6" y1="8" x2="18" y2="8"/>
+                                        <line x1="6" y1="16" x2="18" y2="16"/>
+                                    </svg>
+                                    <h3 class="hoax-dna-title">DNA Hoaks Unik</h3>
+                                    <span class="hoax-dna-badge">EKSKLUSIF</span>
+                                </div>
+                                <p class="hoax-dna-subtitle">Setiap analisis dihasilkan dengan sidik jari visual unik berdasarkan konten dan skor AI. Bagikan untuk literasi digital.</p>
+                            </div>
+                            <div class="hoax-dna-canvas" id="hoax-dna-canvas" aria-label="Visualisasi DNA hoaks">
+                                <!-- Generated SVG inserted here -->
+                            </div>
+                            <div class="hoax-dna-actions">
+                                <button type="button" class="hoax-dna-btn primary" id="hoax-dna-download">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    Unduh PNG
+                                </button>
+                                <a class="hoax-dna-btn wa" id="hoax-dna-wa" href="#" target="_blank" rel="noopener" aria-label="Bagikan DNA via WhatsApp">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A12 12 0 0 0 3.5 20.5L2 22l1.5-1.5A12 12 0 0 0 20.5 3.5zM12 21.3a9.3 9.3 0 0 1-4.7-1.3l-.3-.2-3.5.9.9-3.5-.2-.3A9.3 9.3 0 1 1 12 21.3z"/></svg>
+                                    Bagikan
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Polite Replies Hub -->
+                        <div class="replies-section">
+                            <div class="section-header-row">
+                                <h3>Asisten Balasan Sopan</h3>
+                                <span class="copy-hint">Ketuk kartu untuk menyalin & uji di Simulator</span>
+                            </div>
+                            <p class="replies-intro">Gunakan template di bawah ini untuk meluruskan info di grup keluarga dengan santun dan damai:</p>
+
+                            <!-- AI Tone Slider - Realtime regenerate via Gemini -->
+                            <div class="tone-slider-card" id="tone-slider-card">
+                                <div class="tone-slider-header">
+                                    <div class="tone-slider-title-row">
+                                        <svg viewBox="0 0 24 24" class="tone-slider-icon" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="4" y1="21" x2="4" y2="14"/>
+                                            <line x1="4" y1="10" x2="4" y2="3"/>
+                                            <line x1="12" y1="21" x2="12" y2="12"/>
+                                            <line x1="12" y1="8" x2="12" y2="3"/>
+                                            <line x1="20" y1="21" x2="20" y2="16"/>
+                                            <line x1="20" y1="12" x2="20" y2="3"/>
+                                            <line x1="1" y1="14" x2="7" y2="14"/>
+                                            <line x1="9" y1="8" x2="15" y2="8"/>
+                                            <line x1="17" y1="16" x2="23" y2="16"/>
+                                        </svg>
+                                        <h4>AI Tone Adjuster</h4>
+                                        <span class="tone-slider-badge">BARU</span>
+                                    </div>
+                                    <p class="tone-slider-desc">Geser slider untuk atur tingkat formalitas balasan secara realtime via Gemini.</p>
+                                </div>
+                                <div class="tone-slider-row">
+                                    <span class="tone-slider-label-left">Formal</span>
+                                    <input type="range" id="tone-slider" min="0" max="100" value="50" class="tone-slider" aria-label="Tingkat formalitas balasan" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" />
+                                    <span class="tone-slider-label-right">Bercanda</span>
+                                </div>
+                                <div class="tone-slider-current" id="tone-slider-current">Tone: Sopan Hangat</div>
+                                <div class="tone-result-card hidden" id="tone-result-card">
+                                    <div class="tone-result-header">
+                                        <span class="tone-result-label" id="tone-result-label">Hasil Tone</span>
+                                        <div class="tone-result-actions">
+                                            <button type="button" class="tone-result-copy" id="tone-result-copy" aria-label="Salin balasan hasil tone">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                                                Salin
+                                            </button>
+                                            <a class="tone-result-wa" id="tone-result-wa" href="#" target="_blank" rel="noopener" aria-label="Kirim balasan via WhatsApp">
+                                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A12 12 0 0 0 3.5 20.5L2 22l1.5-1.5A12 12 0 0 0 20.5 3.5zM12 21.3a9.3 9.3 0 0 1-4.7-1.3l-.3-.2-3.5.9.9-3.5-.2-.3A9.3 9.3 0 1 1 12 21.3z"/><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.1-.8.9-1 1.1-.4.2-.7.1c-.3-.1-1.2-.5-2.3-1.4-.9-.7-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.2-.5s.1-.4 0-.5l-.7-1.8c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3s-.9.9-.9 2.2.9 2.5 1 2.7c.1.2 1.8 2.8 4.5 3.9 1.6.6 2.2.7 3 .5.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
+                                                Kirim
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="tone-result-text" id="tone-result-text">Geser slider dan tunggu sebentar untuk hasil baru.</p>
+                                </div>
+                            </div>
+
+                            <div class="replies-grid">
+                                <!-- Card 1: Sopan -->
+                                <div class="reply-card copyable" data-target="sopan-text">
+                                    <div class="card-glow border-purple"></div>
+                                    <div class="reply-card-header">
+                                        <div class="reply-icon-svg text-purple">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                        </div>
+                                        <h4>Sopan dan Hormat</h4>
+                                        <span class="tag-accent purple">Orang Tua</span>
+                                    </div>
+                                    <p class="reply-text" id="sopan-text">Memuat template...</p>
+                                    <div class="reply-actions">
+                                        <button class="copy-btn">
+                                            <svg viewBox="0 0 24 24" class="copy-svg" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                            <span>Salin</span>
+                                        </button>
+                                        <button class="wa-share-btn" data-target="sopan-text" aria-label="Kirim balasan sopan via WhatsApp">
+                                            <svg viewBox="0 0 24 24" class="wa-svg" fill="currentColor"><path d="M20.52 3.48A12 12 0 0 0 3.5 20.5L2 22l1.6-.42a12 12 0 0 0 16.92-18.1ZM12 20.4a8.4 8.4 0 0 1-4.3-1.18l-.31-.18-2.55.67.68-2.49-.2-.32A8.4 8.4 0 1 1 12 20.4Zm4.61-6.3c-.25-.13-1.5-.74-1.73-.82-.23-.08-.4-.13-.57.13s-.65.82-.8 1c-.15.17-.3.2-.55.07a6.86 6.86 0 0 1-2.02-1.25 7.7 7.7 0 0 1-1.4-1.74c-.15-.25 0-.39.1-.51.1-.1.25-.27.37-.4a1.62 1.62 0 0 0 .25-.42.45.45 0 0 0 0-.42c-.06-.13-.57-1.38-.78-1.88-.2-.5-.4-.42-.55-.43h-.47a.91.91 0 0 0-.66.3 2.78 2.78 0 0 0-.87 2.07A4.83 4.83 0 0 0 8 11.7a11 11 0 0 0 4.22 3.74c.6.25 1.06.4 1.42.51a3.43 3.43 0 0 0 1.57.1 2.57 2.57 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .15-1.2c-.07-.1-.23-.16-.48-.29Z"/></svg>
+                                            <span>WA</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: Santai -->
+                                <div class="reply-card copyable" data-target="santai-text">
+                                    <div class="card-glow border-cyan"></div>
+                                    <div class="reply-card-header">
+                                        <div class="reply-icon-svg text-cyan">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        </div>
+                                        <h4>Santai dan Akrab</h4>
+                                        <span class="tag-accent cyan">Sebaya</span>
+                                    </div>
+                                    <p class="reply-text" id="santai-text">Memuat template...</p>
+                                    <div class="reply-actions">
+                                        <button class="copy-btn">
+                                            <svg viewBox="0 0 24 24" class="copy-svg" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                            <span>Salin</span>
+                                        </button>
+                                        <button class="wa-share-btn" data-target="santai-text" aria-label="Kirim balasan santai via WhatsApp">
+                                            <svg viewBox="0 0 24 24" class="wa-svg" fill="currentColor"><path d="M20.52 3.48A12 12 0 0 0 3.5 20.5L2 22l1.6-.42a12 12 0 0 0 16.92-18.1ZM12 20.4a8.4 8.4 0 0 1-4.3-1.18l-.31-.18-2.55.67.68-2.49-.2-.32A8.4 8.4 0 1 1 12 20.4Zm4.61-6.3c-.25-.13-1.5-.74-1.73-.82-.23-.08-.4-.13-.57.13s-.65.82-.8 1c-.15.17-.3.2-.55.07a6.86 6.86 0 0 1-2.02-1.25 7.7 7.7 0 0 1-1.4-1.74c-.15-.25 0-.39.1-.51.1-.1.25-.27.37-.4a1.62 1.62 0 0 0 .25-.42.45.45 0 0 0 0-.42c-.06-.13-.57-1.38-.78-1.88-.2-.5-.4-.42-.55-.43h-.47a.91.91 0 0 0-.66.3 2.78 2.78 0 0 0-.87 2.07A4.83 4.83 0 0 0 8 11.7a11 11 0 0 0 4.22 3.74c.6.25 1.06.4 1.42.51a3.43 3.43 0 0 0 1.57.1 2.57 2.57 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .15-1.2c-.07-.1-.23-.16-.48-.29Z"/></svg>
+                                            <span>WA</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3: Humor -->
+                                <div class="reply-card copyable" data-target="humor-text">
+                                    <div class="card-glow border-emerald"></div>
+                                    <div class="reply-card-header">
+                                        <div class="reply-icon-svg text-emerald">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                        </div>
+                                        <h4>Mencairkan Suasana</h4>
+                                        <span class="tag-accent emerald">Anti Tegang</span>
+                                    </div>
+                                    <p class="reply-text" id="humor-text">Memuat template...</p>
+                                    <div class="reply-actions">
+                                        <button class="copy-btn">
+                                            <svg viewBox="0 0 24 24" class="copy-svg" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                            <span>Salin</span>
+                                        </button>
+                                        <button class="wa-share-btn" data-target="humor-text" aria-label="Kirim balasan humor via WhatsApp">
+                                            <svg viewBox="0 0 24 24" class="wa-svg" fill="currentColor"><path d="M20.52 3.48A12 12 0 0 0 3.5 20.5L2 22l1.6-.42a12 12 0 0 0 16.92-18.1ZM12 20.4a8.4 8.4 0 0 1-4.3-1.18l-.31-.18-2.55.67.68-2.49-.2-.32A8.4 8.4 0 1 1 12 20.4Zm4.61-6.3c-.25-.13-1.5-.74-1.73-.82-.23-.08-.4-.13-.57.13s-.65.82-.8 1c-.15.17-.3.2-.55.07a6.86 6.86 0 0 1-2.02-1.25 7.7 7.7 0 0 1-1.4-1.74c-.15-.25 0-.39.1-.51.1-.1.25-.27.37-.4a1.62 1.62 0 0 0 .25-.42.45.45 0 0 0 0-.42c-.06-.13-.57-1.38-.78-1.88-.2-.5-.4-.42-.55-.43h-.47a.91.91 0 0 0-.66.3 2.78 2.78 0 0 0-.87 2.07A4.83 4.83 0 0 0 8 11.7a11 11 0 0 0 4.22 3.74c.6.25 1.06.4 1.42.51a3.43 3.43 0 0 0 1.57.1 2.57 2.57 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .15-1.2c-.07-.1-.23-.16-.48-.29Z"/></svg>
+                                            <span>WA</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Regional Language Selector (Bahasa Daerah) -->
+                            <div class="language-selector-row">
+                                <label for="lang-selector" class="lang-label">Variasi Bahasa Daerah:</label>
+                                <select id="lang-selector" class="lang-selector" aria-label="Pilih bahasa daerah untuk template balasan">
+                                    <option value="indonesia">Bahasa Indonesia (Standar)</option>
+                                    <option value="jawa">Bahasa Jawa Krama</option>
+                                    <option value="sunda">Bahasa Sunda Halus</option>
+                                    <option value="minang">Bahasa Minang</option>
+                                    <option value="batak">Bahasa Batak</option>
+                                </select>
+                                <button id="regen-lang-btn" class="regen-lang-btn" disabled aria-label="Buat ulang balasan dalam bahasa terpilih">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                                    <span>Konversi</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Export Action Row: PNG + PDF + WhatsApp -->
+                        <div class="share-card-generator-box">
+                            <div class="share-info-row">
+                                <div class="share-icon-wrapper">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                </div>
+                                <div>
+                                    <h4>Sebarkan Hasil Klarifikasi</h4>
+                                    <p>Ekspor hasil fakta sebagai infografis PNG atau laporan PDF untuk disebarkan ke grup WhatsApp.</p>
+                                </div>
+                            </div>
+                            <div class="export-action-grid">
+                                <button class="btn btn-secondary" id="download-card-btn">
+                                    <svg viewBox="0 0 24 24" class="download-svg" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    Infografis PNG
+                                </button>
+                                <button class="btn btn-secondary" id="download-pdf-btn">
+                                    <svg viewBox="0 0 24 24" class="download-svg" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                    Laporan PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Toast Notification for Copying -->
+                        <div class="toast-notification hidden" id="toast" role="status" aria-live="polite" aria-atomic="true">Kalimat berhasil disalin ke simulator</div>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- PANEL 3: SIMULATOR CHAT KELUARGA (Redesigned v2.2 - Natural WhatsApp-style) -->
+            <div id="panel-simulator" class="tab-panel">
+
+                <!-- Quick guide compact card -->
+                <section class="panel card sim-guide-card">
+                    <div class="sim-guide-header">
+                        <div class="sim-guide-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="sim-guide-title">Simulator Chat Keluarga</h2>
+                            <p class="sim-guide-desc">Latih balasan sopanmu dalam ruang chat aman sebelum mengirim ke grup keluarga asli.</p>
+                        </div>
+                    </div>
+                    <div class="sim-step-row">
+                        <div class="sim-step-mini">
+                            <span class="sim-step-num">1</span>
+                            <span>Periksa hoaks di tab <strong>Periksa</strong></span>
+                        </div>
+                        <div class="sim-step-mini">
+                            <span class="sim-step-num">2</span>
+                            <span>Salin balasan, otomatis tempel di sini</span>
+                        </div>
+                        <div class="sim-step-mini">
+                            <span class="sim-step-num">3</span>
+                            <span>Lihat reaksi sopan keluarga simulasi</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chat Window - Natural WhatsApp-style panel (no fake phone bezel) -->
+                <section class="chat-window" aria-label="Simulator chat keluarga">
+
+                    <!-- Chat header (WhatsApp group style with warm tone) -->
+                    <header class="chat-window-header">
+                        <div class="chat-window-contact">
+                            <div class="chat-window-avatar" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div class="chat-window-meta">
+                                <span class="chat-window-name">Grup Keluarga Cemara</span>
+                                <span class="chat-window-status">
+                                    <span class="chat-online-dot" aria-hidden="true"></span>
+                                    Mama, Papa, Om Heri, Tante Rosa
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chat-window-actions">
+                            <button class="chat-window-action-btn" id="reset-chat-btn" type="button" aria-label="Atur ulang percakapan simulator" title="Mulai dari awal">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- Messages area (warm cream wallpaper, no phone bezel) -->
+                    <div class="chat-window-messages" id="chat-box" role="log" aria-live="polite" aria-relevant="additions">
+                        <div class="chat-day-divider">
+                            <span>Hari ini</span>
+                        </div>
+                        <div class="chat-bubble received">
+                            <div class="sender-name sender-om">Om Heri</div>
+                            <p class="message-content">Tolong sebarkan ke keluarga kita! Info penting bahaya makan kangkung yang didalamnya ada lintah air yang hidup meskipun direbus. Kemarin ada tetangga pingsan masuk rumah sakit gara-gara makan kangkung lintah!</p>
+                            <span class="message-time" id="sim-time-1">08:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick suggestion chips (above input) -->
+                    <div class="chat-quick-chips" id="chat-quick-chips" aria-label="Saran balasan cepat">
+                        <button class="chat-quick-chip" data-chip="Terima kasih infonya, sedang saya cek dulu kebenarannya ya.">Saya cek dulu ya</button>
+                        <button class="chat-quick-chip" data-chip="Mohon maaf, sepertinya info ini perlu diverifikasi. Saya akan kirim klarifikasinya.">Perlu verifikasi</button>
+                        <button class="chat-quick-chip" data-chip="Halo semua, sudah ada update faktanya nih.">Update fakta</button>
+                    </div>
+
+                    <!-- Input bar (warm palette, no iOS mockup) -->
+                    <div class="chat-window-input">
+                        <button class="chat-input-helper-btn" type="button" id="chat-paste-from-periksa" aria-label="Tempel hasil dari Periksa AI" title="Tempel balasan terbaru">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                        </button>
+                        <input type="text" id="chat-simulator-input" class="chat-window-textfield" placeholder="Tempel atau ketik balasan sopan di sini..." aria-label="Pesan untuk grup keluarga simulasi" />
+                        <button class="chat-window-send-btn" id="chat-send-btn" type="button" aria-label="Kirim pesan ke grup keluarga simulasi">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 20.85 12.92a1 1 0 0 0 0-1.84L3.4 3.6a1 1 0 0 0-1.38 1.18L4.5 11.5l8.5.5-8.5.5-2.48 6.72a1 1 0 0 0 1.38 1.18Z"/></svg>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Family Profile Cards (premium touch - identifies who's who) -->
+                <section class="panel card family-roster-card">
+                    <h3 class="family-roster-title">Anggota Grup Simulasi</h3>
+                    <div class="family-roster-grid">
+                        <div class="family-member">
+                            <span class="family-avatar member-mama" aria-hidden="true">M</span>
+                            <div class="family-meta">
+                                <span class="family-name">Mama</span>
+                                <span class="family-role">Orang Tua</span>
+                            </div>
+                        </div>
+                        <div class="family-member">
+                            <span class="family-avatar member-papa" aria-hidden="true">P</span>
+                            <div class="family-meta">
+                                <span class="family-name">Papa</span>
+                                <span class="family-role">Orang Tua</span>
+                            </div>
+                        </div>
+                        <div class="family-member">
+                            <span class="family-avatar member-om" aria-hidden="true">O</span>
+                            <div class="family-meta">
+                                <span class="family-name">Om Heri</span>
+                                <span class="family-role">Suka Forward Hoaks</span>
+                            </div>
+                        </div>
+                        <div class="family-member">
+                            <span class="family-avatar member-tante" aria-hidden="true">T</span>
+                            <div class="family-meta">
+                                <span class="family-name">Tante Rosa</span>
+                                <span class="family-role">Mediator Damai</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========================================================
+                     BAHASA MAMA MODE - Conversational AI Coach
+                     Latih cara meluruskan hoaks ke orang tua via multi-turn
+                     chat dengan AI yang berperan sebagai orang tua real
+                     ======================================================== -->
+                <section class="panel card coach-section" id="coach-section">
+                    <div class="coach-header">
+                        <div class="coach-header-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                                <path d="M3 5c0 1.66 4 3 9 3s9-1.34 9-3-4-3-9-3-9 1.34-9 3"/>
+                            </svg>
+                        </div>
+                        <div class="coach-header-text">
+                            <h2>Bahasa Mama Mode</h2>
+                            <p class="coach-subtitle">Latih komunikasi anti-hoaks dengan AI yang berperan sebagai orang tua. Gemini AI akan mensimulasikan reaksi natural Mama/Papa/Om/Tante saat kamu meluruskan pesan hoaks yang mereka forward.</p>
+                        </div>
+                    </div>
+
+                    <!-- Setup Phase: Choose persona + scenario -->
+                    <div class="coach-setup" id="coach-setup">
+                        <div class="coach-step-block">
+                            <label class="coach-step-label">
+                                <span class="coach-step-num">1</span>
+                                Pilih orang tua yang akan dilatih
+                            </label>
+                            <div class="coach-persona-grid" role="radiogroup" aria-label="Pilih persona orang tua">
+                                <button type="button" class="coach-persona-btn active" data-persona="mama" role="radio" aria-checked="true">
+                                    <span class="coach-persona-avatar member-mama" aria-hidden="true">M</span>
+                                    <span class="coach-persona-name">Mama</span>
+                                    <span class="coach-persona-trait">Lembut, gampang percaya grup arisan</span>
+                                </button>
+                                <button type="button" class="coach-persona-btn" data-persona="papa" role="radio" aria-checked="false">
+                                    <span class="coach-persona-avatar member-papa" aria-hidden="true">P</span>
+                                    <span class="coach-persona-name">Papa</span>
+                                    <span class="coach-persona-trait">Tegas, merasa selalu benar</span>
+                                </button>
+                                <button type="button" class="coach-persona-btn" data-persona="om" role="radio" aria-checked="false">
+                                    <span class="coach-persona-avatar member-om" aria-hidden="true">O</span>
+                                    <span class="coach-persona-name">Om Heri</span>
+                                    <span class="coach-persona-trait">Suka pamer info pseudo-ilmiah</span>
+                                </button>
+                                <button type="button" class="coach-persona-btn" data-persona="tante" role="radio" aria-checked="false">
+                                    <span class="coach-persona-avatar member-tante" aria-hidden="true">T</span>
+                                    <span class="coach-persona-name">Tante Rosa</span>
+                                    <span class="coach-persona-trait">Heboh, percaya info mistis</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="coach-step-block">
+                            <label class="coach-step-label" for="coach-scenario-input">
+                                <span class="coach-step-num">2</span>
+                                Pesan hoaks yang baru saja mereka forward
+                            </label>
+                            <textarea id="coach-scenario-input" class="coach-scenario-textarea" rows="3" placeholder="Contoh: Vaksin COVID-19 mengandung chip 5G yang melacak penerimanya secara global." aria-label="Skenario hoaks"></textarea>
+                            <div class="coach-scenario-presets" aria-label="Contoh skenario hoaks">
+                                <button type="button" class="coach-scenario-chip" data-scenario="Vaksin COVID-19 mengandung chip 5G yang melacak penerimanya secara global.">Vaksin chip 5G</button>
+                                <button type="button" class="coach-scenario-chip" data-scenario="Daun sirsak rebusan menyembuhkan kanker stadium 4 dalam 7 hari tanpa kemoterapi.">Daun sirsak kanker</button>
+                                <button type="button" class="coach-scenario-chip" data-scenario="Kemendikbud bagi kuota internet gratis 150GB, klik link bit.ly/kuota-gratis untuk daftar.">Scam kuota gratis</button>
+                                <button type="button" class="coach-scenario-chip" data-scenario="Minum air kelapa hijau campur jeruk nipis tiap pagi bisa melarutkan kolesterol dan vaksin di dalam tubuh.">Air kelapa detox vaksin</button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="coach-start-btn" id="coach-start-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            Mulai Latihan Percakapan
+                        </button>
+                    </div>
+
+                    <!-- Active Coach Chat -->
+                    <div class="coach-chat-wrap hidden" id="coach-chat-wrap">
+                        <header class="coach-chat-header">
+                            <button type="button" class="coach-back-btn" id="coach-back-btn" aria-label="Kembali ke setup">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                            </button>
+                            <div class="coach-chat-meta">
+                                <div class="coach-chat-avatar" id="coach-active-avatar" aria-hidden="true">M</div>
+                                <div class="coach-chat-info">
+                                    <span class="coach-chat-name" id="coach-active-name">Mama</span>
+                                    <span class="coach-chat-mood" id="coach-active-mood">Skeptis - Defensif</span>
+                                </div>
+                            </div>
+                            <button type="button" class="coach-end-btn" id="coach-end-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                Selesai
+                            </button>
+                        </header>
+                        <div class="coach-messages" id="coach-messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+                        <div class="coach-input-row">
+                            <textarea id="coach-input" class="coach-input" rows="1" placeholder="Tulis balasan yang sopan untuk meluruskan..." aria-label="Pesan untuk orang tua simulasi"></textarea>
+                            <button type="button" class="coach-send-btn" id="coach-send-btn" aria-label="Kirim balasan ke simulasi">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 20.85 12.92a1 1 0 0 0 0-1.84L3.4 3.6a1 1 0 0 0-1.38 1.18L4.5 11.5l8.5.5-8.5.5-2.48 6.72a1 1 0 0 0 1.38 1.18Z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Evaluation Result -->
+                    <div class="coach-eval-wrap hidden" id="coach-eval-wrap">
+                        <div class="coach-eval-header">
+                            <h3>Hasil Latihan Komunikasi</h3>
+                        </div>
+                        <div class="coach-eval-score-ring">
+                            <svg viewBox="0 0 120 120" aria-hidden="true">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="var(--bg-secondary)" stroke-width="10"/>
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="url(#coachScoreGrad)" stroke-width="10"
+                                    stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16"
+                                    id="coach-eval-score-arc" transform="rotate(-90 60 60)"/>
+                                <defs>
+                                    <linearGradient id="coachScoreGrad" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0" stop-color="#5C8374"/>
+                                        <stop offset="1" stop-color="#C84B31"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="coach-eval-score-text">
+                                <span class="coach-eval-score-num" id="coach-eval-score-num">0</span>
+                                <span class="coach-eval-score-label">dari 100</span>
+                            </div>
+                        </div>
+                        <div class="coach-eval-section">
+                            <h4 class="coach-eval-section-title coach-eval-positive">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                Kekuatan Komunikasi
+                            </h4>
+                            <ul id="coach-eval-strengths" class="coach-eval-list"></ul>
+                        </div>
+                        <div class="coach-eval-section">
+                            <h4 class="coach-eval-section-title coach-eval-improve">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                Saran Perbaikan
+                            </h4>
+                            <ul id="coach-eval-improvements" class="coach-eval-list"></ul>
+                        </div>
+                        <div class="coach-eval-rec" id="coach-eval-rec"></div>
+                        <button type="button" class="coach-restart-btn" id="coach-restart-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                            Coba Skenario Lain
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- PANEL 4: KOMUNITAS (Synced Centralized Board) -->
+            <div id="panel-komunitas" class="tab-panel">
+                <section class="panel card community-panel">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" class="side-icon text-blue" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <h2>Papan Laporan Komunitas</h2>
+                    </div>
+                    <p class="panel-desc">Pantau aduan hoaks terbaru yang dilaporkan oleh masyarakat Indonesia secara real-time dan bantu sebarkan verifikasinya.</p>
+                    
+                    <!-- Search Filter Row -->
+                    <div class="community-filter-row">
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24" class="search-icon-svg" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="community-search" placeholder="Cari laporan aduan hoaks..." />
+                        </div>
+                    </div>
+                    
+                    <!-- Category Tabs -->
+                    <div class="community-tabs">
+                        <button class="comm-tab active" data-cat="all">Semua</button>
+                        <button class="comm-tab" data-cat="Kesehatan">Kesehatan</button>
+                        <button class="comm-tab" data-cat="Scam">Scam/Penipuan</button>
+                        <button class="comm-tab" data-cat="Keluarga">Keluarga</button>
+                    </div>
+                    
+                    <!-- central container for reporting feed -->
+                    <div class="community-feed" id="community-feed-container">
+                        <!-- Dynamically populated community reports -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- PANEL 5: EDUKASI & PERINGKAT (Literacy, Leaderboard, & Hot Hoaxes) -->
+            <div id="panel-edukasi" class="tab-panel">
+                
+                <!-- Papan Peringkat Pahlawan Fakta -->
+                <section class="panel card leaderboard-card">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" class="side-icon text-amber" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        <h2>Papan Peringkat Pahlawan Fakta</h2>
+                    </div>
+                    <p class="panel-desc">Daftar verifikator hoaks teraktif nasional yang telah menyelamatkan ribuan keluarga dari berita palsu:</p>
+
+                    <div class="leaderboard-list">
+                        <!-- rank 1 -->
+                        <div class="leaderboard-item">
+                            <span class="rank-badge gold">1</span>
+                            <div class="hero-info">
+                                <span class="hero-name">Budi Santoso</span>
+                                <span class="hero-sub">Pahlawan Utama</span>
+                            </div>
+                            <span class="hero-points">1.420 verifikasi</span>
+                        </div>
+                        <!-- rank 2 (Sultan) -->
+                        <div class="leaderboard-item active-user">
+                            <span class="rank-badge silver">2</span>
+                            <div class="hero-info">
+                                <span class="hero-name">Sultan <span class="you-tag">(Anda)</span></span>
+                                <span class="hero-sub">Pembela Kebenaran</span>
+                            </div>
+                            <span class="hero-points">1.331 verifikasi</span>
+                        </div>
+                        <!-- rank 3 -->
+                        <div class="leaderboard-item">
+                            <span class="rank-badge bronze">3</span>
+                            <div class="hero-info">
+                                <span class="hero-name">Siti Aminah</span>
+                                <span class="hero-sub">Pemeriksa Handal</span>
+                            </div>
+                            <span class="hero-points">942 verifikasi</span>
+                        </div>
+                        <!-- rank 4 -->
+                        <div class="leaderboard-item">
+                            <span class="rank-badge normal">4</span>
+                            <div class="hero-info">
+                                <span class="hero-name">Ahmad Fauzi</span>
+                                <span class="hero-sub">Pengawal Hoaks</span>
+                            </div>
+                            <span class="hero-points">810 verifikasi</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hoax Analytics Dashboard (Live Stats) -->
+                <section class="panel card analytics-card">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" class="side-icon text-blue" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                        <h2>Analitik Hoaks Indonesia</h2>
+                    </div>
+                    <p class="panel-desc">Statistik live dari laporan komunitas terverifikasi:</p>
+
+                    <!-- Stat Cards Grid -->
+                    <div class="analytics-stat-grid">
+                        <div class="analytics-stat-card stat-danger">
+                            <span class="analytics-stat-label">Total Hoaks Terdeteksi</span>
+                            <span class="analytics-stat-value" id="stat-total-hoax">0</span>
+                            <span class="analytics-stat-sub">laporan komunitas</span>
+                        </div>
+                        <div class="analytics-stat-card stat-success">
+                            <span class="analytics-stat-label">Keluarga Terselamatkan</span>
+                            <span class="analytics-stat-value" id="stat-families">0</span>
+                            <span class="analytics-stat-sub">total verifikasi</span>
+                        </div>
+                        <div class="analytics-stat-card stat-warning">
+                            <span class="analytics-stat-label">Kategori Teratas</span>
+                            <span class="analytics-stat-value-small" id="stat-top-category">Scam/Penipuan</span>
+                            <span class="analytics-stat-sub" id="stat-top-category-pct">0% dari total</span>
+                        </div>
+                        <div class="analytics-stat-card stat-info">
+                            <span class="analytics-stat-label">Tingkat Bahaya Rata-rata</span>
+                            <span class="analytics-stat-value" id="stat-avg-danger">0%</span>
+                            <span class="analytics-stat-sub">indeks keparahan</span>
+                        </div>
+                    </div>
+
+                    <!-- Category Distribution Chart (CSS-only bar chart) -->
+                    <div class="analytics-chart-block">
+                        <h4 class="chart-title">Distribusi Kategori Hoaks</h4>
+                        <div class="chart-bars" id="chart-category-bars">
+                            <!-- Dynamically rendered -->
+                        </div>
+                    </div>
+
+                    <!-- AI Daily Insight -->
+                    <div class="analytics-insight-box">
+                        <div class="insight-icon-wrap">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/><path d="M12 2v2"/><circle cx="12" cy="12" r="6"/></svg>
+                        </div>
+                        <div class="insight-text">
+                            <h5>Insight AI Hari Ini</h5>
+                            <p id="ai-daily-insight">Memuat insight pintar dari Gemini AI...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Live Hoax Map Indonesia -->
+                <section class="panel card hoax-map-card">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" class="side-icon text-blue" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <h2>Peta Sebaran Hoaks Indonesia</h2>
+                    </div>
+                    <p class="panel-desc">Visualisasi konsentrasi laporan hoaks per wilayah:</p>
+
+                    <div class="hoax-map-container" id="hoax-map-container">
+                        <svg class="hoax-map-svg" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Peta sebaran hoaks Indonesia">
+                            <!-- Indonesia simplified map (7 main regions as rounded shapes) -->
+                            <g class="map-regions">
+                                <!-- Sumatera -->
+                                <path class="map-region" data-region="Sumatera" data-count="0" d="M50,80 Q75,60 95,75 Q110,85 105,110 Q100,140 90,165 Q80,190 70,200 Q55,205 50,190 Q45,160 50,130 Q50,100 50,80 Z"/>
+                                <!-- Jawa -->
+                                <path class="map-region" data-region="Jawa" data-count="0" d="M140,195 Q175,180 215,185 Q260,190 295,195 Q310,210 290,225 Q250,232 200,228 Q160,222 140,215 Q130,205 140,195 Z"/>
+                                <!-- Kalimantan -->
+                                <path class="map-region" data-region="Kalimantan" data-count="0" d="M195,80 Q235,70 270,80 Q285,100 280,130 Q275,160 265,180 Q235,185 215,175 Q195,160 190,135 Q188,105 195,80 Z"/>
+                                <!-- Sulawesi -->
+                                <path class="map-region" data-region="Sulawesi" data-count="0" d="M320,100 Q345,85 365,100 Q370,125 355,145 Q365,160 355,175 Q345,190 335,180 Q325,160 330,145 Q315,130 320,100 Z"/>
+                                <!-- Bali/NTB/NTT -->
+                                <path class="map-region" data-region="Bali-NTB-NTT" data-count="0" d="M310,235 Q345,228 385,232 Q420,238 445,240 Q455,250 440,255 Q400,260 360,255 Q325,250 310,245 Q300,240 310,235 Z"/>
+                                <!-- Maluku -->
+                                <path class="map-region" data-region="Maluku" data-count="0" d="M400,130 Q425,120 445,135 Q450,155 435,170 Q420,180 410,170 Q395,155 400,130 Z"/>
+                                <!-- Papua -->
+                                <path class="map-region" data-region="Papua" data-count="0" d="M475,130 Q515,115 550,130 Q565,160 555,195 Q540,215 510,210 Q485,205 475,185 Q470,160 475,130 Z"/>
+                            </g>
+                            <!-- Region labels -->
+                            <g class="map-labels" font-family="Plus Jakarta Sans, system-ui" font-size="10" font-weight="600">
+                                <text x="77" y="135" text-anchor="middle">Sumatera</text>
+                                <text x="217" y="212" text-anchor="middle">Jawa</text>
+                                <text x="232" y="130" text-anchor="middle">Kalimantan</text>
+                                <text x="343" y="140" text-anchor="middle">Sulawesi</text>
+                                <text x="377" y="247" text-anchor="middle">Bali-NT</text>
+                                <text x="423" y="153" text-anchor="middle">Maluku</text>
+                                <text x="512" y="170" text-anchor="middle">Papua</text>
+                            </g>
+                        </svg>
+
+                        <div class="map-legend">
+                            <span class="map-legend-title">Intensitas:</span>
+                            <div class="map-legend-scale">
+                                <span class="legend-dot intensity-low"></span><span class="legend-label">Sedikit</span>
+                                <span class="legend-dot intensity-mid"></span><span class="legend-label">Sedang</span>
+                                <span class="legend-dot intensity-high"></span><span class="legend-label">Tinggi</span>
+                                <span class="legend-dot intensity-critical"></span><span class="legend-label">Kritis</span>
+                            </div>
+                        </div>
+
+                        <div class="map-detail-panel" id="map-detail-panel">
+                            <span class="map-detail-region">Klik wilayah untuk detail</span>
+                            <span class="map-detail-count"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Educational Quiz Mode -->
+                <section class="panel card quiz-card">
+                    <div class="card-header">
+                        <svg viewBox="0 0 24 24" class="side-icon text-emerald" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                        <h2>Tantangan Deteksi Hoaks</h2>
+                    </div>
+                    <p class="panel-desc">Uji kemampuan literasimu. Bisakah kamu deteksi hoaks dari fakta?</p>
+
+                    <div class="quiz-container" id="quiz-container">
+                        <!-- Quiz start state -->
+                        <div class="quiz-intro" id="quiz-intro">
+                            <div class="quiz-stat-row">
+                                <div class="quiz-stat">
+                                    <span class="quiz-stat-val">10</span>
+                                    <span class="quiz-stat-lbl">Pertanyaan</span>
+                                </div>
+                                <div class="quiz-stat">
+                                    <span class="quiz-stat-val">2</span>
+                                    <span class="quiz-stat-lbl">Menit</span>
+                                </div>
+                                <div class="quiz-stat">
+                                    <span class="quiz-stat-val">100</span>
+                                    <span class="quiz-stat-lbl">Poin Maks</span>
+                                </div>
+                            </div>
+                            <p class="quiz-intro-text">Setiap pertanyaan menampilkan pesan WhatsApp asli yang beredar di Indonesia. Tugasmu: putuskan apakah ini <strong>Hoaks</strong> atau <strong>Fakta</strong>. Bersiaplah jadi Pahlawan Fakta keluarga!</p>
+                            <button class="btn btn-primary quiz-start-btn" id="quiz-start-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Mulai Tantangan
+                            </button>
+                        </div>
+
+                        <!-- Active quiz state -->
+                        <div class="quiz-active hidden" id="quiz-active">
+                            <div class="quiz-progress-row">
+                                <span class="quiz-question-counter">Pertanyaan <span id="quiz-current-num">1</span> dari <span id="quiz-total-num">10</span></span>
+                                <span class="quiz-score-display">Skor: <strong id="quiz-current-score">0</strong></span>
+                            </div>
+                            <div class="quiz-progress-bar">
+                                <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+                            </div>
+
+                            <div class="quiz-question-card">
+                                <div class="quiz-question-header">
+                                    <span class="quiz-source-tag" id="quiz-source-tag">Pesan WhatsApp Keluarga</span>
+                                </div>
+                                <p class="quiz-question-text" id="quiz-question-text">Memuat pertanyaan...</p>
+                            </div>
+
+                            <div class="quiz-answer-row">
+                                <button class="quiz-answer-btn quiz-btn-hoax" data-answer="hoax">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                    HOAKS
+                                </button>
+                                <button class="quiz-answer-btn quiz-btn-fact" data-answer="fact">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 16 9"/></svg>
+                                    FAKTA
+                                </button>
+                            </div>
+
+                            <div class="quiz-explanation hidden" id="quiz-explanation">
+                                <div class="quiz-explanation-header" id="quiz-explanation-header"></div>
+                                <p id="quiz-explanation-text"></p>
+                                <button class="btn btn-secondary quiz-next-btn" id="quiz-next-btn">Lanjut</button>
+                            </div>
+                        </div>
+
+                        <!-- Quiz result state -->
+                        <div class="quiz-result hidden" id="quiz-result">
+                            <div class="quiz-result-badge" id="quiz-result-badge">
+                                <span class="quiz-result-emoji-replacement" id="quiz-result-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                                </span>
+                                <h3 id="quiz-result-title">Pahlawan Fakta!</h3>
+                                <p id="quiz-result-message">Kamu berhasil dengan skor tinggi.</p>
+                            </div>
+
+                            <div class="quiz-result-stats">
+                                <div class="quiz-result-stat">
+                                    <span class="qr-stat-num" id="quiz-result-correct">0</span>
+                                    <span class="qr-stat-lbl">Benar</span>
+                                </div>
+                                <div class="quiz-result-stat">
+                                    <span class="qr-stat-num" id="quiz-result-score">0</span>
+                                    <span class="qr-stat-lbl">Poin</span>
+                                </div>
+                                <div class="quiz-result-stat">
+                                    <span class="qr-stat-num" id="quiz-result-percent">0%</span>
+                                    <span class="qr-stat-lbl">Akurasi</span>
+                                </div>
+                            </div>
+
+                            <div class="quiz-result-actions">
+                                <button class="btn btn-secondary" id="quiz-retry-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                                    Coba Lagi
+                                </button>
+                                <button class="btn btn-primary" id="quiz-share-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                                    Bagikan Skor
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Trending Hoaxes in Indonesia -->
+                <section class="panel card side-card trending-card">
+                    <div class="side-card-header">
+                        <svg viewBox="0 0 24 24" class="side-icon text-amber" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        <h3>Hoaks Terkini di Indonesia</h3>
+                    </div>
+                    <p class="panel-desc">Daftar rumor palsu dan hoaks yang sedang ramai beredar minggu ini:</p>
+                    
+                    <div class="trending-list">
+                        <div class="trending-item">
+                            <span class="trending-tag red">HOAKS</span>
+                            <h5>Lintah Hidup di Dalam Kangkung</h5>
+                            <p>Klaim lintah tidak mati meski kangkung direbus dan bersarang di usus.</p>
+                        </div>
+                        <div class="trending-item">
+                            <span class="trending-tag red">SCAM</span>
+                            <h5>Bantuan Kuota Kemendikbud 150GB</h5>
+                            <p>Tautan phising gratis internet mengatasnamakan kementerian pendidikan.</p>
+                        </div>
+                        <div class="trending-item">
+                            <span class="trending-tag red">HOAKS</span>
+                            <h5>Jeruk Nipis, Garam, dan Kelapa Hijau</h5>
+                            <p>Kombinasi bahan alami diklaim bisa menyembuhkan infeksi virus pernapasan.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Digital Literacy Hub (Accordion) -->
+                <section class="panel card side-card literacy-card">
+                    <div class="side-card-header">
+                        <svg viewBox="0 0 24 24" class="side-icon text-blue" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <h3>Panduan Literasi Digital</h3>
+                    </div>
+                    <p class="panel-desc">Kiat cerdas membedakan kebenaran dari rumor jahat di jagat maya:</p>
+                    
+                    <div class="literacy-accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-trigger">
+                                <span>1. Periksa Alamat Sumber</span>
+                                <svg viewBox="0 0 24 24" class="accordion-chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Pastikan berita berasal dari media pers resmi atau domain terverifikasi, bukan blog gratisan atau tautan tidak dikenal.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-trigger">
+                                <span>2. Sadari Judul Sensasional</span>
+                                <svg viewBox="0 0 24 24" class="accordion-chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Berita hoaks sering memakai judul clickbait bernada mendesak atau menakut-nakuti agar cepat dibagikan.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-trigger">
+                                <span>3. Cek Tanggal dan Konteks</span>
+                                <svg viewBox="0 0 24 24" class="accordion-chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Beberapa pesan melampirkan berita lama yang disebarkan ulang dengan konteks berbeda untuk memicu kebingungan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Standard Footer -->
+            <footer class="app-footer">
+                <p>&copy; 2026 SaringSini. Dibuat untuk <strong>#JuaraVibeCoding</strong> oleh Sultan &amp; Misha.</p>
+            </footer>
+
+        </main>
+
+        <!-- Persistent Bottom Tab Bar Navigation (5 Tabs) -->
+        <nav class="bottom-nav" aria-label="Navigasi utama aplikasi">
+            <button class="bottom-nav-btn active" data-tab="beranda">
+                <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Beranda</span>
+            </button>
+            <button class="bottom-nav-btn" data-tab="periksa">
+                <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span>Periksa</span>
+            </button>
+            <button class="bottom-nav-btn" data-tab="simulator">
+                <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>Simulator</span>
+            </button>
+            <button class="bottom-nav-btn" data-tab="komunitas">
+                <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Komunitas</span>
+            </button>
+            <button class="bottom-nav-btn" data-tab="edukasi">
+                <svg viewBox="0 0 24 24" class="nav-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+                <span>Edukasi</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- App Logic Scripts -->
+    <script src="app.js"></script>
+    <script src="js/hoax-dna.js"></script>
+    <script src="js/coach.js"></script>
+    <script src="js/tone-slider.js"></script>
+    <script src="js/dna-integrator.js"></script>
+</body>
+</html>

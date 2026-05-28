@@ -1,0 +1,11 @@
+{
+  "name": "SaringSini",
+  "version": "2.3.0",
+  "description": "Asisten AI Gemini untuk filter hoaks WhatsApp keluarga Indonesia. Fitur unggulan: Bahasa Mama Mode (latih komunikasi anti-hoaks via role-play AI orang tua), AI Tone Slider, Hoax DNA Visualization, deteksi multimodal (teks/screenshot/deepfake/URL), generator balasan sopan dalam 5 bahasa, simulator chat keluarga, papan komunitas, quiz edukasi, peta hoaks Indonesia, voice input, dan PWA installable.",
+  "competition": "JuaraVibeCoding 2026",
+  "author": "Sultan dan Misha",
+  "team": "Sultan & Misha",
+  "license": "MIT",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

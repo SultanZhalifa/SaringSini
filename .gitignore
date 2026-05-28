@@ -1,0 +1,10 @@
+node_modules/
+.env
+uploads/
+.DS_Store
+*.log
+data/community.json
+.claude/
+
+# Competitor reference (not part of submission)
+survive-jobs-main/
