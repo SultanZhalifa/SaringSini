@@ -1,19 +1,18 @@
 # SaringSini v2.3 — Asisten Filter Hoaks dan Coaching Komunikasi Anti-Hoaks Keluarga
 
-[![Competition](https://img.shields.io/badge/Competition-JuaraVibeCoding_2026-brightgreen?style=for-the-badge&logo=google-gemini&logoColor=white)](#)
-[![Tech Stack](https://img.shields.io/badge/Stack-Node.js_|_Express_|_Gemini_3.5_Flash-blue?style=for-the-badge&logo=node.js&logoColor=white)](#)
-[![Platform](https://img.shields.io/badge/Platform-Android_|_iOS_|_Desktop_|_PWA-orange?style=for-the-badge)](#)
-
 [![CI](https://github.com/SultanZhalifa/SaringSini/actions/workflows/ci.yml/badge.svg)](https://github.com/SultanZhalifa/SaringSini/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![good first issues](https://img.shields.io/github/issues/SultanZhalifa/SaringSini/good%20first%20issue?label=good%20first%20issues&color=7057ff)](https://github.com/SultanZhalifa/SaringSini/labels/good%20first%20issue)
 [![Open Issues](https://img.shields.io/github/issues/SultanZhalifa/SaringSini)](https://github.com/SultanZhalifa/SaringSini/issues)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Platform](https://img.shields.io/badge/Platform-Web_|_PWA-orange.svg)](#)
 
-Selamat datang di repositori resmi **SaringSini v2.3** — platform Single Page Application (SPA) mobile-first bertenaga **Gemini 3.5 Flash** yang dikembangkan untuk ajang **#JuaraVibeCoding 2026**.
+**SaringSini** adalah aplikasi web bertenaga AI (Google Gemini) yang membantu keluarga Indonesia menyaring konten mencurigakan di grup WhatsApp — dan mendiskusikan misinformasi dengan cara yang lebih membangun, tanpa merusak silaturahmi.
 
-Aplikasi ini memecahkan masalah sosial nyata masyarakat Indonesia: **penyebaran hoaks di grup WhatsApp keluarga tanpa merusak silaturahmi**. Versi 2.3 menghadirkan **tiga fitur WOW Factor**: **Bahasa Mama Mode** (coaching komunikasi via AI role-play orang tua), **AI Tone Adjuster Slider** (regenerate balasan realtime), dan **Hoax DNA Visualization** (sidik jari generatif unik per analisis) — di atas fondasi palet **Warm Earth** yang nyaman di mata, PWA installable, dan multimodal AI engine (teks/screenshot/deepfake/URL).
+Alih-alih sekadar memberi label "hoaks", SaringSini membantu pengguna **menyusun balasan sopan**, **melatih cara berkomunikasi** dengan anggota keluarga yang skeptis, dan **memahami mengapa** sebuah pesan patut diragukan. Aplikasi berjalan sebagai Single Page Application mobile-first yang dapat dipasang sebagai PWA, dengan mesin AI multimodal (teks, screenshot, deteksi konten buatan AI, dan pengecekan URL).
+
+> Proyek ini bermula dari ajang #JuaraVibeCoding 2026 dan kini dikembangkan sebagai proyek open source yang terbuka untuk kontribusi.
 
 ---
 
@@ -31,13 +30,13 @@ Cuplikan layar aplikasi (tersedia lengkap di [`docs/screenshots/`](docs/screensh
 |---|---|
 | ![Simulator Chat](docs/screenshots/JUARAVIBECODING4.png) | ![Komunitas](docs/screenshots/JUARAVIBECODING5.png) |
 
-> ⚠️ **Catatan transparansi:** sebagian metrik pada antarmuka (mis. jumlah keluarga terbantu, papan peringkat) bersifat data demonstrasi untuk kepentingan lomba dan belum mencerminkan penggunaan nyata di produksi.
+> ⚠️ **Catatan transparansi:** sebagian metrik pada antarmuka (mis. jumlah keluarga terbantu, papan peringkat) bersifat data demonstrasi dan belum mencerminkan penggunaan nyata di produksi.
 
 ---
 
-## Highlights v2.3 (Triple-Threat Vibe Features)
+## Fitur Unggulan
 
-### Tiga Fitur WOW Factor (Uniqueness Play)
+### Tiga Fitur Utama
 
 **1. Bahasa Mama Mode** — Coaching Komunikasi Anti-Hoaks
 - 4 persona AI orang tua (Mama, Papa, Om Heri, Tante Rosa) dengan karakter unik
@@ -58,9 +57,9 @@ Cuplikan layar aplikasi (tersedia lengkap di [`docs/screenshots/`](docs/screensh
 - Color mapping per skor (sage/amber/terracotta)
 - Download as 3x scaled PNG + WhatsApp share
 
-### Highlights Lainnya
+### Fitur Lainnya
 
-- **Palet Warm Earth** — cream `#FDF8F0`, terracotta `#C84B31`, sage green `#5C8374`, warm brown text. Hangat, premium, eye-friendly.
+- **Palet Warm Earth** — cream `#FDF8F0`, terracotta `#C84B31`, sage green `#5C8374`, warm brown text. Hangat dan nyaman di mata.
 - **Simulator Chat WhatsApp-Style** — natural chat window (bukan phone mockup awkward), warm gradient header, day divider, typing indicator inline, quick suggestion chips, family roster (Mama, Papa, Om, Tante).
 - **Hoax Trend Analytics Dashboard** — stat cards live, bar chart distribusi kategori, AI daily insight auto-generated.
 - **Live Hoax Map Indonesia** — interactive SVG dengan 7 wilayah, heatmap intensity, critical pulse animation.
@@ -73,7 +72,7 @@ Cuplikan layar aplikasi (tersedia lengkap di [`docs/screenshots/`](docs/screensh
 - **PDF Report Export** — laporan PDF branded (terracotta header, gauge score, claims, tiga template balasan, footer) via jsPDF lazy-loaded.
 - **PWA Installable** — manifest, service worker (stale-while-revalidate + network-first untuk API), banner install in-app, offline fallback.
 - **Accessibility WCAG 2.1 AA** — skip link, ARIA roles/labels, keyboard navigation, focus rings, `prefers-reduced-motion`, contrast ratio AA.
-- **Persistent JSON Database** — community board sekarang tahan restart server (`data/community.json`).
+- **Penyimpanan JSON Lokal** — papan komunitas disimpan ke `data/community.json` agar tahan restart server. Ditujukan untuk pengembangan dan demo; untuk produksi disarankan memakai database terkelola (lihat [Deployment](#deployment)).
 
 ---
 
@@ -107,8 +106,8 @@ Cuplikan layar aplikasi (tersedia lengkap di [`docs/screenshots/`](docs/screensh
 - Auto-redirect dari tab "Periksa" saat klik tombol Salin.
 - Anggota keluarga simulasi (Mama, Papa, Om Heri, Tante Rosa) memberikan respon kontekstual berdasarkan hasil analisis.
 
-### 4. Papan Komunitas (Persistent JSON Feed)
-- Database `data/community.json` (tahan restart server).
+### 4. Papan Komunitas (Penyimpanan JSON Lokal)
+- Disimpan ke `data/community.json` (tahan restart server; untuk dev/demo — lihat catatan produksi di [Deployment](#deployment)).
 - Filter pencarian teks + kategori (Kesehatan, Scam, Keluarga).
 - Tombol "Bantu Sebar Fakta" (Upvote) dengan proteksi UUID klien.
 - Auto-injection setiap pemeriksaan baru ke feed.
@@ -149,13 +148,13 @@ Cuplikan layar aplikasi (tersedia lengkap di [`docs/screenshots/`](docs/screensh
 | Translate | Google Gemini 3.5 Flash | Konversi template balasan ke bahasa daerah |
 | Voice | Web Speech API (browser-native) | Voice-to-text Bahasa Indonesia (`id-ID`) |
 | PDF | jsPDF 2.5.1 (CDN, lazy-loaded) | Generator laporan PDF branded |
-| Security | Rate Limiter 6 req/min, CSP headers, XSS protection | Proteksi quota dan keamanan |
-| Persistence | JSON file (`data/community.json`) | Database tahan restart untuk feed komunitas |
-| Frontend | HTML5, CSS3 (warm palette), Vanilla JS ES6+ | SPA premium responsive |
+| Security | Rate Limiter 6 req/min + security headers (lihat di bawah) | Proteksi quota dan keamanan |
+| Persistence | JSON file (`data/community.json`) | Penyimpanan lokal untuk dev/demo; produksi disarankan pakai database terkelola |
+| Frontend | HTML5, CSS3 (warm palette), Vanilla JS ES6+ | SPA responsive |
 | PWA | Service Worker + Web App Manifest | Installable, offline-capable, app shortcuts |
 | Deployment | Docker + Google Cloud Run | Container portable, auto-scaling |
 
-### Security Headers (production-grade)
+### Security Headers
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: strict-origin-when-cross-origin`
@@ -216,13 +215,17 @@ Akan mengaktifkan: cache-control headers, error message production-safe, dan opt
 
 ---
 
-## Deployment ke Google Cloud Run
+## Deployment
+
+Contoh deploy ke Google Cloud Run:
 
 ```bash
 gcloud run deploy saringsini --source . --platform managed --allow-unauthenticated --region asia-southeast2 --set-env-vars GEMINI_API_KEY=YOUR_KEY,NODE_ENV=production
 ```
 
-Dockerfile sudah disediakan dengan multi-stage build dan optimasi production.
+Dockerfile sudah disediakan dengan multi-stage build.
+
+> ⚠️ **Catatan persistensi data:** papan komunitas menggunakan penyimpanan file lokal (`data/community.json`) yang ditujukan untuk **pengembangan dan demo**. Pada platform container seperti Cloud Run, filesystem bersifat *ephemeral* dan tidak dibagikan antar-instance — data dapat hilang saat instance diganti atau tidak sinkron jika berjalan di beberapa instance. Untuk penggunaan produksi nyata, ganti lapisan penyimpanan dengan **database terkelola** (mis. Firestore, Cloud SQL, atau Supabase).
 
 ---
 
@@ -251,22 +254,12 @@ Pengguna mobile (Android Chrome / iOS Safari) akan melihat banner install di ata
 
 ---
 
-## Pemenuhan Kriteria Penilaian
-
-| Kriteria | Bobot | Implementasi |
-|---|---|---|
-| **Problem** | 30% | Menyelesaikan masalah nyata penyebaran hoaks di grup WhatsApp keluarga Indonesia yang memecah belah kerukunan. Hyper-local: 4 bahasa daerah, referensi UU ITE, mitigasi via portal nasional. |
-| **Solution** | 40% | Aplikasi fungsional penuh bertenaga Gemini 3.5 Flash multimodal (text + image + URL + voice). PWA installable, persistent JSON database, 10+ fitur differentiator. Production-ready dengan rate limit, security headers, error boundary global, dan accessibility WCAG 2.1 AA. |
-| **Uniqueness** | 30% | Warm Earth palette (berbeda dari kompetitor). Voice input untuk orang tua. WhatsApp deep link. Bahasa daerah templates (Jawa/Sunda/Minang/Batak). URL phishing checker. PDF export branded. iPhone 14 Pro mockup. Pahlawan Fakta gamification. |
-
----
-
-## Struktur Project (v2.3 - Modular)
+## Struktur Project
 
 ```
-JUARAVIBECODING/
+SaringSini/
 ├── public/
-│   ├── index.html               (SPA shell + 5 tab panels + WOW features)
+│   ├── index.html               (SPA shell + 5 tab panels)
 │   ├── index.css                (warm palette + core components, ~4860 lines)
 │   ├── app.js                   (core interactive logic, voice, PWA, ~2330 lines)
 │   ├── css/                     (v2.3 modular stylesheets)
@@ -286,9 +279,9 @@ JUARAVIBECODING/
 │       ├── icon-192.svg
 │       └── icon-512.svg
 ├── data/
-│   └── community.json           (persistent community reports DB)
+│   └── community.json           (penyimpanan JSON lokal untuk dev/demo)
 ├── docs/
-│   └── screenshots/             (submission screenshots)
+│   └── screenshots/             (screenshot aplikasi)
 ├── server.js                    (Express + Gemini integration + 9 endpoints)
 ├── package.json
 ├── Dockerfile                   (multi-stage + tini + non-root)
@@ -300,6 +293,8 @@ JUARAVIBECODING/
 ├── CONTRIBUTING.md
 ├── CODE_OF_CONDUCT.md
 ├── SECURITY.md
+├── SUPPORT.md
+├── ROADMAP.md
 ├── LICENSE
 ├── CHANGELOG.md
 └── README.md
@@ -326,6 +321,8 @@ Kontribusi sangat kami sambut! 🎉 Baik itu laporan bug, ide fitur, perbaikan d
 - 📋 Baca [**CONTRIBUTING.md**](CONTRIBUTING.md) untuk panduan setup dan alur kerja.
 - 🤝 Patuhi [**Kode Etik**](CODE_OF_CONDUCT.md) kami.
 - 🔒 Laporkan isu keamanan secara privat sesuai [**SECURITY.md**](SECURITY.md).
+- 🗺️ Lihat arah pengembangan di [**ROADMAP.md**](ROADMAP.md).
+- 🙋 Butuh bantuan? Lihat [**SUPPORT.md**](SUPPORT.md).
 - 🌱 Baru pertama kali? Mulai dari label [**good first issue**](https://github.com/SultanZhalifa/SaringSini/labels/good%20first%20issue) dan [**help wanted**](https://github.com/SultanZhalifa/SaringSini/labels/help%20wanted).
 
 ## Lisensi
@@ -334,4 +331,4 @@ Didistribusikan di bawah [Lisensi MIT](LICENSE). Bebas digunakan, dimodifikasi, 
 
 ---
 
-*Dibuat untuk mendukung kesuksesan Sultan di ajang #JuaraVibeCoding 2026.*
+*Built in Indonesia to help families verify suspicious content and discuss misinformation more constructively.*
