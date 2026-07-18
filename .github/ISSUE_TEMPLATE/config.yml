@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Diskusi & Pertanyaan
+    url: https://github.com/SultanZhalifa/SaringSini/discussions
+    about: Punya pertanyaan atau ingin berdiskusi ide? Mulai diskusi di sini.
+  - name: 🔒 Laporan Keamanan
+    url: https://github.com/SultanZhalifa/SaringSini/security/advisories/new
+    about: Menemukan kerentanan keamanan? Laporkan secara privat, jangan lewat issue publik.

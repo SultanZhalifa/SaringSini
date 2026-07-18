@@ -3,11 +3,35 @@
 [![Competition](https://img.shields.io/badge/Competition-JuaraVibeCoding_2026-brightgreen?style=for-the-badge&logo=google-gemini&logoColor=white)](#)
 [![Tech Stack](https://img.shields.io/badge/Stack-Node.js_|_Express_|_Gemini_3.5_Flash-blue?style=for-the-badge&logo=node.js&logoColor=white)](#)
 [![Platform](https://img.shields.io/badge/Platform-Android_|_iOS_|_Desktop_|_PWA-orange?style=for-the-badge)](#)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](#)
+
+[![CI](https://github.com/SultanZhalifa/SaringSini/actions/workflows/ci.yml/badge.svg)](https://github.com/SultanZhalifa/SaringSini/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![good first issues](https://img.shields.io/github/issues/SultanZhalifa/SaringSini/good%20first%20issue?label=good%20first%20issues&color=7057ff)](https://github.com/SultanZhalifa/SaringSini/labels/good%20first%20issue)
+[![Open Issues](https://img.shields.io/github/issues/SultanZhalifa/SaringSini)](https://github.com/SultanZhalifa/SaringSini/issues)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
 Selamat datang di repositori resmi **SaringSini v2.3** — platform Single Page Application (SPA) mobile-first bertenaga **Gemini 3.5 Flash** yang dikembangkan untuk ajang **#JuaraVibeCoding 2026**.
 
 Aplikasi ini memecahkan masalah sosial nyata masyarakat Indonesia: **penyebaran hoaks di grup WhatsApp keluarga tanpa merusak silaturahmi**. Versi 2.3 menghadirkan **tiga fitur WOW Factor**: **Bahasa Mama Mode** (coaching komunikasi via AI role-play orang tua), **AI Tone Adjuster Slider** (regenerate balasan realtime), dan **Hoax DNA Visualization** (sidik jari generatif unik per analisis) — di atas fondasi palet **Warm Earth** yang nyaman di mata, PWA installable, dan multimodal AI engine (teks/screenshot/deepfake/URL).
+
+---
+
+## 🎬 Demo
+
+> **Live demo:** _menyusul_ — aplikasi di-deploy ke Google Cloud Run. Setelah URL publik tersedia, tautannya akan dicantumkan di sini. Sementara itu, cara tercepat mencoba adalah menjalankannya secara lokal (lihat [Cara Menjalankan Secara Lokal](#cara-menjalankan-secara-lokal)).
+
+Cuplikan layar aplikasi (tersedia lengkap di [`docs/screenshots/`](docs/screenshots)):
+
+| Beranda | Periksa AI | Hasil Analisis |
+|---|---|---|
+| ![Beranda](docs/screenshots/JUARAVIBECODING1.png) | ![Periksa AI](docs/screenshots/JUARAVIBECODING2.png) | ![Hasil Analisis](docs/screenshots/JUARAVIBECODING3.png) |
+
+| Simulator Chat | Komunitas |
+|---|---|
+| ![Simulator Chat](docs/screenshots/JUARAVIBECODING4.png) | ![Komunitas](docs/screenshots/JUARAVIBECODING5.png) |
+
+> ⚠️ **Catatan transparansi:** sebagian metrik pada antarmuka (mis. jumlah keluarga terbantu, papan peringkat) bersifat data demonstrasi untuk kepentingan lomba dan belum mencerminkan penggunaan nyata di produksi.
 
 ---
 
@@ -268,12 +292,45 @@ JUARAVIBECODING/
 ├── server.js                    (Express + Gemini integration + 9 endpoints)
 ├── package.json
 ├── Dockerfile                   (multi-stage + tini + non-root)
+├── .github/                     (workflow CI, template issue & PR, CODEOWNERS)
+├── test/                        (check.js syntax lint + smoke.js health test)
 ├── .env.example
 ├── .gitignore
 ├── .dockerignore
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+├── SECURITY.md
+├── LICENSE
 ├── CHANGELOG.md
 └── README.md
 ```
+
+---
+
+## Testing & Continuous Integration
+
+Proyek ini menyertakan pengecekan ringan tanpa dependensi tambahan, dijalankan otomatis oleh **GitHub Actions** pada Node.js 18, 20, dan 22 di setiap push dan pull request:
+
+```bash
+npm run check   # syntax check semua file JavaScript (node --check)
+npm run smoke   # nyalakan server & verifikasi endpoint /api/health
+npm test        # check + smoke sekaligus
+```
+
+---
+
+## Berkontribusi
+
+Kontribusi sangat kami sambut! 🎉 Baik itu laporan bug, ide fitur, perbaikan dokumentasi, maupun kode.
+
+- 📋 Baca [**CONTRIBUTING.md**](CONTRIBUTING.md) untuk panduan setup dan alur kerja.
+- 🤝 Patuhi [**Kode Etik**](CODE_OF_CONDUCT.md) kami.
+- 🔒 Laporkan isu keamanan secara privat sesuai [**SECURITY.md**](SECURITY.md).
+- 🌱 Baru pertama kali? Mulai dari label [**good first issue**](https://github.com/SultanZhalifa/SaringSini/labels/good%20first%20issue) dan [**help wanted**](https://github.com/SultanZhalifa/SaringSini/labels/help%20wanted).
+
+## Lisensi
+
+Didistribusikan di bawah [Lisensi MIT](LICENSE). Bebas digunakan, dimodifikasi, dan disebarluaskan dengan tetap mencantumkan atribusi.
 
 ---
 
