@@ -1,0 +1,85 @@
+name: 🐛 Laporan Bug
+description: Laporkan bug atau perilaku tak terduga di SaringSini
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih telah meluangkan waktu untuk melaporkan bug! Isi form di bawah selengkap mungkin agar kami dapat mereproduksi dan memperbaikinya dengan cepat.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pengecekan awal
+      options:
+        - label: Saya sudah mencari issue yang ada dan bug ini belum pernah dilaporkan.
+          required: true
+        - label: Saya menggunakan versi terbaru dari branch `master`.
+          required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Deskripsi bug
+      description: Jelaskan secara singkat dan jelas apa yang terjadi.
+      placeholder: Saat saya melakukan X, terjadi Y...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Langkah reproduksi
+      description: Langkah-langkah untuk memunculkan bug.
+      placeholder: |
+        1. Buka tab '...'
+        2. Klik '...'
+        3. Masukkan '...'
+        4. Muncul error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Perilaku yang diharapkan
+      description: Apa yang seharusnya terjadi?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Perilaku aktual
+      description: Apa yang benar-benar terjadi? Sertakan pesan error bila ada.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area terdampak
+      options:
+        - Periksa AI (analisis hoaks)
+        - Bahasa Mama Mode / Coaching
+        - AI Tone Slider
+        - Hoax DNA Visualization
+        - Simulator Chat WhatsApp
+        - Papan Komunitas
+        - Cek Link / Phishing
+        - PWA / Offline
+        - Aksesibilitas
+        - Server / API
+        - Lainnya
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Lingkungan
+      description: Browser, OS, versi Node.js (jika menjalankan lokal).
+      placeholder: "Chrome 120 / Android 14 / Node 20.11"
+    validations:
+      required: false
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshot / log
+      description: Seret dan lepas screenshot atau tempel log console di sini (jangan sertakan API key!).
+    validations:
+      required: false
