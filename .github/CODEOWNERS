@@ -1,0 +1,5 @@
+# Pemilik kode default untuk seluruh repositori.
+# Setiap PR akan otomatis meminta review dari pemilik ini.
+# Dokumentasi: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+* @SultanZhalifa

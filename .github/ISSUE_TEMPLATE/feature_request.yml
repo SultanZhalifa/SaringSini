@@ -1,0 +1,61 @@
+name: 💡 Usulan Fitur
+description: Usulkan ide atau peningkatan untuk SaringSini
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih atas idenya! Ceritakan masalah yang ingin Anda selesaikan, bukan hanya solusinya, agar kami bisa berdiskusi lebih terarah.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pengecekan awal
+      options:
+        - label: Saya sudah mencari issue yang ada dan usulan ini belum pernah diajukan.
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Masalah yang ingin diselesaikan
+      description: Fitur ini menjawab masalah apa? Contoh, "Sebagai orang tua, saya kesulitan..."
+      placeholder: Saya frustrasi ketika...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solusi yang diusulkan
+      description: Jelaskan bagaimana Anda membayangkan fitur ini bekerja.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatif yang dipertimbangkan
+      description: Solusi atau pendekatan lain yang sudah Anda pikirkan.
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area terkait
+      options:
+        - Deteksi hoaks / AI
+        - Balasan sopan / bahasa daerah
+        - Coaching komunikasi
+        - Komunitas / gamifikasi
+        - Edukasi literasi digital
+        - Aksesibilitas
+        - PWA / performa
+        - Dokumentasi
+        - Lainnya
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Konteks tambahan
+      description: Mockup, referensi, atau catatan lain yang membantu.
+    validations:
+      required: false
