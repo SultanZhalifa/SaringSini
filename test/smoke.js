@@ -3,7 +3,8 @@
  * Smoke test sederhana untuk SaringSini.
  *
  * Menyalakan server pada port acak, memanggil endpoint /api/health,
- * lalu memverifikasi respons berstatus "healthy". Tidak membutuhkan
+ * lalu memverifikasi respons berstatus "healthy" dan endpoint /api/stats.
+ * Tidak membutuhkan
  * GEMINI_API_KEY — server tetap boot tanpanya (fitur AI dinonaktifkan),
  * sehingga aman dijalankan di CI.
  *
@@ -40,6 +41,14 @@ async function waitForHealth() {
   throw lastErr || new Error('Timeout menunggu server siap');
 }
 
+async function fetchJson(pathname) {
+  const res = await fetch(`${BASE_URL}${pathname}`);
+  if (!res.ok) {
+    throw new Error(`${pathname} mengembalikan HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
 async function main() {
   console.log(`[smoke] Menyalakan server di port ${PORT}...`);
 
@@ -60,7 +69,23 @@ async function main() {
       throw new Error('field "version" tidak ada pada respons health');
     }
 
-    console.log('[smoke] ✅ LULUS — server sehat dan endpoint /api/health merespons dengan benar.');
+    const stats = await fetchJson('/api/stats');
+    console.log('[smoke] Respons /api/stats:', JSON.stringify(stats));
+
+    if (typeof stats.totalChecks !== 'number') {
+      throw new Error('field "totalChecks" tidak ada atau bukan angka pada respons stats');
+    }
+    if (typeof stats.totalUpvotes !== 'number') {
+      throw new Error('field "totalUpvotes" tidak ada atau bukan angka pada respons stats');
+    }
+    if (typeof stats.familiesSaved !== 'number') {
+      throw new Error('field "familiesSaved" tidak ada atau bukan angka pada respons stats');
+    }
+    if (typeof stats.target !== 'number') {
+      throw new Error('field "target" tidak ada atau bukan angka pada respons stats');
+    }
+
+    console.log('[smoke] LULUS — server sehat dan endpoint publik merespons dengan benar.');
     exitCode = 0;
   } catch (err) {
     console.error('[smoke] ❌ GAGAL —', err.message);
