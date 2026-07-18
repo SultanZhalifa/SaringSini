@@ -7,7 +7,10 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "start:prod": "node -e \"process.env.NODE_ENV='production';require('./server.js')\"",
-    "health": "node -e \"fetch('http://localhost:3000/api/health').then(r=>r.json()).then(d=>console.log(JSON.stringify(d,null,2)))\""
+    "health": "node -e \"fetch('http://localhost:3000/api/health').then(r=>r.json()).then(d=>console.log(JSON.stringify(d,null,2)))\"",
+    "check": "node test/check.js",
+    "smoke": "node test/smoke.js",
+    "test": "npm run check && npm run smoke"
   },
   "keywords": [
     "hoax-detector",
