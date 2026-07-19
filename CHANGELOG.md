@@ -6,6 +6,23 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 
 ---
 
+## [Unreleased] — Maintainer Credibility Pass
+
+### Changed
+- Memposisikan keluaran Gemini sebagai indikasi awal berbantuan AI, bukan verifikasi resmi atau analisis forensik tervalidasi.
+- Melabeli leaderboard, activity counter, impact counter, analytics, dan peta sebagai data demonstrasi/simulasi.
+- Memperjelas alur data Gemini, memory upload, feed komunitas, UUID upvote, dan keterbatasan `data/community.json`.
+- Mengganti klaim WCAG penuh, production-ready/grade, CSP, dan sanitasi menyeluruh dengan deskripsi mekanisme yang telah diverifikasi.
+
+### Removed
+- Aggregate rating sintetis dari JSON-LD.
+- Canonical/public URL yang belum tersedia.
+
+### Added
+- `ROADMAP.md`, `SUPPORT.md`, dan template issue untuk pertanyaan penggunaan.
+
+---
+
 ## [2.3.0] - 2026-05-28 — Triple-Threat Vibe: WOW Factor Features
 
 ### Added
@@ -61,7 +78,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 ## [2.2.0] - 2026-05-27 — Polish & Final Touches
 
 ### Added
-- **Live Activity Indicator** di Beranda — Social proof "X keluarga sedang memeriksa hoaks sekarang" dengan random walk smooth animation.
+- **Demonstration Activity Indicator** di Beranda — angka sintetis dengan random walk untuk mendemonstrasikan komponen aktivitas.
 - **Confetti Celebration** — Canvas-based confetti effect saat quiz score ≥ 80% dan setelah upvote sukses, dengan respect `prefers-reduced-motion`.
 - **Easter Egg / Konami Code** — Tekan ↑↑↓↓←→←→BA di luar input box untuk aktifkan Developer Mode dengan stats badge floating.
 - **Console Signature** — Branded console message untuk dev yang inspect element.
@@ -91,15 +108,15 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 
 ### Added
 - **Hoax Trend Analytics Dashboard** di panel Edukasi:
-  - 4 stat cards live (total hoax, keluarga terselamatkan, kategori teratas, tingkat bahaya)
+  - 4 stat cards demonstrasi (entri risiko, poin dampak sintetis, kategori teratas, tingkat bahaya)
   - CSS-only animated bar chart distribusi kategori
-  - AI Daily Insight auto-generated dari pattern data (no extra API call)
-- **Live Hoax Map Indonesia** — Interactive SVG dengan 7 wilayah (Sumatera, Jawa, Kalimantan, Sulawesi, Bali-NT, Maluku, Papua):
+  - Ringkasan berbasis aturan dari pattern data (no extra API call)
+- **Demonstration Hoax Map Indonesia** — Interactive SVG dengan 7 wilayah (Sumatera, Jawa, Kalimantan, Sulawesi, Bali-NT, Maluku, Papua):
   - Heatmap intensity (low/mid/high/critical) dengan critical pulse animation
   - Click region untuk detail panel
   - Keyboard accessible (Tab + Enter)
-  - Distribusi laporan berbobot populasi
-- **Educational Quiz Mode** — 10 pertanyaan real hoax Indonesia (vaksin chip 5G, daun sirsak kanker, Kemendikbud kuota, dll):
+  - Alokasi wilayah sintetis berbobot populasi
+- **Educational Quiz Mode** — 10 contoh pesan bertema hoaks Indonesia (vaksin chip 5G, daun sirsak kanker, Kemendikbud kuota, dll):
   - Progress bar + score live + correct count tracking
   - Animasi feedback (correct-pop, wrong-shake)
   - Result badges (Master/Pejuang/Berlatih/Semangat)
@@ -124,12 +141,12 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - **Regional Language Templates** — Konversi balasan ke Bahasa Jawa Krama, Sunda Halus, Minang, Batak via Gemini.
 - **PDF Report Export** — Branded laporan PDF (terracotta header, gauge score, claims, replies) via jsPDF lazy-loaded.
 - **PWA Installable** — manifest.webmanifest, sw.js (stale-while-revalidate + network-first), banner install, app shortcuts.
-- **Accessibility WCAG 2.1 AA** — Skip-link, ARIA roles/labels, focus rings, `prefers-reduced-motion`, semantic HTML, color contrast AA.
-- **Persistent JSON DB** (`data/community.json`) — Tahan restart server.
+- **Accessibility foundations** — Skip-link, sebagian ARIA roles/labels, focus rings, `prefers-reduced-motion`, dan semantic HTML; belum diaudit untuk compliance penuh WCAG 2.1 AA.
+- **Local/demo JSON persistence** (`data/community.json`) — dapat bertahan pada restart proses dengan filesystem yang sama, tetapi bukan durable production storage.
 - **New API endpoints**: `/api/translate-replies`, `/api/stats`.
 - **Toast notification system** — Multi-variant (safe/warning/danger) replace native `alert()`.
 - **Animated counters** — Hero stats count-up dari 0.
-- **Production-grade server**: security headers, Cache-Control, SPA fallback, global error handler, NODE_ENV awareness.
+- **Server hardening baseline**: beberapa security headers, Cache-Control, SPA fallback, global error handler, dan NODE_ENV awareness; bukan jaminan production readiness.
 
 ### Changed
 - `/api/analyze` extended dengan `checkType=url` support.
@@ -147,7 +164,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 
 ### Added
 - 5-tab mobile dashboard: Beranda, Periksa AI, Simulator Chat, Komunitas, Edukasi.
-- Gemini 3.5 Flash multimodal integration (text + screenshot + deepfake).
+- Gemini 3.5 Flash multimodal integration untuk indikasi awal (text + screenshot + media AI).
 - 3 polite reply templates (Sopan/Santai/Humor).
 - iPhone 14 Pro mockup simulator chat (replaced di v2.2).
 - In-memory community board dengan upvote.
