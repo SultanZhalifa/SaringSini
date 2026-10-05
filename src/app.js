@@ -53,7 +53,8 @@ function createApp({ config, gemini, community }) {
   app.set('trust proxy', config.trustProxy);
   app.use(securityHeaders(config));
   app.use(express.static(config.publicDir, staticOptions(config.isProduction)));
-  app.get('/vendor/jspdf.umd.min.js', (_req, res) =>
+  // These two handlers read files from disk, so they share the API's per-IP limiter.
+  app.get('/vendor/jspdf.umd.min.js', limiters.api, (_req, res) =>
     // `root` keeps dot-directories in the install path from being treated as hidden files.
     res.sendFile(path.basename(JSPDF_BUNDLE), { root: JSPDF_DIR, maxAge: config.isProduction ? `${ONE_DAY_SECONDS}s` : 0 }),
   );
@@ -68,7 +69,7 @@ function createApp({ config, gemini, community }) {
   );
 
   // Single-page app: only document navigations fall back to index.html.
-  app.get('/{*path}', (req, res, next) => {
+  app.get('/{*path}', limiters.api, (req, res, next) => {
     if (path.extname(req.path) || !req.accepts('html')) return next();
     return res.sendFile(path.join(config.publicDir, 'index.html'));
   });
