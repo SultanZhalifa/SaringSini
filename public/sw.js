@@ -1,7 +1,8 @@
-// SaringSini v2.0 Service Worker
+// SaringSini Service Worker
 // Caching strategy: stale-while-revalidate for shell, network-first for API
 
-const VERSION = 'saringsini-v2.0.1';
+// Bump when cached assets change shape so clients drop their old caches.
+const VERSION = 'saringsini-v2.3.1';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
