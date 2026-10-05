@@ -28,6 +28,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - Graceful shutdown (`SIGTERM`) dan penulisan data feed secara atomik.
 - Suite pengujian: unit, integrasi (dengan Gemini palsu), smoke test proses sungguhan, dan end-to-end Playwright.
 - ESLint, workflow CodeQL, `npm audit` serta build image Docker di CI, dan Dependabot.
+- Unit test untuk logika browser (ambang risiko, balasan simulator, insight analitik, penempatan peta, DNA hoaks) dan untuk kelengkapan cache offline serta impor modul.
 
 ### Security
 - **Memperbaiki stored XSS pada feed komunitas.** Teks pesan yang dikirim ke `/api/analyze` disimpan dan dirender sebagai HTML bagi semua pengunjung. Keluaran AI (`claims`, `explanation`) dan teks simulator chat juga dirender sebagai HTML. Semua rendering kini memakai `textContent`.
@@ -38,6 +39,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - Input pengguna pada prompt dibungkus sebagai data bertag, dan `X-XSS-Protection` diganti `0` sesuai rekomendasi OWASP.
 
 ### Fixed
+- Wilayah pada peta kini dapat dipilih dengan keyboard (Enter atau Spasi). Sebelumnya handler memanggil `click()` pada elemen SVG, sehingga tombol keyboard tidak berfungsi.
 - Posisi slider nada paling formal (`tone = 0`) diperlakukan sebagai nada netral.
 - Penghapusan emoji tidak lagi ikut membuang tanda kutip melengkung, tanda pisah, dan elipsis.
 - Confetti dukungan komunitas tidak lagi muncul ketika dukungan gagal.
@@ -51,10 +53,14 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - Perintah `check` dan `smoke` digantikan `lint` dan `test`. Smoke test kontribusi `jpachec0` dipertahankan di `test/smoke.test.js`.
 - Waktu entri feed disimpan sebagai timestamp dan label relatif dihitung saat dibaca, bukan string tetap seperti "Baru saja".
 - Respons dukungan duplikat kini 409 (sebelumnya 400); layanan AI yang belum dikonfigurasi kini 503 (sebelumnya 500).
+- `public/app.js` (satu closure sepanjang sekitar 2.200 baris) dan empat skrip terpisah dipecah menjadi modul ES di `public/js/` (`core/`, `features/`, `lib/`) dengan satu titik masuk, `js/main.js`. Tampilan tidak berubah. Modul saling mengabari lewat import dan event `saringsini:analysis` serta `saringsini:community`, tidak lagi lewat global `window.__saringSini*` dan `window.HoaxDNA`. Duplikasi (empat salinan toast, dua helper haptic, tujuh pola `fetch`, dua zona unggah, ambang risiko) digabung ke `core/`.
+- Service worker memasukkan semua modul JS dan stylesheet ke cache awal (sebelumnya hanya `app.js`); test menjaga daftar ini tetap sinkron dengan isi `public/`.
+- Penghitung angka (beranda, analitik, indikator aktivitas, skor coach) langsung menampilkan nilai akhir bila pengguna meminta animasi dikurangi.
 
 ### Removed
 - Kode mati di `public/` (hook monkey-patch yang tidak dipakai, variabel tak terpakai, `escapeHtml` ganda, `cleanEmojiText`) dan polling `setInterval`/`MutationObserver` yang tidak perlu.
 - `test/check.js` (digantikan ESLint).
+- Kode mati hasil pemecahan `app.js`: pindah tab di input suara (tombol hanya ada di tab teks), penghitung `[data-count-to]` tanpa elemen pemakai, penghapusan `data-theme` yang tak pernah terpasang, dan `avatarClass` persona coach.
 
 ---
 

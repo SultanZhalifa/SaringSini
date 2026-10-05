@@ -36,7 +36,7 @@ Roadmap ini menggambarkan arah pemeliharaan untuk sekitar enam bulan ke depan. U
 Item berikut bersifat rencana pemeliharaan, bukan janji rilis. Semuanya terpisah dari issue contributor di atas.
 
 - Migrasi ke SDK Gemini yang masih dipelihara (`@google/genai`). Pemakaian SDK terisolasi di `src/services/gemini.js`, tetapi migrasi perlu diverifikasi dengan API key sungguhan sebelum digabung.
-- Memecah `public/app.js` dan `public/index.css` menjadi modul per fitur, dengan test Playwright sebagai jaring pengaman.
+- Memecah `public/index.css` menjadi berkas per fitur, dengan test Playwright sebagai jaring pengaman. (`public/app.js` sudah dipecah menjadi modul ES di `public/js/`.)
 - Self-host font agar tidak ada permintaan ke Google Fonts.
 - Menjadikan publikasi ke feed komunitas sebagai opt-in dengan persetujuan eksplisit (lihat juga item consent di bawah).
 

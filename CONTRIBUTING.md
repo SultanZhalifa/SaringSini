@@ -98,7 +98,13 @@ Test memakai Gemini palsu, jadi tidak membutuhkan API key atau jaringan. Jalanka
 - `src/lib/` — logika murni (validasi, sanitasi, normalisasi keluaran AI) yang diuji unit.
 - `src/services/` — akses ke dunia luar (Gemini, penyimpanan). Gemini hanya diketahui oleh `services/gemini.js`.
 - `src/prompts/` — system instruction; input pengguna harus dibungkus dengan `asUntrustedBlock`.
-- `public/` — teks dari server atau pengguna hanya boleh masuk ke DOM melalui `textContent` (lihat helper `createElement` di `app.js`), tidak pernah lewat `innerHTML`.
+- `public/js/main.js` — satu-satunya titik masuk browser; memanggil `init<Fitur>()` milik tiap fitur.
+- `public/js/features/` — satu modul per fitur. Fitur saling mengabari lewat event (`core/events.js`), bukan global `window`.
+- `public/js/core/` — utilitas bersama: DOM, pemanggilan API, toast, storage, clipboard.
+- `public/js/lib/` — logika mandiri tanpa DOM.
+- Teks dari server atau pengguna hanya boleh masuk ke DOM melalui `textContent` (lihat helper `createElement` di `public/js/core/dom.js`), tidak pernah lewat `innerHTML`.
+- CSP melarang atribut `style` inline: pakai kelas CSS atau `element.style`.
+- Menambah berkas di `public/js` atau `public/css`? Daftarkan di `SHELL_ASSETS` pada `public/sw.js` dan naikkan `VERSION`-nya agar tersedia offline; sebuah test akan gagal bila lupa.
 
 ## Panduan Pull Request
 
