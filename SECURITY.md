@@ -30,23 +30,31 @@ Laporan akan ditinjau dan ditangani sesuai kapasitas maintainer, tingkat risiko,
 
 ## Mekanisme yang diterapkan
 
-Implementasi saat ini memiliki mekanisme berikut:
+Mekanisme berikut diverifikasi oleh test otomatis proyek (integrasi dan Playwright):
 
 - `GEMINI_API_KEY` dibaca di server dan tidak dimasukkan ke bundle browser.
-- Endpoint berbasis AI memakai rate limiter in-memory sebanyak enam permintaan per menit untuk alamat yang dilihat proses server.
-- Server mengirim `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, dan `X-XSS-Protection`.
-- Body JSON dibatasi 1 MB.
-- Upload Multer dibatasi 5 MB dan diterima melalui memory storage.
+- Content-Security-Policy tanpa inline script maupun script pihak ketiga (`script-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'`). Pustaka PDF disajikan dari origin sendiri. Mode production menambahkan `Strict-Transport-Security` dan `upgrade-insecure-requests`.
+- Header `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, serta COOP/CORP. `X-XSS-Protection: 0` sesuai rekomendasi OWASP untuk fitur legacy tersebut.
+- Teks dari feed komunitas, keluaran AI, dan input pengguna dirender dengan `textContent`, bukan `innerHTML`. Keluaran model dinormalisasi (tipe, panjang, label yang diizinkan) sebelum disimpan atau dikirim ke klien.
+- Setiap endpoint memvalidasi tipe dan panjang input. Body JSON dibatasi 64 KB. URL harus `http(s)` dan tidak pernah di-fetch oleh server.
+- Upload dibatasi 5 MB dan diterima melalui memory storage. Tipe berkas ditentukan dari isinya, bukan dari header klien; hanya gambar PNG/JPEG/WebP/HEIC, dan video MP4/MOV/WebM khusus pemeriksaan deepfake.
+- Rate limit per alamat IP: 6 permintaan/menit untuk endpoint AI, 20/menit untuk dukungan komunitas, 120/menit untuk seluruh API. Konfigurasi `TRUST_PROXY` harus sesuai dengan jumlah proxy di depan aplikasi.
+- Dukungan komunitas memerlukan identitas klien dan hanya dihitung sekali per klien per entri. Server hanya menyimpan hash identitas tersebut dan tidak pernah mengirim daftar pendukung ke klien.
+- Potongan pesan yang ditampilkan di feed disamarkan dari email, nomor telepon, dan deretan angka panjang (best effort). Untuk pemeriksaan URL hanya nama host yang ditampilkan.
+- Input pengguna disisipkan ke prompt sebagai blok data bertag.
 - Detail error tidak dimasukkan ke respons ketika `NODE_ENV=production`.
+- Data feed ditulis secara atomik dan disimpan saat server menerima `SIGTERM`.
 - `.env` diabaikan oleh Git dan `.env.example` hanya berisi placeholder.
+- CI menjalankan lint, test, `npm audit` untuk dependency produksi, dan CodeQL; Dependabot memantau dependency, GitHub Actions, dan image dasar Docker.
 
 ## Batasan keamanan dan data
 
-- Content-Security-Policy belum diterapkan.
-- Rate limiter dan `data/community.json` bersifat lokal per proses/instance dan bukan kontrol terdistribusi.
-- Validasi berbeda untuk setiap endpoint; proyek belum menjalani audit sanitasi atau keamanan menyeluruh.
-- Teks dan file yang dianalisis dikirim ke Gemini. File upload tidak ditulis ke `data/community.json`, tetapi potongan teks atau klaim hasil AI dapat ditambahkan ke feed demonstrasi dan disimpan di file tersebut.
-- UUID klien untuk dukungan komunitas dapat dikirim dan disimpan di server bersama entri feed.
-- Proyek belum menjanjikan retensi, penghapusan otomatis, enkripsi aplikasi, anonimisasi formal, atau compliance tertentu.
+- Proyek belum menjalani audit keamanan independen. Mekanisme di atas diverifikasi oleh test proyek sendiri, bukan oleh penilaian pihak ketiga.
+- Mitigasi prompt injection bersifat parsial. Keluaran model diperlakukan sebagai tidak tepercaya, tetapi tidak ada jaminan model akan selalu mematuhi instruksi.
+- Rate limiter dan `data/community.json` bersifat lokal per proses/instance dan bukan kontrol terdistribusi. Identitas klien untuk dukungan komunitas dibuat di browser, sehingga dukungan bukan ukuran integritas yang kuat.
+- UI masih memakai atribut `style` inline, sehingga CSP mengizinkan `style-src-attr 'unsafe-inline'` (hanya atribut, tidak untuk script atau elemen `<style>`).
+- Font dimuat dari Google Fonts, sehingga alamat IP pengunjung terlihat oleh Google.
+- Teks dan file yang dianalisis dikirim ke Gemini. File upload tidak ditulis ke `data/community.json`, tetapi potongan teks atau klaim hasil AI dapat ditambahkan ke feed demonstrasi dan disimpan di file tersebut. Penyamaran data pribadi di feed bukan anonimisasi formal.
+- Proyek belum menjanjikan retensi, penghapusan otomatis, enkripsi aplikasi, atau compliance tertentu.
 
 Jangan gunakan deployment demonstrasi untuk rahasia atau data pribadi/sensitif. Lihat [README.md](README.md#privasi-dan-alur-data) untuk penjelasan alur data dan [SUPPORT.md](SUPPORT.md) untuk kanal bantuan lainnya.

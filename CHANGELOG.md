@@ -20,6 +20,41 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 
 ### Added
 - `ROADMAP.md`, `SUPPORT.md`, dan template issue untuk pertanyaan penggunaan.
+- Content-Security-Policy tanpa inline script maupun script pihak ketiga, HSTS dan `upgrade-insecure-requests` pada mode production, serta COOP/CORP.
+- Validasi tipe dan panjang input pada setiap endpoint, normalisasi keluaran model, dan deteksi tipe upload dari isi berkas.
+- Rate limit per IP untuk dukungan komunitas dan seluruh API, serta konfigurasi `TRUST_PROXY`.
+- Variabel konfigurasi `GEMINI_MODEL`, `GEMINI_TIMEOUT_MS`, `DATA_DIR`, `COMMUNITY_AUTO_PUBLISH`, dan batas rate limit (lihat `.env.example`).
+- Penyamaran email, nomor telepon, dan deretan angka panjang pada potongan pesan di feed; untuk pemeriksaan URL hanya nama host yang ditampilkan.
+- Graceful shutdown (`SIGTERM`) dan penulisan data feed secara atomik.
+- Suite pengujian: unit, integrasi (dengan Gemini palsu), smoke test proses sungguhan, dan end-to-end Playwright.
+- ESLint, workflow CodeQL, `npm audit` serta build image Docker di CI, dan Dependabot.
+
+### Security
+- **Memperbaiki stored XSS pada feed komunitas.** Teks pesan yang dikirim ke `/api/analyze` disimpan dan dirender sebagai HTML bagi semua pengunjung. Keluaran AI (`claims`, `explanation`) dan teks simulator chat juga dirender sebagai HTML. Semua rendering kini memakai `textContent`.
+- Mengganti pustaka PDF dari CDN tanpa SRI (jsPDF 2.5.1, yang memiliki advisory tingkat critical, termasuk ReDoS dan DoS) dengan jsPDF 4.x dari origin sendiri.
+- Memperbarui `multer` 1.x (dinyatakan rentan) ke 2.x dan `express` ke 5.x; `npm audit` untuk dependency produksi kini bersih.
+- Dukungan komunitas tidak lagi dapat diulang tanpa batas: `clientId` wajib, hanya satu dukungan per klien per entri, dan daftar pendukung (kini berupa hash) tidak lagi dikirim ke semua pengunjung.
+- Rate limiter membaca alamat klien yang benar di belakang proxy (`TRUST_PROXY`). Sebelumnya `req.ip` di belakang proxy seperti Cloud Run berupa alamat proxy, sehingga banyak pengunjung dapat berbagi satu batas.
+- Input pengguna pada prompt dibungkus sebagai data bertag, dan `X-XSS-Protection` diganti `0` sesuai rekomendasi OWASP.
+
+### Fixed
+- Posisi slider nada paling formal (`tone = 0`) diperlakukan sebagai nada netral.
+- Penghapusan emoji tidak lagi ikut membuang tanda kutip melengkung, tanda pisah, dan elipsis.
+- Confetti dukungan komunitas tidak lagi muncul ketika dukungan gagal.
+- Tombol regenerasi bahasa daerah, grafik analitik, peta, dan DNA hoaks kini diperbarui langsung (event/panggilan fungsi), bukan lewat polling DOM yang berjalan terus-menerus.
+- DNA hoaks kini benar-benar memakai klaim analisis sebagai bagian seed, sesuai desain. Sebelumnya selector DOM yang dipakai tidak cocok dengan markup klaim sehingga klaim tidak pernah ikut; akibatnya pola DNA untuk analisis yang sama kini berbeda dari sebelumnya.
+
+### Changed
+- Kode server dipecah dari satu `server.js` menjadi modul di `src/` (routes, middleware, services, prompts, lib). Entrypoint kini `src/server.js`.
+- Node.js minimum menjadi 22.13; CI menjalankan Node.js 22 dan 24; Dockerfile memakai Node 24 Alpine, user non-root bawaan image, dan healthcheck tanpa `curl`.
+- `.env` dimuat dengan flag `--env-file` Node.js; dependency `dotenv` dihapus.
+- Perintah `check` dan `smoke` digantikan `lint` dan `test`. Smoke test kontribusi `jpachec0` dipertahankan di `test/smoke.test.js`.
+- Waktu entri feed disimpan sebagai timestamp dan label relatif dihitung saat dibaca, bukan string tetap seperti "Baru saja".
+- Respons dukungan duplikat kini 409 (sebelumnya 400); layanan AI yang belum dikonfigurasi kini 503 (sebelumnya 500).
+
+### Removed
+- Kode mati di `public/` (hook monkey-patch yang tidak dipakai, variabel tak terpakai, `escapeHtml` ganda, `cleanEmojiText`) dan polling `setInterval`/`MutationObserver` yang tidak perlu.
+- `test/check.js` (digantikan ESLint).
 
 ---
 
