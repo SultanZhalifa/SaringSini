@@ -88,7 +88,7 @@ test.describe('uploads', () => {
     await page.setInputFiles('#file-input', { name: 'chat.png', mimeType: 'image/png', buffer: PNG_1X1 });
 
     await expect(page.locator('#image-preview-container')).toBeVisible();
-    await expect(page.locator('#image-preview')).toHaveAttribute('src', /^data:image\/png/);
+    await expect(page.locator('#image-preview')).toHaveAttribute('src', /^blob:/);
 
     await page.click('#analyze-btn');
     await expect(page.locator('#res-claims-list .claim-card').first()).toBeVisible();

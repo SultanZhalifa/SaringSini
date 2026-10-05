@@ -25,34 +25,25 @@ export function createUploadSlot({ ids, messages }) {
     const video = ids.video ? document.getElementById(ids.video) : null;
 
     let selected = null;
-    let videoUrl = null;
+    let previewUrl = null;
 
-    const releaseVideoUrl = () => {
-        if (videoUrl) URL.revokeObjectURL(videoUrl);
-        videoUrl = null;
+    const releasePreviewUrl = () => {
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        previewUrl = null;
     };
 
-    const previewImage = (file) => {
-        image.classList.remove('hidden');
-        if (video) {
-            video.classList.add('hidden');
-            video.removeAttribute('src');
+    const preview = (file, isVideo) => {
+        releasePreviewUrl();
+        previewUrl = URL.createObjectURL(file);
+
+        const shown = isVideo ? video : image;
+        const hidden = isVideo ? image : video;
+        shown.src = previewUrl;
+        shown.classList.remove('hidden');
+        if (hidden) {
+            hidden.removeAttribute('src');
+            hidden.classList.add('hidden');
         }
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            image.src = event.target.result;
-            container.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const previewVideo = (file) => {
-        image.classList.add('hidden');
-        image.removeAttribute('src');
-        releaseVideoUrl();
-        videoUrl = URL.createObjectURL(file);
-        video.src = videoUrl;
-        video.classList.remove('hidden');
         container.classList.remove('hidden');
     };
 
@@ -69,14 +60,13 @@ export function createUploadSlot({ ids, messages }) {
         }
 
         selected = file;
-        if (isImage) previewImage(file);
-        else previewVideo(file);
+        preview(file, isVideo);
     };
 
     const clear = () => {
         selected = null;
         input.value = '';
-        releaseVideoUrl();
+        releasePreviewUrl();
         image.removeAttribute('src');
         image.classList.add('hidden');
         if (video) {
