@@ -53,7 +53,7 @@ test('every relative import in the browser code points at an existing module', (
 
 test('the page starts one module and keeps no inline script handlers', () => {
   const html = fs.readFileSync(path.join(PUBLIC, 'index.html'), 'utf8');
-  const scripts = [...html.matchAll(/<script\b([^>]*)>/g)].map(([, attributes]) => attributes.trim());
+  const scripts = [...html.matchAll(/<script\b([^>]*)>/gi)].map(([, attributes]) => attributes.trim());
 
   assert.deepEqual(
     scripts.filter((attributes) => !attributes.includes('application/ld+json')),
