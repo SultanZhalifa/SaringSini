@@ -131,9 +131,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-    <!-- jsPDF for PDF Export (lazy load on demand via dynamic injection later, but precache via preconnect) -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="css/coach.css">
@@ -444,13 +441,13 @@
                                     <span class="voice-status-text">Bicara</span>
                                 </button>
                             </div>
-                            <textarea id="message-input" placeholder="Contoh: Beredar kabar makan udang setelah minum jeruk dapat memicu keracunan arsenik mematikan..." rows="5"></textarea>
+                            <textarea id="message-input" maxlength="4000" placeholder="Contoh: Beredar kabar makan udang setelah minum jeruk dapat memicu keracunan arsenik mematikan..." rows="5"></textarea>
                         </div>
 
                         <!-- URL Input (Cek Link Phishing) -->
                         <div class="input-group hidden" id="group-url">
                             <label for="url-input">URL Mencurigakan</label>
-                            <input type="url" id="url-input" class="url-input" placeholder="https://contoh-link-mencurigakan.com/promo-kuota" inputmode="url" autocomplete="off">
+                            <input type="url" id="url-input" class="url-input" maxlength="2048" placeholder="https://contoh-link-mencurigakan.com/promo-kuota" inputmode="url" autocomplete="off">
                             <p class="input-helper-text">Tempel link dari pesan WhatsApp untuk memperoleh indikasi pola phishing atau scam dari AI. Ini bukan pemindaian keamanan jaringan.</p>
                         </div>
 
@@ -991,7 +988,7 @@
                                 <span class="coach-step-num">2</span>
                                 Pesan hoaks yang baru saja mereka forward
                             </label>
-                            <textarea id="coach-scenario-input" class="coach-scenario-textarea" rows="3" placeholder="Contoh: Vaksin COVID-19 mengandung chip 5G yang melacak penerimanya secara global." aria-label="Skenario hoaks"></textarea>
+                            <textarea id="coach-scenario-input" class="coach-scenario-textarea" rows="3" maxlength="500" placeholder="Contoh: Vaksin COVID-19 mengandung chip 5G yang melacak penerimanya secara global." aria-label="Skenario hoaks"></textarea>
                             <div class="coach-scenario-presets" aria-label="Contoh skenario hoaks">
                                 <button type="button" class="coach-scenario-chip" data-scenario="Vaksin COVID-19 mengandung chip 5G yang melacak penerimanya secara global.">Vaksin chip 5G</button>
                                 <button type="button" class="coach-scenario-chip" data-scenario="Daun sirsak rebusan menyembuhkan kanker stadium 4 dalam 7 hari tanpa kemoterapi.">Daun sirsak kanker</button>
@@ -1026,7 +1023,7 @@
                         </header>
                         <div class="coach-messages" id="coach-messages" role="log" aria-live="polite" aria-relevant="additions"></div>
                         <div class="coach-input-row">
-                            <textarea id="coach-input" class="coach-input" rows="1" placeholder="Tulis balasan yang sopan untuk meluruskan..." aria-label="Pesan untuk orang tua simulasi"></textarea>
+                            <textarea id="coach-input" class="coach-input" rows="1" maxlength="500" placeholder="Tulis balasan yang sopan untuk meluruskan..." aria-label="Pesan untuk orang tua simulasi"></textarea>
                             <button type="button" class="coach-send-btn" id="coach-send-btn" aria-label="Kirim balasan ke simulasi">
                                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4 20.85 12.92a1 1 0 0 0 0-1.84L3.4 3.6a1 1 0 0 0-1.38 1.18L4.5 11.5l8.5.5-8.5.5-2.48 6.72a1 1 0 0 0 1.38 1.18Z"/></svg>
                             </button>

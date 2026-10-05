@@ -12,7 +12,7 @@
         tante: { name: 'Tante Rosa', initial: 'T', mood: 'Heboh - Dramatis', avatarClass: 'member-tante' }
     };
 
-    let state = {
+    const state = {
         persona: 'mama',
         scenario: '',
         history: [],
@@ -150,10 +150,12 @@
             const persona = PERSONA_DATA[state.persona];
             const forwarded = document.createElement('div');
             forwarded.className = 'coach-msg parent';
-            forwarded.innerHTML = `
-                <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.04em;">${escapeHtml(persona.name)} mem-forward:</div>
-                <div>${escapeHtml(state.scenario)}</div>
-            `;
+            const label = document.createElement('div');
+            label.className = 'coach-forward-label';
+            label.textContent = `${persona.name} mem-forward:`;
+            const body = document.createElement('div');
+            body.textContent = state.scenario;
+            forwarded.append(label, body);
             messagesEl.appendChild(forwarded);
 
             // Add the parent message to history as the initial forwarded content
@@ -327,12 +329,6 @@
             requestAnimationFrame(() => {
                 messagesEl.scrollTop = messagesEl.scrollHeight;
             });
-        }
-
-        function escapeHtml(s) {
-            return String(s).replace(/[&<>"']/g, c => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            }[c]));
         }
 
         function triggerHaptic(pattern) {
