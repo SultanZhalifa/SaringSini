@@ -115,6 +115,23 @@ test.describe('analytics and map', () => {
     await expect(page.locator('#map-detail-panel .map-detail-region')).toHaveText('Bali / NTB / NTT');
   });
 
+  test('regions can be operated from the keyboard', async ({ page, problems }) => {
+    await page.goto('/?tab=edukasi');
+    const detail = page.locator('#map-detail-panel .map-detail-region');
+    const sumatera = page.locator('.map-region[data-region="Sumatera"]');
+
+    await sumatera.focus();
+    await page.keyboard.press('Enter');
+    await expect(sumatera).toHaveClass(/active-region/);
+    await expect(detail).toHaveText('Sumatera');
+
+    await page.locator('.map-region[data-region="Bali-NTB-NTT"]').focus();
+    await page.keyboard.press('Space');
+    await expect(sumatera).not.toHaveClass(/active-region/);
+    await expect(detail).toHaveText('Bali / NTB / NTT');
+    expect(problems).toEqual([]);
+  });
+
   test('every region carries an intensity class derived from the feed', async ({ page }) => {
     await page.goto('/?tab=edukasi');
     await expect(page.locator('.map-region.intensity-low, .map-region.intensity-mid, .map-region.intensity-high, .map-region.intensity-critical')).toHaveCount(7);
