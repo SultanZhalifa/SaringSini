@@ -36,13 +36,16 @@ export function createUploadSlot({ ids, messages }) {
         releasePreviewUrl();
         previewUrl = URL.createObjectURL(file);
 
-        const shown = isVideo ? video : image;
-        const hidden = isVideo ? image : video;
-        shown.src = previewUrl;
-        shown.classList.remove('hidden');
-        if (hidden) {
-            hidden.removeAttribute('src');
-            hidden.classList.add('hidden');
+        if (isVideo) {
+            image.removeAttribute('src');
+            image.classList.add('hidden');
+            video.src = previewUrl;
+            video.classList.remove('hidden');
+        } else {
+            video?.removeAttribute('src');
+            video?.classList.add('hidden');
+            image.src = previewUrl;
+            image.classList.remove('hidden');
         }
         container.classList.remove('hidden');
     };
