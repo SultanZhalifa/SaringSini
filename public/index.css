@@ -574,7 +574,8 @@ textarea:focus {
     z-index: 10;
 }
 
-.upload-preview img {
+.upload-preview img,
+.upload-preview video {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
@@ -4509,6 +4510,7 @@ a:focus-visible {
 }
 
 .solidarity-progress-fill {
+    width: 65.6%; /* 9.842 of the 15.000 demo points */
     height: 100%;
     background: linear-gradient(90deg, var(--blue) 0%, var(--cyan) 100%);
     border-radius: 9999px;

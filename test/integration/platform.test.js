@@ -66,7 +66,8 @@ test('responses carry a strict CSP and hardening headers, and do not advertise E
   assert.match(csp, /script-src 'self'(;|$)/, 'no inline or third-party scripts');
   assert.match(csp, /object-src 'none'/);
   assert.match(csp, /frame-ancestors 'none'/);
-  assert.doesNotMatch(csp, /script-src[^;]*unsafe-inline/);
+  assert.match(csp, /style-src-attr 'none'/, 'no inline style attributes');
+  assert.doesNotMatch(csp, /unsafe-inline/);
   assert.doesNotMatch(csp, /upgrade-insecure-requests/, 'only enabled in production');
 
   assert.equal(headers.get('x-content-type-options'), 'nosniff');

@@ -6,9 +6,10 @@ const PERMISSIONS_POLICY = 'camera=(), microphone=(self), geolocation=()';
 const HSTS_SIX_MONTHS = 15_552_000;
 
 /**
- * Security headers. The CSP allows only same-origin scripts; Google Fonts is the sole
- * third-party origin. Inline style attributes are still used by the UI, so they are
- * allowed for attributes only (style-src-attr), never for <style> blocks or scripts.
+ * Security headers. The CSP allows only same-origin scripts and styles, with Google Fonts as
+ * the sole third-party origin. The UI sets styles through CSS classes and the CSSOM
+ * (`element.style.x = ...`), neither of which the CSP restricts, so inline `style` attributes
+ * are refused as well.
  */
 function securityHeaders({ isProduction }) {
   const policy = helmet({
@@ -18,7 +19,7 @@ function securityHeaders({ isProduction }) {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
         styleSrc: ["'self'", 'https://fonts.googleapis.com'],
-        styleSrcAttr: ["'unsafe-inline'"],
+        styleSrcAttr: ["'none'"],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'blob:'],
         mediaSrc: ["'self'", 'blob:'],
