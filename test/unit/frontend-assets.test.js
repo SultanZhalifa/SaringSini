@@ -62,6 +62,16 @@ test('the page starts one module and keeps no inline script handlers', () => {
   assert.doesNotMatch(html, /\son[a-z]+\s*=/i, 'inline event handler attributes are blocked by the CSP');
 });
 
+test('nothing writes inline style attributes, which the CSP refuses', () => {
+  const inlineStyle = /\sstyle\s*=|setAttribute\(\s*['"]style['"]/i;
+  const sources = ['/index.html', ...listFiles('js')];
+
+  for (const file of sources) {
+    const source = fs.readFileSync(path.join(PUBLIC, file), 'utf8');
+    assert.doesNotMatch(source, inlineStyle, `${file} sets an inline style attribute: use a CSS class or element.style`);
+  }
+});
+
 test('browser modules talk through imports and events, not window globals', () => {
   for (const file of listFiles('js')) {
     const source = fs.readFileSync(path.join(PUBLIC, file), 'utf8');
