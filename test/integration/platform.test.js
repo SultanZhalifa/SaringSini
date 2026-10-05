@@ -132,3 +132,23 @@ test('the PDF library is served from our own origin', async (t) => {
   assert.match(response.headers.get('content-type'), /javascript/);
   assert.match(await response.text(), /jsPDF/);
 });
+
+test('routes that read files from disk are rate limited too', async (t) => {
+  const server = await startTestServer({ env: { RATE_LIMIT_API_PER_MINUTE: '3' } });
+  t.after(() => server.close());
+
+  const statuses = async (route, headers) => {
+    const result = [];
+    for (let attempt = 0; attempt < 4; attempt += 1) result.push((await server.get(route, headers)).status);
+    return result;
+  };
+  assert.deepEqual(await statuses('/vendor/jspdf.umd.min.js'), [200, 200, 200, 429]);
+
+  const second = await startTestServer({ env: { RATE_LIMIT_API_PER_MINUTE: '3' } });
+  t.after(() => second.close());
+  const navigations = [];
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    navigations.push((await second.get('/komunitas', { Accept: 'text/html' })).status);
+  }
+  assert.deepEqual(navigations, [200, 200, 200, 429]);
+});
