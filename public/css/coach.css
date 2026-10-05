@@ -796,3 +796,12 @@ button.hero-promo-card,
 .hero-promo-card:hover .hero-promo-cta svg {
     transform: translateX(3px);
 }
+
+.coach-forward-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
