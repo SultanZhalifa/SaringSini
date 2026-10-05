@@ -163,3 +163,19 @@ input, textarea, select, button {
     color: #53bdeb;
     margin-left: 2px;
 }
+
+/* Label of a mitigation link: the action, with the source it points to underneath */
+.mitigation-text {
+    text-align: left;
+}
+
+.mitigation-title,
+.mitigation-sub {
+    display: block;
+}
+
+.mitigation-sub {
+    font-size: 0.65rem;
+    font-weight: 500;
+    opacity: 0.75;
+}
