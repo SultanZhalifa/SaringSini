@@ -1,39 +1,7 @@
 'use strict';
 
 const fs = require('node:fs');
-const { expect, test: base } = require('@playwright/test');
-
-const HOSTILE_TEXT = '<img src=x onerror="window.__pwned=1">';
-
-/**
- * `problems` collects uncaught page errors and Content-Security-Policy violations.
- * Failed loads of Google Fonts are ignored: they depend on the network, not on us.
- */
-const test = base.extend({
-  // Returning visitors have already dismissed the first-visit onboarding tour.
-  page: async ({ page }, use) => {
-    await page.addInitScript(() => localStorage.setItem('saringsini_onboarded', '1'));
-    await use(page);
-  },
-
-  problems: async ({ page }, use) => {
-    const problems = [];
-    page.on('pageerror', (error) => problems.push(`pageerror: ${error.message}`));
-    page.on('console', (message) => {
-      const text = message.text();
-      const fromFonts = /fonts\.(googleapis|gstatic)\.com/.test(message.location().url);
-      if (message.type() === 'error' && !fromFonts) problems.push(`console: ${text}`);
-    });
-    await use(problems);
-  },
-});
-
-const analyze = async (page, message) => {
-  await page.goto('/?tab=periksa');
-  await page.fill('#message-input', message);
-  await page.click('#analyze-btn');
-  await expect(page.locator('#res-claims-list .claim-card').first()).toBeVisible();
-};
+const { HOSTILE_TEXT, analyze, expect, test } = require('./fixtures');
 
 test('boots under the strict CSP with no script errors or violations', async ({ page, problems }) => {
   await page.goto('/');
