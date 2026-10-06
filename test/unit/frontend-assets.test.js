@@ -87,6 +87,18 @@ test('every stylesheet is linked from the page, and the page links no stylesheet
   assert.equal(new Set(linked).size, linked.length, 'a stylesheet is linked twice');
 });
 
+test('every custom property the stylesheets read is defined', () => {
+  const css = listFiles('css')
+    .map((file) => fs.readFileSync(path.join(PUBLIC, file), 'utf8'))
+    .join('\n')
+    .replace(/\/\*[\s\S]*?\*\//g, '');
+  const defined = new Set([...css.matchAll(/(--[\w-]+)\s*:/g)].map(([, name]) => name));
+  const read = [...css.matchAll(/var\(\s*(--[\w-]+)/g)].map(([, name]) => name);
+
+  // An undefined variable makes the whole declaration invalid at computed-value time, silently.
+  assert.deepEqual([...new Set(read.filter((name) => !defined.has(name)))], []);
+});
+
 test('every font file referenced by the stylesheets exists and no stylesheet points off-site', () => {
   for (const file of listFiles('css')) {
     const source = fs.readFileSync(path.join(PUBLIC, file), 'utf8');
