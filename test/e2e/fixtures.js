@@ -6,15 +6,13 @@ const HOSTILE_TEXT = '<img src=x onerror="window.__pwned=1">';
 
 /**
  * `problems` collects uncaught page errors and console errors (which include
- * Content-Security-Policy violations). Failed loads of Google Fonts are ignored: they
- * depend on the network, not on us.
+ * Content-Security-Policy violations).
  */
 const collectProblems = async ({ page }, use) => {
   const problems = [];
   page.on('pageerror', (error) => problems.push(`pageerror: ${error.message}`));
   page.on('console', (message) => {
-    const fromFonts = /fonts\.(googleapis|gstatic)\.com/.test(message.location().url);
-    if (message.type() === 'error' && !fromFonts) problems.push(`console: ${message.text()}`);
+    if (message.type() === 'error') problems.push(`console: ${message.text()}`);
   });
   await use(problems);
 };
