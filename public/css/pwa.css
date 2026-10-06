@@ -1,0 +1,102 @@
+/* PWA install banner. */
+
+/* PWA Install Banner */
+.pwa-install-banner {
+    position: fixed;
+    top: max(12px, env(safe-area-inset-top, 12px));
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);
+    max-width: 440px;
+    background-color: var(--surface-elevated);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-warm-lg);
+    padding: 0.85rem 1rem;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    animation: slideDownBanner 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pwa-install-banner[hidden] {
+    display: none;
+}
+
+.pwa-banner-content {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+}
+
+.pwa-banner-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+}
+
+.pwa-banner-content strong {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.1rem;
+}
+
+.pwa-banner-content p {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.pwa-banner-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.pwa-banner-dismiss,
+.pwa-banner-accept {
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pwa-banner-dismiss {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+}
+
+.pwa-banner-dismiss:hover {
+    background-color: var(--bg-secondary);
+}
+
+.pwa-banner-accept {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    color: #ffffff;
+}
+
+.pwa-banner-accept:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+@keyframes slideDownBanner {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}

@@ -102,6 +102,7 @@ Test memakai Gemini palsu, jadi tidak membutuhkan API key atau jaringan. Jalanka
 - `public/js/features/` — satu modul per fitur. Fitur saling mengabari lewat event (`core/events.js`), bukan global `window`.
 - `public/js/core/` — utilitas bersama: DOM, pemanggilan API, toast, storage, clipboard.
 - `public/js/lib/` — logika mandiri tanpa DOM.
+- `public/css/` — satu stylesheet per fitur. Urutan `<link>` di `index.html` adalah urutan cascade; berkas baru harus ditautkan di sana dan didaftarkan di `SHELL_ASSETS` (`public/sw.js`), dan tes akan gagal bila salah satunya terlewat.
 - Teks dari server atau pengguna hanya boleh masuk ke DOM melalui `textContent` (lihat helper `createElement` di `public/js/core/dom.js`), tidak pernah lewat `innerHTML`.
 - CSP melarang atribut `style` inline: pakai kelas CSS atau `element.style`.
 - Menambah berkas di `public/js` atau `public/css`? Daftarkan di `SHELL_ASSETS` pada `public/sw.js` dan naikkan `VERSION`-nya agar tersedia offline; sebuah test akan gagal bila lupa.
