@@ -1,50 +1,52 @@
 # Kebijakan Keamanan
 
-Kami menganggap keamanan pengguna SaringSini sebagai prioritas. Terima kasih telah membantu menjaga proyek dan penggunanya tetap aman.
+Terima kasih telah membantu menjaga SaringSini dan contributornya tetap aman. Proyek ini masih berada pada tahap awal dan dipelihara secara best effort.
 
-## Versi yang Didukung
+## Status dukungan
 
-Pembaruan keamanan diberikan untuk rilis minor terbaru.
+Belum ada release atau tag stabil dengan jangka dukungan keamanan formal. Perbaikan keamanan, bila tersedia, ditargetkan ke branch `master`. Nomor versi package tidak menyiratkan SLA, audit keamanan, atau dukungan produksi.
 
-| Versi | Didukung |
-| ----- | -------- |
-| 2.3.x | ✅       |
-| < 2.3 | ❌       |
+## Melaporkan kerentanan
 
-## Melaporkan Kerentanan
+**Jangan melaporkan kerentanan melalui issue, pull request, atau diskusi publik.**
 
-**Mohon JANGAN melaporkan kerentanan keamanan melalui issue publik, pull request, atau diskusi publik.**
+Kirim laporan secara privat ke **sultanzhalifunnasmusyaffa@gmail.com** dengan subjek `[SECURITY] SaringSini`.
 
-Sebagai gantinya, laporkan secara privat melalui salah satu cara berikut:
+Private vulnerability reporting melalui GitHub belum diaktifkan untuk repositori ini. Dokumentasi akan diperbarui apabila kanal tersebut tersedia.
 
-1. **GitHub Security Advisories (disarankan)** — buka tab **Security → Report a vulnerability** pada repositori ini untuk membuat laporan privat.
-2. **Email** — kirim ke pemelihara proyek di **sultanzhalifunnasmusyaffa@gmail.com** dengan subjek `[SECURITY] SaringSini`.
+Jika aman untuk dibagikan melalui email, sertakan:
 
-Sertakan sebanyak mungkin informasi berikut agar kami dapat menindaklanjuti dengan cepat:
+- jenis kerentanan;
+- langkah reproduksi minimal;
+- file atau endpoint yang terdampak;
+- dampak potensial;
+- bukti pendukung yang sudah dibersihkan dari rahasia dan data pribadi.
 
-- Jenis kerentanan (mis. XSS, injeksi, kebocoran API key, SSRF, dsb).
-- Langkah-langkah untuk mereproduksi.
-- File/endpoint yang terdampak (mis. `/api/analyze`).
-- Dampak potensial dan skenario eksploitasi.
-- Bukti pendukung (log, screenshot, PoC) bila ada.
+Jangan mengirim API key aktif, token, isi percakapan pribadi, atau data pihak ketiga yang tidak diperlukan.
 
-## Waktu Respons
+## Ekspektasi respons
 
-- **Konfirmasi penerimaan:** dalam 72 jam.
-- **Penilaian awal:** dalam 7 hari.
-- **Perbaikan:** kami akan mengoordinasikan jadwal rilis perbaikan bersama Anda sebelum publikasi.
+Laporan akan ditinjau dan ditangani sesuai kapasitas maintainer, tingkat risiko, dan informasi yang tersedia. Proyek tidak menjanjikan batas waktu untuk konfirmasi, penilaian, perbaikan, atau rilis. Koordinasi pengungkapan akan dilakukan secara best effort.
 
-Kami mengapresiasi *responsible disclosure* dan akan dengan senang hati memberikan kredit kepada pelapor pada catatan rilis, kecuali Anda meminta untuk tetap anonim.
+## Mekanisme yang diterapkan
 
-## Praktik Keamanan dalam Proyek Ini
+Implementasi saat ini memiliki mekanisme berikut:
 
-Kontributor wajib memperhatikan hal berikut:
+- `GEMINI_API_KEY` dibaca di server dan tidak dimasukkan ke bundle browser.
+- Endpoint berbasis AI memakai rate limiter in-memory sebanyak enam permintaan per menit untuk alamat yang dilihat proses server.
+- Server mengirim `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, dan `X-XSS-Protection`.
+- Body JSON dibatasi 1 MB.
+- Upload Multer dibatasi 5 MB dan diterima melalui memory storage.
+- Detail error tidak dimasukkan ke respons ketika `NODE_ENV=production`.
+- `.env` diabaikan oleh Git dan `.env.example` hanya berisi placeholder.
 
-- **Jangan pernah meng-commit rahasia.** File `.env` sudah masuk `.gitignore`. Gunakan `.env.example` sebagai referensi variabel.
-- `GEMINI_API_KEY` hanya digunakan di sisi server (`server.js`) dan tidak boleh diekspos ke klien.
-- Endpoint AI dibatasi *rate limit* (6 permintaan/menit per IP) untuk melindungi kuota.
-- Header keamanan produksi aktif: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, dan `X-XSS-Protection`.
-- Unggahan file dibatasi ukuran (5 MB) dan diproses di memori.
-- Validasi dan sanitasi setiap input pengguna sebelum diproses atau ditampilkan.
+## Batasan keamanan dan data
 
-Jika Anda menemukan rahasia yang tidak sengaja ter-commit, segera laporkan secara privat sesuai prosedur di atas — jangan membukanya di issue publik.
+- Content-Security-Policy belum diterapkan.
+- Rate limiter dan `data/community.json` bersifat lokal per proses/instance dan bukan kontrol terdistribusi.
+- Validasi berbeda untuk setiap endpoint; proyek belum menjalani audit sanitasi atau keamanan menyeluruh.
+- Teks dan file yang dianalisis dikirim ke Gemini. File upload tidak ditulis ke `data/community.json`, tetapi potongan teks atau klaim hasil AI dapat ditambahkan ke feed demonstrasi dan disimpan di file tersebut.
+- UUID klien untuk dukungan komunitas dapat dikirim dan disimpan di server bersama entri feed.
+- Proyek belum menjanjikan retensi, penghapusan otomatis, enkripsi aplikasi, anonimisasi formal, atau compliance tertentu.
+
+Jangan gunakan deployment demonstrasi untuk rahasia atau data pribadi/sensitif. Lihat [README.md](README.md#privasi-dan-alur-data) untuk penjelasan alur data dan [SUPPORT.md](SUPPORT.md) untuk kanal bantuan lainnya.
