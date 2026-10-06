@@ -20,8 +20,9 @@ Closes #
 
 <!-- Jelaskan langkah pengujian yang Anda lakukan. -->
 
-- [ ] `npm run check` lulus
-- [ ] `npm run smoke` lulus
+- [ ] `npm run lint` lulus
+- [ ] `npm test` lulus
+- [ ] `npm run test:e2e` lulus (bila menyentuh `public/` atau header keamanan)
 - [ ] Diuji manual di browser
 
 ## Screenshot (untuk perubahan UI)

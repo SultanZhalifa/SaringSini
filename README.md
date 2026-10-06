@@ -70,9 +70,9 @@ Perilaku berikut didasarkan pada implementasi saat ini:
 
 - Teks, URL, riwayat coaching, template balasan, dan media yang dianalisis dikirim dari server ke layanan Gemini untuk menghasilkan respons.
 - File upload dibatasi 5 MB dan diterima melalui penyimpanan in-memory Multer. Aplikasi tidak menulis file upload tersebut ke `data/community.json`.
-- Setelah analisis, potongan teks pesan—atau klaim pertama yang dihasilkan AI ketika tidak ada teks—dapat otomatis ditambahkan ke feed komunitas demonstrasi.
-- Feed tersebut, termasuk potongan teks, skor/label AI, jumlah dukungan, dan daftar UUID klien yang sudah mendukung suatu entri, ditulis ke `data/community.json` pada instance server.
-- UUID klien dibuat dan disimpan di browser. Ketika pengguna mendukung entri komunitas, UUID itu juga dikirim ke server dan dapat disimpan di `upvotedClients` untuk mencegah dukungan berulang pada instance tersebut.
+- Setelah analisis, potongan teks pesan—atau klaim pertama yang dihasilkan AI ketika tidak ada teks—dapat otomatis ditambahkan ke feed komunitas demonstrasi. Potongan dipangkas hingga 110 karakter; nomor telepon, email, dan deretan angka panjang disamarkan (best effort), dan untuk pemeriksaan URL hanya nama host yang ditampilkan. Perilaku ini dapat dimatikan dengan `COMMUNITY_AUTO_PUBLISH=false`.
+- Feed tersebut, termasuk potongan teks, skor/label AI, jumlah dukungan, dan hash dari UUID klien yang sudah mendukung suatu entri, ditulis ke `data/community.json` pada instance server. Daftar pendukung tidak pernah dikirim ke klien.
+- UUID klien dibuat dan disimpan di browser. Ketika pengguna mendukung entri komunitas, UUID itu dikirim ke server, yang hanya menyimpan hash-nya untuk mencegah dukungan berulang pada instance tersebut.
 
 Jangan memasukkan rahasia, kredensial, atau informasi pribadi/sensitif. Proyek belum menjanjikan masa retensi, penghapusan otomatis, enkripsi aplikasi, anonimisasi formal, atau kepatuhan terhadap standar privasi tertentu.
 
@@ -101,34 +101,37 @@ SaringSini awalnya dikembangkan sebagai submission **#JuaraVibeCoding 2026**. Ri
 
 | Area | Implementasi saat ini |
 |---|---|
-| Backend | Node.js 18+ dan Express 4 |
+| Backend | Node.js 22.13+ dan Express 5 |
 | AI | Google Gemini melalui `@google/generative-ai` |
 | Upload | Multer memory storage, maksimum 5 MB |
 | Frontend | HTML, CSS, dan Vanilla JavaScript |
 | Persistence | `data/community.json` untuk pengembangan lokal/demo |
-| Proteksi dasar | Beberapa HTTP headers dan rate limiter in-memory per proses |
+| Proteksi | Helmet (CSP dan header keamanan), `express-rate-limit` in-memory per proses, validasi input |
+| Ekspor PDF | jsPDF, disajikan dari origin sendiri |
+| Pengujian | `node:test` (unit dan integrasi), Playwright (browser), ESLint |
 | PWA | Service worker dan Web App Manifest |
-| Container | Dockerfile berbasis Node 20 Alpine |
+| Container | Dockerfile berbasis Node 24 Alpine |
 
 ### Security baseline
 
-Server saat ini mengirim header berikut:
+Mekanisme berikut diverifikasi oleh test otomatis (integrasi dan Playwright):
 
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: DENY`
-- `Referrer-Policy: strict-origin-when-cross-origin`
-- `Permissions-Policy: camera=(), microphone=(self), geolocation=()`
-- `X-XSS-Protection: 1; mode=block`
+- **Content-Security-Policy** tanpa inline script maupun script pihak ketiga (`script-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'`). jsPDF disajikan dari origin sendiri.
+- Header `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, COOP/CORP, serta `Strict-Transport-Security` pada mode production. `X-XSS-Protection: 0`, sesuai rekomendasi OWASP untuk fitur legacy tersebut.
+- Teks dari feed komunitas, keluaran AI, dan input pengguna dirender melalui `textContent`; keluaran model dinormalisasi (tipe, panjang, label yang diizinkan) sebelum disimpan atau dikirim ke klien.
+- Setiap endpoint memvalidasi tipe dan panjang input; body JSON dibatasi 64 KB; URL harus `http(s)` dan tidak pernah di-fetch oleh server.
+- Tipe upload dideteksi dari isi berkas, bukan dari header klien: gambar PNG/JPEG/WebP/HEIC, dan video MP4/MOV/WebM khusus pemeriksaan deepfake. Batas ukuran 5 MB.
+- Rate limit per alamat IP: 6 permintaan/menit untuk endpoint AI, 20/menit untuk dukungan komunitas, dan 120/menit untuk seluruh API. Store limiter berada di memori, reset saat proses dimulai ulang, dan tidak dibagikan antar-instance.
 
-Endpoint AI memakai rate limiter ringan sebesar enam permintaan per menit per alamat yang dilihat proses server. Store limiter berada di memori, akan reset saat proses dimulai ulang, dan tidak dibagikan antar-instance. Content-Security-Policy belum diterapkan. Lihat [SECURITY.md](SECURITY.md) untuk mekanisme dan batasan keamanan yang sudah diverifikasi.
+Mitigasi prompt injection bersifat parsial: input pengguna dibungkus sebagai data bertag, tetapi keluaran model tetap diperlakukan sebagai tidak tepercaya. Lihat [SECURITY.md](SECURITY.md) untuk mekanisme, batasan, dan cara melapor.
 
 ## API endpoints
 
 | Endpoint | Method | Deskripsi |
 |---|---|---|
 | `/api/health` | GET | Status proses, versi, konfigurasi Gemini, dan jumlah entri feed |
-| `/api/community` | GET | Feed komunitas lokal/demo |
-| `/api/community/:id/upvote` | POST | Dukungan entri dengan pemeriksaan UUID klien per instance |
+| `/api/community` | GET | Feed komunitas lokal/demo; header opsional `X-Client-Id` menandai entri yang sudah didukung klien tersebut |
+| `/api/community/:id/upvote` | POST | Dukungan entri; wajib `clientId`, satu dukungan per klien per entri (409 bila berulang) |
 | `/api/analyze` | POST | Penilaian awal berbantuan AI untuk teks/media/URL |
 | `/api/translate-replies` | POST | Konversi template balasan ke bahasa daerah |
 | `/api/coach` | POST | Simulasi percakapan keluarga berbantuan AI |
@@ -142,7 +145,7 @@ Contoh request/response API sengaja tetap tersedia sebagai peluang kontribusi di
 
 ### Prasyarat
 
-- Node.js 18 atau lebih baru
+- Node.js 22.13 atau lebih baru
 - Google AI Studio API key untuk fitur berbasis Gemini
 
 ### Langkah
@@ -176,7 +179,9 @@ Contoh request/response API sengaja tetap tersedia sebagai peluang kontribusi di
 
 6. Buka <http://localhost:3000>.
 
-Server tetap dapat boot tanpa `GEMINI_API_KEY` untuk pengembangan antarmuka dan smoke test, tetapi endpoint berbasis AI akan mengembalikan error konfigurasi.
+`npm start` dan `npm run dev` memuat `.env` otomatis. Seluruh variabel konfigurasi yang didukung (model, timeout, `TRUST_PROXY`, batas rate limit, dan lainnya) terdokumentasi di [.env.example](.env.example).
+
+Server tetap dapat boot tanpa `GEMINI_API_KEY` untuk pengembangan antarmuka dan smoke test, tetapi endpoint berbasis AI akan mengembalikan 503.
 
 ### Mode production
 
@@ -194,17 +199,32 @@ Dockerfile dapat digunakan sebagai titik awal deployment container. Contoh berik
 gcloud run deploy saringsini --source . --platform managed --allow-unauthenticated --region asia-southeast2 --set-env-vars GEMINI_API_KEY=YOUR_KEY,NODE_ENV=production
 ```
 
+Dockerfile sudah mengatur `TRUST_PROXY=1` karena Cloud Run menempatkan tepat satu proxy di depan aplikasi; tanpa itu rate limit per-IP akan menghitung semua pengunjung sebagai satu alamat. Pada platform lain, atur `TRUST_PROXY` sesuai jumlah proxy di depan aplikasi, dan biarkan kosong bila aplikasi diakses langsung.
+
 Sebelum deployment yang menerima data pengguna nyata, rancang external storage, kebijakan privasi, observability, pengelolaan rahasia, dan hardening keamanan sesuai kebutuhan lingkungan Anda.
 
 ## Struktur ringkas
 
 ```text
 .
+├── src/
+│   ├── server.js           # Entrypoint: konfigurasi, listen, graceful shutdown
+│   ├── app.js              # Perakit Express tanpa I/O sehingga dapat dites
+│   ├── config.js           # Parsing environment
+│   ├── routes/             # Endpoint /api
+│   ├── middleware/         # Header keamanan, rate limit, upload, penanganan error
+│   ├── services/           # Fasad Gemini dan penyimpanan komunitas
+│   ├── prompts/            # System instruction tiap fitur AI
+│   ├── lib/                # Validasi, sanitasi, normalisasi keluaran AI, deteksi tipe file
+│   └── data/               # Data seed demonstrasi
 ├── public/                 # Antarmuka, aset, PWA, dan modul browser
-├── test/                   # Syntax check dan smoke test
+├── test/
+│   ├── unit/               # Logika murni
+│   ├── integration/        # API melalui HTTP dengan Gemini palsu
+│   ├── e2e/                # Browser (Playwright)
+│   └── smoke.test.js       # Boot proses server sungguhan
 ├── docs/screenshots/       # Screenshot demonstrasi
-├── .github/                # CI dan template kontribusi
-├── server.js               # Express dan integrasi Gemini
+├── .github/                # CI, CodeQL, Dependabot, dan template kontribusi
 ├── Dockerfile
 ├── ROADMAP.md
 ├── SUPPORT.md
@@ -217,15 +237,15 @@ Folder `data/` dibuat saat runtime dan diabaikan oleh Git.
 
 ## Testing dan CI
 
-CI menjalankan pengecekan berikut pada Node.js 18, 20, dan 22:
+CI menjalankan lint, test, end-to-end Chromium, audit dependency produksi, build image Docker, dan CodeQL. Perintah yang sama tersedia secara lokal:
 
 ```bash
-npm run check   # node --check untuk file JavaScript
-npm run smoke   # boot server tanpa API key dan cek endpoint publik
-npm test        # check + smoke
+npm run lint       # ESLint, termasuk deteksi kode mati
+npm test           # unit, integrasi, dan smoke test (Node.js 22 dan 24 di CI)
+npm run test:e2e   # browser Playwright; sekali saja: npx playwright install chromium
 ```
 
-Pengecekan ini merupakan baseline ringan. Pengecekan tersebut belum mencakup akurasi AI, keamanan menyeluruh, aksesibilitas, browser end-to-end, atau durability penyimpanan.
+Test memakai Gemini palsu sehingga tidak membutuhkan API key atau jaringan. Suite ini tidak mencakup akurasi AI, audit keamanan independen, audit aksesibilitas penuh, atau durability penyimpanan.
 
 ## Berkontribusi
 
