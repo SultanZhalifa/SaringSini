@@ -14,7 +14,7 @@ Roadmap ini menggambarkan arah pemeliharaan untuk sekitar enam bulan ke depan. U
 
 - Menyelaraskan dokumentasi, metadata, dan copy antarmuka dengan implementasi yang ada.
 - Menjelaskan alur data, keterbatasan AI, dan batas persistence lokal/demo.
-- Menjaga CI Node.js 18, 20, dan 22 tetap hijau.
+- Menjaga CI (lint, test, end-to-end, audit, CodeQL) tetap hijau pada Node.js 22 dan 24.
 - Meninjau issue dan pull request secara best effort serta menjaga scope kontribusi tetap jelas.
 
 ## Near-term — sekitar 1–2 bulan
@@ -22,7 +22,7 @@ Roadmap ini menggambarkan arah pemeliharaan untuk sekitar enam bulan ke depan. U
 - Menerima kontribusi terfokus untuk [template Bahasa Bali (#1)](https://github.com/SultanZhalifa/SaringSini/issues/1) dan [feedback tombol Salin (#2)](https://github.com/SultanZhalifa/SaringSini/issues/2).
 - Memperluas dokumentasi API melalui [issue #3](https://github.com/SultanZhalifa/SaringSini/issues/3), tanpa menduplikasinya dalam credibility pass.
 - Melakukan audit alt text dan ikon melalui [issue #5](https://github.com/SultanZhalifa/SaringSini/issues/5).
-- Menambah pengujian terfokus untuk perilaku yang tidak tercakup syntax check dan smoke test saat ada proposal yang dapat ditinjau.
+- Memperluas pengujian terfokus untuk perilaku baru; baseline unit, integrasi, dan browser sudah tersedia.
 
 ## Medium-term — sekitar 3–4 bulan
 
@@ -30,6 +30,15 @@ Roadmap ini menggambarkan arah pemeliharaan untuk sekitar enam bulan ke depan. U
 - Mengevaluasi cache berumur pendek melalui [issue #7](https://github.com/SultanZhalifa/SaringSini/issues/7), termasuk implikasi privasi dan deployment multi-instance.
 - Mendokumentasikan opsi external storage untuk deployment yang membutuhkan data durable; tidak ada pilihan database yang sudah ditetapkan.
 - Meninjau alur consent dan disclosure sebelum feed komunitas digunakan di luar demonstrasi lokal.
+
+## Pekerjaan teknis yang direncanakan
+
+Item berikut bersifat rencana pemeliharaan, bukan janji rilis. Semuanya terpisah dari issue contributor di atas.
+
+- Migrasi ke SDK Gemini yang masih dipelihara (`@google/genai`). Pemakaian SDK terisolasi di `src/services/gemini.js`, tetapi migrasi perlu diverifikasi dengan API key sungguhan sebelum digabung.
+- Memecah `public/app.js` dan `public/index.css` menjadi modul per fitur, dengan test Playwright sebagai jaring pengaman.
+- Self-host font agar tidak ada permintaan ke Google Fonts.
+- Menjadikan publikasi ke feed komunitas sebagai opt-in dengan persetujuan eksplisit (lihat juga item consent di bawah).
 
 ## Longer-term exploration — sekitar 5–6 bulan
 

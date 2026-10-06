@@ -32,13 +32,26 @@
     });
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Generate/Retrieve Persistent Client ID for Upvote tracking
-    let clientId = localStorage.getItem('saringsini_client_id');
-    if (!clientId) {
-        clientId = 'client_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        localStorage.setItem('saringsini_client_id', clientId);
+const CLIENT_ID_KEY = 'saringsini_client_id';
+
+const createClientId = () =>
+    Array.from(crypto.getRandomValues(new Uint8Array(16)), (byte) => byte.toString(16).padStart(2, '0')).join('');
+
+/** Anonymous per-browser id; the server only uses it to de-duplicate community upvotes. */
+const getClientId = () => {
+    try {
+        const stored = localStorage.getItem(CLIENT_ID_KEY);
+        if (stored) return stored;
+        const created = createClientId();
+        localStorage.setItem(CLIENT_ID_KEY, created);
+        return created;
+    } catch (_) {
+        return createClientId(); // storage blocked (e.g. private mode): the id lasts for this page view
     }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const clientId = getClientId();
 
     // Force light theme — dark mode removed per design decision
     document.documentElement.removeAttribute('data-theme');
@@ -164,116 +177,108 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeCategoryFilter = 'all';
     let searchQuery = '';
 
+    // Untrusted text (community posts, AI output, user input) must only reach the DOM through
+    // textContent. This helper is the single place elements are created from it.
+    const createElement = (tag, className, text) => {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    };
+
+    const UPVOTE_ICON = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>';
+    const FACTUAL_ICON = '<svg viewBox="0 0 24 24" class="claim-status-icon text-emerald" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    const HOAX_ICON = '<svg viewBox="0 0 24 24" class="claim-status-icon text-red" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+    const READ_TICKS_ICON = '<svg class="chat-read-ticks" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path><path d="M16 6l-6.85 7.15L8.5 12.5"></path></svg>';
+
     // -------------------------------------------------------------
-    // [NEW] API Backend Sync for Community Feed (Victory Feature!)
+    // Community feed (every field from /api/community is untrusted text)
     // -------------------------------------------------------------
+    const BADGE_CLASSES = new Set(['safe', 'warning', 'danger']);
+
     const loadCommunityFeed = async () => {
         try {
-            const res = await fetch('/api/community');
+            const res = await fetch('/api/community', { headers: { 'X-Client-Id': clientId } });
             if (res.ok) {
                 communityReportsList = await res.json();
-                renderCommunityFeed();
+                renderCommunityViews();
             }
         } catch (error) {
-            console.error("Failed to load community feed from server:", error);
+            console.error('Failed to load community feed from server:', error);
         }
     };
 
-    // Render Community Feed with Search & Category filters
-    const renderCommunityFeed = () => {
-        communityFeedContainer.innerHTML = '';
-        
-        // Filter list
-        let filtered = [...communityReportsList];
-        
+    const matchesFeedFilters = (item) => {
         if (activeCategoryFilter !== 'all') {
-            const filterLower = activeCategoryFilter.toLowerCase();
-            filtered = filtered.filter(item => 
-                (item.category || '').toLowerCase().includes(filterLower) || 
-                (item.badge || '').toLowerCase().includes(filterLower)
-            );
+            const filter = activeCategoryFilter.toLowerCase();
+            const inCategory = (item.category || '').toLowerCase().includes(filter);
+            const inBadge = (item.badge || '').toLowerCase().includes(filter);
+            if (!inCategory && !inBadge) return false;
         }
-        
         if (searchQuery) {
-            const queryLower = searchQuery.toLowerCase();
-            filtered = filtered.filter(item => 
-                (item.text || '').toLowerCase().includes(queryLower) || 
-                (item.author || '').toLowerCase().includes(queryLower)
-            );
+            const query = searchQuery.toLowerCase();
+            return (item.text || '').toLowerCase().includes(query) || (item.author || '').toLowerCase().includes(query);
         }
+        return true;
+    };
 
-        if (filtered.length === 0) {
-            communityFeedContainer.innerHTML = `
-                <div style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.8rem;">
-                    Tidak ada laporan hoaks yang cocok.
-                </div>
-            `;
+    const buildCommunityItem = (post) => {
+        const header = createElement('div', 'community-item-header');
+        const badge = createElement('span', 'community-badge', `${post.percentage}% ${post.badge}`);
+        if (BADGE_CLASSES.has(post.badgeClass)) badge.classList.add(post.badgeClass);
+        header.append(createElement('span', 'community-author', post.author), badge);
+
+        const upvote = createElement('button', 'community-upvote-btn');
+        upvote.type = 'button';
+        upvote.disabled = post.upvoted;
+        upvote.classList.toggle('upvoted', post.upvoted);
+        upvote.innerHTML = UPVOTE_ICON;
+        upvote.append(createElement('span', '', `${post.upvotes} ${post.upvoted ? 'Sudah Didukung' : 'Dukung Klarifikasi'}`));
+        upvote.addEventListener('click', (event) => {
+            event.stopPropagation();
+            handleCommunityUpvote(post.id);
+        });
+
+        const actions = createElement('div', 'community-actions');
+        actions.append(createElement('span', 'community-date', post.time), upvote);
+
+        const item = createElement('div', 'community-item');
+        item.append(header, createElement('p', 'community-text', post.text), actions);
+        return item;
+    };
+
+    const renderCommunityFeed = () => {
+        const visible = communityReportsList.filter(matchesFeedFilters);
+        if (visible.length === 0) {
+            communityFeedContainer.replaceChildren(createElement('div', 'community-empty', 'Tidak ada laporan hoaks yang cocok.'));
             return;
         }
-
-        filtered.forEach(post => {
-            const item = document.createElement('div');
-            item.className = 'community-item';
-            
-            // Check if already upvoted by this client
-            const hasUpvoted = post.upvotedClients && post.upvotedClients.includes(clientId);
-            const upvoteClass = hasUpvoted ? 'community-upvote-btn upvoted' : 'community-upvote-btn';
-            const upvoteText = hasUpvoted ? 'Sudah Didukung' : 'Dukung Klarifikasi';
-            
-            item.innerHTML = `
-                <div class="community-item-header">
-                    <span class="community-author">${post.author}</span>
-                    <span class="community-badge ${post.badgeClass}">${post.percentage}% ${post.badge}</span>
-                </div>
-                <p class="community-text">${post.text}</p>
-                <div class="community-actions">
-                    <span class="community-date">${post.time}</span>
-                    <button class="${upvoteClass}" data-id="${post.id}" ${hasUpvoted ? 'disabled' : ''}>
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                        <span>${post.upvotes} ${upvoteText}</span>
-                    </button>
-                </div>
-            `;
-            communityFeedContainer.appendChild(item);
-        });
-        
-        // Add upvote click listeners
-        document.querySelectorAll('.community-upvote-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const id = this.getAttribute('data-id');
-                handleCommunityUpvote(id);
-            });
-        });
+        communityFeedContainer.replaceChildren(...visible.map(buildCommunityItem));
     };
-    
+
     const handleCommunityUpvote = async (id) => {
         try {
-            const res = await fetch(`/api/community/${id}/upvote`, {
+            const res = await fetch(`/api/community/${encodeURIComponent(id)}/upvote`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ clientId })
             });
-            
-            if (res.ok) {
-                toast.textContent = 'Dukungan verifikasi berhasil ditambahkan';
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2000);
-                
-                // Reload feed
-                loadCommunityFeed();
-            } else {
-                const err = await res.json();
-                showToast(err.error || "Gagal memberikan upvote.", 'warning');
+
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                showToast(err.error || 'Gagal memberikan upvote.', 'warning');
+                return;
             }
+
+            showToast('Dukungan verifikasi berhasil ditambahkan', 'safe');
+            fireConfetti(1200);
+            loadCommunityFeed();
         } catch (error) {
-            console.error("Upvote request failed:", error);
+            console.error('Upvote request failed:', error);
             showToast('Koneksi gagal. Coba lagi.', 'danger');
         }
     };
-    
+
     // [NEW] Search & Category Filter click handlers (Victory Update!)
     communitySearch.addEventListener('input', (e) => {
         searchQuery = e.target.value.trim();
@@ -289,9 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCommunityFeed();
         });
     });
-
-    // Initial Community Load
-    loadCommunityFeed();
 
     // Set simulator timestamp to current time
     const setInitialTimestamps = () => {
@@ -522,7 +524,6 @@ document.addEventListener('DOMContentLoaded', () => {
         resultLoading.classList.remove('hidden');
 
         const formData = new FormData();
-        formData.append('clientId', clientId);
 
         if (activeTab === 'text') {
             formData.append('message', textVal);
@@ -557,6 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
             currentAnalysis = data;
             
             renderAnalysisResults(data);
+            updateRegenBtnState();
+            document.dispatchEvent(new CustomEvent('saringsini:analysis', { detail: data }));
 
             // Auto scroll down to the loaded result cards smoothly
             setTimeout(() => {
@@ -577,6 +580,25 @@ document.addEventListener('DOMContentLoaded', () => {
             resultLoading.classList.add('hidden');
         }
     });
+
+    const buildClaimCard = ({ claim, isFactual, explanation }) => {
+        const icon = createElement('div', 'claim-status-icon');
+        icon.innerHTML = isFactual ? FACTUAL_ICON : HOAX_ICON;
+
+        const status = createElement('span', 'claim-title', `[${isFactual ? 'Indikasi faktual' : 'Perlu verifikasi'}]`);
+        status.style.color = isFactual ? 'var(--emerald)' : 'var(--red)';
+        const text = createElement('span', 'claim-title', claim);
+        text.style.color = 'var(--text-primary)';
+        const body = createElement('div', 'claim-body');
+        body.append(status, ' ', text);
+
+        const header = createElement('div', 'claim-header-row');
+        header.append(icon, body);
+
+        const card = createElement('div', 'claim-card');
+        card.append(header, createElement('p', 'claim-explanation', explanation));
+        return card;
+    };
 
     // -------------------------------------------------------------
     // Render Results & Animate Speedometer Gauge
@@ -615,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resBadge.textContent = `Indikasi AI: ${data.statusBadge || 'Perlu verifikasi'}`;
         resBadge.className = 'status-badge'; 
         
-        let headerColor = '#0f172a';
+        let headerColor;
         if (hoaxPercentage < 30) {
             resBadge.classList.add('safe');
             resultView.classList.add('glow-safe-pulse'); // Glow green
@@ -685,6 +707,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.className = `mitigation-btn ${mit.colorClass}`;
                 btn.href = mit.url;
                 btn.target = '_blank';
+                btn.rel = 'noopener noreferrer';
                 btn.innerHTML = `
                     <div style="text-align: left;">
                         <span style="display: block;">${mit.title}</span>
@@ -698,52 +721,22 @@ document.addEventListener('DOMContentLoaded', () => {
             resMitigationBox.classList.add('hidden');
         }
 
-        // 4. Claims Listing using clean SVGs (NO EMOJI)
-        resClaimsList.innerHTML = '';
+        // 4. Claims (text comes from the AI and is rendered as plain text)
         if (data.claims && data.claims.length > 0) {
-            data.claims.forEach(item => {
-                const claimCard = document.createElement('div');
-                claimCard.className = 'claim-card';
-                
-                const isFactual = item.isFactual;
-                const statusText = isFactual ? 'Indikasi faktual' : 'Perlu verifikasi';
-                const titleColor = isFactual ? 'var(--emerald)' : 'var(--red)';
-                
-                const iconSvg = isFactual 
-                    ? `<svg viewBox="0 0 24 24" class="claim-status-icon text-emerald" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
-                    : `<svg viewBox="0 0 24 24" class="claim-status-icon text-red" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-                
-                claimCard.innerHTML = `
-                    <div class="claim-header-row">
-                        <div class="claim-status-icon">${iconSvg}</div>
-                        <div style="flex: 1;">
-                            <span class="claim-title" style="color: ${titleColor};">[${statusText}]</span>
-                            <span class="claim-title" style="color: var(--text-primary);"> ${item.claim}</span>
-                        </div>
-                    </div>
-                    <p class="claim-explanation">${item.explanation}</p>
-                `;
-                resClaimsList.appendChild(claimCard);
-            });
+            resClaimsList.replaceChildren(...data.claims.map(buildClaimCard));
         } else {
-            resClaimsList.innerHTML = '<p class="claim-explanation">Tidak ditemukan klaim spesifik.</p>';
+            resClaimsList.replaceChildren(createElement('p', 'claim-explanation', 'Tidak ditemukan klaim spesifik.'));
         }
 
         // 5. Populate Polite Replies cards (Strictly Clean Text - NO EMOJI)
-        sopanText.textContent = cleanEmojiText(data.politeReplies.sopan);
-        santaiText.textContent = cleanEmojiText(data.politeReplies.santai);
-        humorText.textContent = cleanEmojiText(data.politeReplies.humor);
+        sopanText.textContent = data.politeReplies.sopan;
+        santaiText.textContent = data.politeReplies.santai;
+        humorText.textContent = data.politeReplies.humor;
         
         // 6. Automatically sync newly injected server-side community feed reports (Victory Update!)
         setTimeout(() => {
             loadCommunityFeed();
         }, 600);
-    };
-
-    // Helper to strip any accidentally generated emojis from strings
-    const cleanEmojiText = (str) => {
-        if (!str) return '';
-        return str.replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, '');
     };
 
     // -------------------------------------------------------------
@@ -929,10 +922,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentY = y;
         
         for (let n = 0; n < words.length; n++) {
-            let testLine = line + words[n] + ' ';
-            let metrics = context.measureText(testLine);
-            let testWidth = metrics.width;
-            if (testWidth > maxWidth && n > 0) {
+            const testLine = line + words[n] + ' ';
+            if (context.measureText(testLine).width > maxWidth && n > 0) {
                 context.fillText(line, x, currentY);
                 line = words[n] + ' ';
                 currentY += lineHeight;
@@ -961,29 +952,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // Family Chat Simulator (Strictly Emoji-Free & SVGs)
     // -------------------------------------------------------------
+    const formatClock = (date) =>
+        `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
     const appendMessage = (sender, content, type, senderNameColor = '#0f766e') => {
-        const bubble = document.createElement('div');
-        bubble.className = `chat-bubble ${type}`;
-        
-        const now = new Date();
-        const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-        
+        const bubble = createElement('div', `chat-bubble ${type}`);
+        const message = createElement('p', 'message-content', content);
+        const time = createElement('span', 'message-time', formatClock(new Date()));
+
         if (type === 'received') {
-            bubble.innerHTML = `
-                <div class="sender-name" style="color: ${senderNameColor};">${sender}</div>
-                <p class="message-content">${content}</p>
-                <span class="message-time">${timeStr}</span>
-            `;
+            const name = createElement('div', 'sender-name', sender);
+            name.style.color = senderNameColor;
+            bubble.append(name, message, time);
         } else {
-            bubble.innerHTML = `
-                <p class="message-content">${content}</p>
-                <div style="display: flex; justify-content: flex-end; align-items: center; gap: 2px; margin-top: 2px;">
-                    <span class="message-time">${timeStr}</span>
-                    <svg viewBox="0 0 24 24" width="13" height="13" style="color: #53bdeb; margin-left: 2px;" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path><path d="M16 6l-6.85 7.15L8.5 12.5"></path></svg>
-                </div>
-            `;
+            const meta = createElement('div', 'chat-sent-meta');
+            meta.append(time);
+            meta.insertAdjacentHTML('beforeend', READ_TICKS_ICON);
+            bubble.append(message, meta);
         }
-        
+
         chatBox.appendChild(bubble);
         chatBox.scrollTop = chatBox.scrollHeight;
     };
@@ -1004,147 +991,96 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Show inline typing indicator inside chat-box (natural WhatsApp-style)
     const showTypingIndicator = (senderName) => {
-        if (!chatBox) return null;
-        const node = document.createElement('div');
-        node.className = 'chat-typing-indicator';
-        node.setAttribute('data-typing-for', senderName);
-        node.innerHTML = `
-            <span>${escapeHtml ? escapeHtml(senderName) : senderName} sedang mengetik</span>
-            <span class="chat-typing-dots"><span></span><span></span><span></span></span>
-        `;
+        const dots = createElement('span', 'chat-typing-dots');
+        dots.append(createElement('span'), createElement('span'), createElement('span'));
+
+        const node = createElement('div', 'chat-typing-indicator');
+        node.dataset.typingFor = senderName;
+        node.append(createElement('span', '', `${senderName} sedang mengetik`), dots);
+
         chatBox.appendChild(node);
         chatBox.scrollTop = chatBox.scrollHeight;
         return node;
     };
 
-    const removeTypingIndicator = (node) => {
-        if (node && node.parentNode) node.parentNode.removeChild(node);
+    const FAMILY = {
+        mama: { name: 'Mama', color: '#B8392E' },
+        papa: { name: 'Papa', color: '#5C8374' },
+        tante: { name: 'Tante Rosa', color: '#7A4A8E' },
+        om: { name: 'Om Heri', color: '#D97706' }
+    };
+
+    // Canned replies (the simulator never calls the AI).
+    const FAMILY_REPLIES = {
+        ping: { who: 'papa', text: 'Nak, dibiasakan kalau memulai obrolan dengan orang tua mengucapkan salam ya, jangan cuma huruf P saja, kurang sopan.' },
+        rude: { who: 'mama', text: 'Astagfirullah nak, bahasanya yang sopan ya di grup keluarga. Ada Om dan Tante juga di sini.' },
+        salam: { who: 'mama', text: 'Waalaikumsalam warahmatullah. Ada kabar atau info penting apa nak hari ini? Semoga kita sekeluarga selalu sehat ya.' },
+        greeting: { who: 'tante', text: 'Halo juga keponakanku yang baik. Ada informasi menarik atau kabar apa hari ini?' },
+        debunked: [
+            { who: 'mama', text: 'Ya ampun nak, Mama baru saja mau membagikan info ini ke grup arisan warga RT dan teman sekolah Mama. Untung kamu cepat memberikan klarifikasi ini. Terima kasih banyak ya sayang, nanti sepulang kerja Mama buatkan makanan kesukaanmu.' },
+            { who: 'papa', text: 'Oh begitu ya nak, untung Papa membaca penjelasan bijakmu dulu di grup ini. Memang sekarang banyak sekali disinformasi menyebar secara sembarangan di internet. Papa bantu teruskan penjelasan ini ke teman-teman di kantor.' },
+            { who: 'om', text: 'Waduh, ternyata ini tidak benar ya. Om mendapatkan pesan ini dari teman kantor yang katanya langsung dari dinas terkait. Tapi ya sudahlah kalau sistem AI kamu sudah memastikan ini salah. Terima kasih infonya keponakanku.' }
+        ],
+        verified: [
+            { who: 'papa', text: 'Info yang sangat baik nak. Penjelasannya terstruktur dan berdasarkan fakta ilmiah. Langsung Papa sebarkan ke grup angkatan alumni sekolah biar semua tahu. Terima kasih banyak.' },
+            { who: 'mama', text: 'Terima kasih banyak ya anakku sayang untuk info penting ini. Jaga kondisi tubuhmu baik-baik di sana, jangan lupa istirahat teratur dan kurangi minum es.' }
+        ],
+        uncertain: [
+            { who: 'tante', text: 'Terima kasih banyak nak atas bantuannya meluruskan informasi ini. Memang kita harus menyaring dulu setiap berita sebelum ikut membagikannya ke orang lain ya.' },
+            { who: 'mama', text: 'Ternyata beritanya kurang akurat ya nak. Terima kasih ya sudah membantu membedah kebenarannya. Sangat membantu Mama memahami isi beritanya.' }
+        ],
+        generic: [
+            { who: 'mama', text: 'Iya nak, terima kasih. Jangan lupa nanti pas pulang mampir belikan kebutuhan bumbu dapur dulu ya, Mama mau memasak makan malam.' },
+            { who: 'papa', text: 'Info yang bagus sekali nak. Terima kasih banyak.' },
+            { who: 'tante', text: 'Semoga kita sekeluarga selalu diberikan kesehatan, kelancaran rezeki, dan perlindungan dari segala mara bahaya.' }
+        ]
+    };
+
+    const LAST_GENERIC_REPLY_KEY = 'saringsini_last_gen_idx';
+    const ANALYSIS_REPLY_MIN_LENGTH = 25;
+    const DEBUNKED_FROM = 60;
+    const VERIFIED_BELOW = 30;
+
+    const randomItem = (items) => items[Math.floor(Math.random() * items.length)];
+
+    // Cycles through the generic replies so the same one is not repeated back to back.
+    const nextGenericReply = () => {
+        let index = 0;
+        try {
+            index = ((parseInt(localStorage.getItem(LAST_GENERIC_REPLY_KEY), 10) || 0) + 1) % FAMILY_REPLIES.generic.length;
+            localStorage.setItem(LAST_GENERIC_REPLY_KEY, String(index));
+        } catch (_) { /* storage unavailable: always the first reply */ }
+        return FAMILY_REPLIES.generic[index];
+    };
+
+    const pickFamilyReply = (userText) => {
+        const text = userText.toLowerCase().trim();
+
+        if (text === 'p' || text === 'ping') return FAMILY_REPLIES.ping;
+        if (['woi', 'woy', 'oi', 'oy'].includes(text)) return FAMILY_REPLIES.rude;
+        if (text.includes('assalamualaikum') || text.includes("assalamu'alaikum")) return FAMILY_REPLIES.salam;
+        if (['halo', 'hallo', 'hai', 'hi'].includes(text)) return FAMILY_REPLIES.greeting;
+
+        if (currentAnalysis && userText.length > ANALYSIS_REPLY_MIN_LENGTH) {
+            const percent = currentAnalysis.hoaxPercentage || 0;
+            if (percent >= DEBUNKED_FROM) return randomItem(FAMILY_REPLIES.debunked);
+            if (percent < VERIFIED_BELOW) return randomItem(FAMILY_REPLIES.verified);
+            return randomItem(FAMILY_REPLIES.uncertain);
+        }
+        return nextGenericReply();
     };
 
     const simulateFamilyResponse = (userText) => {
-        // Show typing indicator inline
-        const typingNode = showTypingIndicator('Mama');
+        const typingNode = showTypingIndicator(FAMILY.mama.name);
 
         setTimeout(() => {
-            if (typingNode) typingNode.querySelector('span').textContent = 'Papa sedang mengetik';
+            typingNode.querySelector('span').textContent = `${FAMILY.papa.name} sedang mengetik`;
 
             setTimeout(() => {
-                removeTypingIndicator(typingNode);
-                
-                let sender = 'Mama';
-                let reply = '';
-                let nameColor = '#B8392E'; // pink/rose for mama
-                
-                const cleanText = userText.toLowerCase().trim();
-                
-                if (cleanText === 'p' || cleanText === 'ping') {
-                    sender = 'Papa';
-                    nameColor = '#5C8374';
-                    reply = 'Nak, dibiasakan kalau memulai obrolan dengan orang tua mengucapkan salam ya, jangan cuma huruf P saja, kurang sopan.';
-                } else if (cleanText === 'woi' || cleanText === 'woy' || cleanText === 'oi' || cleanText === 'oy') {
-                    sender = 'Mama';
-                    nameColor = '#B8392E';
-                    reply = 'Astagfirullah nak, bahasanya yang sopan ya di grup keluarga. Ada Om dan Tante juga di sini.';
-                } else if (cleanText.includes('assalamualaikum') || cleanText.includes('assalamu\'alaikum')) {
-                    sender = 'Mama';
-                    nameColor = '#B8392E';
-                    reply = 'Waalaikumsalam warahmatullah. Ada kabar atau info penting apa nak hari ini? Semoga kita sekeluarga selalu sehat ya.';
-                } else if (cleanText === 'halo' || cleanText === 'hallo' || cleanText === 'hai' || cleanText === 'hi') {
-                    sender = 'Tante Rosa';
-                    nameColor = '#7A4A8E';
-                    reply = 'Halo juga keponakanku yang baik. Ada informasi menarik atau kabar apa hari ini?';
-                } else if (currentAnalysis && userText.length > 25) {
-                    const percent = currentAnalysis.hoaxPercentage || 0;
-                    
-                    if (percent >= 60) {
-                        const responses = [
-                            {
-                                name: 'Mama',
-                                color: '#B8392E',
-                                text: 'Ya ampun nak, Mama baru saja mau membagikan info ini ke grup arisan warga RT dan teman sekolah Mama. Untung kamu cepat memberikan klarifikasi ini. Terima kasih banyak ya sayang, nanti sepulang kerja Mama buatkan makanan kesukaanmu.'
-                            },
-                            {
-                                name: 'Papa',
-                                color: '#5C8374', 
-                                text: 'Oh begitu ya nak, untung Papa membaca penjelasan bijakmu dulu di grup ini. Memang sekarang banyak sekali disinformasi menyebar secara sembarangan di internet. Papa bantu teruskan penjelasan ini ke teman-teman di kantor.'
-                            },
-                            {
-                                name: 'Om Heri',
-                                color: '#D97706', 
-                                text: 'Waduh, ternyata ini tidak benar ya. Om mendapatkan pesan ini dari teman kantor yang katanya langsung dari dinas terkait. Tapi ya sudahlah kalau sistem AI kamu sudah memastikan ini salah. Terima kasih infonya keponakanku.'
-                            }
-                        ];
-                        const chosen = responses[Math.floor(Math.random() * responses.length)];
-                        sender = chosen.name;
-                        nameColor = chosen.color;
-                        reply = cleanEmojiText(chosen.text);
-                    } else if (percent < 30) {
-                        const responses = [
-                            {
-                                name: 'Papa',
-                                color: '#5C8374',
-                                text: 'Info yang sangat baik nak. Penjelasannya terstruktur dan berdasarkan fakta ilmiah. Langsung Papa sebarkan ke grup angkatan alumni sekolah biar semua tahu. Terima kasih banyak.'
-                            },
-                            {
-                                name: 'Mama',
-                                color: '#B8392E',
-                                text: 'Terima kasih banyak ya anakku sayang untuk info penting ini. Jaga kondisi tubuhmu baik-baik di sana, jangan lupa istirahat teratur dan kurangi minum es.'
-                            }
-                        ];
-                        const chosen = responses[Math.floor(Math.random() * responses.length)];
-                        sender = chosen.name;
-                        nameColor = chosen.color;
-                        reply = cleanEmojiText(chosen.text);
-                    } else {
-                        const responses = [
-                            {
-                                name: 'Tante Rosa',
-                                color: '#7A4A8E', 
-                                text: 'Terima kasih banyak nak atas bantuannya meluruskan informasi ini. Memang kita harus menyaring dulu setiap berita sebelum ikut membagikannya ke orang lain ya.'
-                            },
-                            {
-                                name: 'Mama',
-                                color: '#B8392E',
-                                text: 'Ternyata beritanya kurang akurat ya nak. Terima kasih ya sudah membantu membedah kebenarannya. Sangat membantu Mama memahami isi beritanya.'
-                            }
-                        ];
-                        const chosen = responses[Math.floor(Math.random() * responses.length)];
-                        sender = chosen.name;
-                        nameColor = chosen.color;
-                        reply = cleanEmojiText(chosen.text);
-                    }
-                } else {
-                    const genericResponses = [
-                        {
-                            name: 'Mama',
-                            color: '#B8392E',
-                            text: 'Iya nak, terima kasih. Jangan lupa nanti pas pulang mampir belikan kebutuhan bumbu dapur dulu ya, Mama mau memasak makan malam.'
-                        },
-                        {
-                            name: 'Papa',
-                            color: '#5C8374',
-                            text: 'Info yang bagus sekali nak. Terima kasih banyak.'
-                        },
-                        {
-                            name: 'Tante Rosa',
-                            color: '#7A4A8E',
-                            text: 'Semoga kita sekeluarga selalu diberikan kesehatan, kelancaran rezeki, dan perlindungan dari segala mara bahaya.'
-                        }
-                    ];
-                    // Prevent repeating the same response if possible
-                    let lastGenericIndex = parseInt(localStorage.getItem('saringsini_last_gen_idx')) || 0;
-                    let nextIndex = (lastGenericIndex + 1) % genericResponses.length;
-                    localStorage.setItem('saringsini_last_gen_idx', nextIndex);
-                    
-                    const chosen = genericResponses[nextIndex];
-                    sender = chosen.name;
-                    nameColor = chosen.color;
-                    reply = cleanEmojiText(chosen.text);
-                }
-                
-                appendMessage(sender, reply, 'received', nameColor);
+                typingNode.remove();
+                const { who, text } = pickFamilyReply(userText);
+                appendMessage(FAMILY[who].name, text, 'received', FAMILY[who].color);
             }, 1000);
         }, 1000);
     };
@@ -1229,11 +1165,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             recognition = new SpeechRecognition();
             recognition.lang = 'id-ID';
-            recognition.interimResults = true;
+            recognition.interimResults = false;
             recognition.continuous = false;
             recognition.maxAlternatives = 1;
-
-            let interimText = '';
 
             recognition.onstart = () => {
                 isRecording = true;
@@ -1244,14 +1178,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             recognition.onresult = (event) => {
                 let finalTranscript = '';
-                interimText = '';
                 for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interimText += transcript;
-                    }
+                    if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript;
                 }
                 if (finalTranscript) {
                     const current = messageInput.value.trim();
@@ -1342,8 +1270,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         replies: currentAnalysis.politeReplies,
-                        language: lang,
-                        clientId
+                        language: lang
                     })
                 });
 
@@ -1354,9 +1281,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const data = await res.json();
                 if (data.politeReplies) {
-                    sopanText.textContent = cleanEmojiText(data.politeReplies.sopan || '');
-                    santaiText.textContent = cleanEmojiText(data.politeReplies.santai || '');
-                    humorText.textContent = cleanEmojiText(data.politeReplies.humor || '');
+                    sopanText.textContent = data.politeReplies.sopan;
+                    santaiText.textContent = data.politeReplies.santai;
+                    humorText.textContent = data.politeReplies.humor;
                     currentAnalysis.politeReplies = data.politeReplies;
                     const langLabels = {
                         jawa: 'Jawa Krama',
@@ -1385,7 +1312,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (jsPdfLoadPromise) return jsPdfLoadPromise;
         jsPdfLoadPromise = new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+            script.src = '/vendor/jspdf.umd.min.js';
             script.async = true;
             script.onload = () => {
                 if (window.jspdf && window.jspdf.jsPDF) resolve(window.jspdf.jsPDF);
@@ -1470,7 +1397,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(11);
                 doc.setTextColor(90, 70, 52);
-                const sumLines = doc.splitTextToSize(cleanEmojiText(currentAnalysis.summary || '-'), contentW);
+                const sumLines = doc.splitTextToSize(currentAnalysis.summary || '-', contentW);
                 doc.text(sumLines, margin, y);
                 y += sumLines.length * 14 + 16;
 
@@ -1482,20 +1409,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     doc.text('Daftar Indikasi Klaim', margin, y);
                     y += 16;
                     doc.setFontSize(10);
-                    currentAnalysis.claims.forEach((c, i) => {
+                    currentAnalysis.claims.forEach((c) => {
                         if (y > 740) { doc.addPage(); y = margin; }
                         const isFact = !!c.isFactual;
                         doc.setFillColor(isFact ? 107 : 184, isFact ? 142 : 57, isFact ? 78 : 46);
                         doc.circle(margin + 6, y - 3, 4, 'F');
                         doc.setFont('helvetica', 'bold');
                         doc.setTextColor(61, 40, 23);
-                        const claimTitle = `[${isFact ? 'Indikasi faktual' : 'Perlu verifikasi'}] ${cleanEmojiText(c.claim || '')}`;
+                        const claimTitle = `[${isFact ? 'Indikasi faktual' : 'Perlu verifikasi'}] ${c.claim || ''}`;
                         const claimLines = doc.splitTextToSize(claimTitle, contentW - 18);
                         doc.text(claimLines, margin + 18, y);
                         y += claimLines.length * 13 + 2;
                         doc.setFont('helvetica', 'normal');
                         doc.setTextColor(90, 70, 52);
-                        const explLines = doc.splitTextToSize(cleanEmojiText(c.explanation || ''), contentW - 18);
+                        const explLines = doc.splitTextToSize(c.explanation || '', contentW - 18);
                         doc.text(explLines, margin + 18, y);
                         y += explLines.length * 12 + 10;
                     });
@@ -1525,7 +1452,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         y += 14;
                         doc.setFont('helvetica', 'normal');
                         doc.setTextColor(61, 40, 23);
-                        const rLines = doc.splitTextToSize(cleanEmojiText(r.text || ''), contentW);
+                        const rLines = doc.splitTextToSize(r.text || '', contentW);
                         doc.text(rLines, margin, y);
                         y += rLines.length * 12 + 10;
                     });
@@ -1552,10 +1479,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // Re-evaluate regen button when new analysis comes in
-    const observeAnalysis = new MutationObserver(() => updateRegenBtnState());
-    if (resBadge) observeAnalysis.observe(resBadge, { childList: true, characterData: true, subtree: true });
 
     // ------------ Animated number counters for hero stats ------------
     const animateCounter = (el, target, duration) => {
@@ -1631,7 +1554,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pwaDismissBtn) {
         pwaDismissBtn.addEventListener('click', () => {
             if (pwaBanner) pwaBanner.hidden = true;
-            try { localStorage.setItem('saringsini_pwa_dismissed_at', String(Date.now())); } catch (_) {}
+            try { localStorage.setItem('saringsini_pwa_dismissed_at', String(Date.now())); } catch (_) { /* storage unavailable */ }
         });
     }
 
@@ -1712,15 +1635,15 @@ document.addEventListener('DOMContentLoaded', () => {
             sortedCats.slice(0, 5).forEach(([cat, count], idx) => {
                 const pct = Math.round((count / maxVal) * 100);
                 const fillClass = idx === 0 ? 'fill-danger' : idx === 1 ? 'fill-warning' : idx === 2 ? '' : 'fill-success';
-                const row = document.createElement('div');
-                row.className = 'chart-bar-row';
-                row.innerHTML = `
-                    <span class="chart-bar-label">${escapeHtml(cat)}</span>
-                    <div class="chart-bar-track">
-                        <div class="chart-bar-fill ${fillClass}" style="width: 0%;" data-target-width="${pct}%"></div>
-                    </div>
-                    <span class="chart-bar-count">${count}</span>
-                `;
+                const fill = createElement('div', 'chart-bar-fill');
+                if (fillClass) fill.classList.add(fillClass);
+                fill.style.width = '0%';
+                fill.dataset.targetWidth = `${pct}%`;
+                const track = createElement('div', 'chart-bar-track');
+                track.append(fill);
+
+                const row = createElement('div', 'chart-bar-row');
+                row.append(createElement('span', 'chart-bar-label', cat), track, createElement('span', 'chart-bar-count', String(count)));
                 chartEl.appendChild(row);
             });
             // Animate bars
@@ -1753,34 +1676,6 @@ document.addEventListener('DOMContentLoaded', () => {
             : 'Selalu verifikasi sumber sebelum membagikan informasi.';
         return `Kategori ${topCategory} ${trend} dengan ${topPct}% dari total laporan. Tingkat bahaya rata-rata ${danger} (${avgDanger}%). ${advisory}`;
     };
-
-    const escapeHtml = (s) => String(s).replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[m]));
-
-    // Hook into community feed: re-render analytics whenever feed loads
-    const originalLoadFeed = loadCommunityFeed;
-    // (already defined above, we will just re-render after each call via observer pattern)
-    // Trigger initial render once analytics tab is rendered
-    setTimeout(() => renderAnalytics(communityReportsList), 800);
-
-    // Re-render analytics every time community feed updates (after upvote / new report)
-    const renderFeedAndAnalytics = () => {
-        renderCommunityFeed();
-        renderAnalytics(communityReportsList);
-        renderHoaxMap(communityReportsList);
-    };
-    // Patch to also update on load
-    const _origLoadFn = loadCommunityFeed;
-    // We can't fully monkey-patch the const, but we can listen to render via interval
-    let _lastReportsLength = 0;
-    setInterval(() => {
-        if (communityReportsList.length !== _lastReportsLength) {
-            _lastReportsLength = communityReportsList.length;
-            renderAnalytics(communityReportsList);
-            renderHoaxMap(communityReportsList);
-        }
-    }, 1500);
 
     // =============================================================
     // v2.1 HOAX MAP INDONESIA - SVG region heatmap
@@ -2001,6 +1896,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (fillEl) fillEl.style.width = `${((quizState.currentIndex + 1) / quizState.questions.length) * 100}%`;
     };
 
+    const QUIZ_CONFETTI_MIN_CORRECT = 8;
+
     const finishQuiz = () => {
         showQuizState('result');
         const total = quizState.questions.length;
@@ -2025,6 +1922,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (title) title.textContent = 'Tetap Semangat!';
             if (msg) msg.textContent = 'Hoaks memang licik. Pakai SaringSini sebagai senjatamu.';
         }
+
+        if (quizState.correctCount >= QUIZ_CONFETTI_MIN_CORRECT) fireConfetti(2400);
     };
 
     const startQuiz = () => {
@@ -2126,7 +2025,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeOnboarding = () => {
         if (onboardingOverlay) onboardingOverlay.hidden = true;
-        try { localStorage.setItem('saringsini_onboarded', '1'); } catch (_) {}
+        try { localStorage.setItem('saringsini_onboarded', '1'); } catch (_) { /* storage unavailable */ }
     };
 
     if (onboardingOverlay) {
@@ -2250,38 +2149,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expose for other modules
     window.__saringSiniConfetti = fireConfetti;
 
-    // Hook into quiz finish (perfect or >= 80%) — patch finishQuiz logic
-    const originalFinishQuiz = finishQuiz;
-    // We added confetti directly inside finishQuiz earlier? No, let's wrap via event
-    // Easier: poll for result visibility and trigger once
-    let confettiFiredForQuiz = false;
-    setInterval(() => {
-        const quizResult = document.getElementById('quiz-result');
-        const isResultVisible = quizResult && !quizResult.classList.contains('hidden');
-        const correctEl = document.getElementById('quiz-result-correct');
-        const correct = correctEl ? parseInt(correctEl.textContent, 10) || 0 : 0;
-        if (isResultVisible && correct >= 8 && !confettiFiredForQuiz) {
-            confettiFiredForQuiz = true;
-            fireConfetti(2400);
-        }
-        if (!isResultVisible) confettiFiredForQuiz = false;
-    }, 600);
-
-    // Also fire confetti on successful upvote (small celebration)
-    const _origHandleUpvote = handleCommunityUpvote;
-    // Wrap by intercepting clicks
-    document.addEventListener('click', (e) => {
-        const upBtn = e.target.closest('.community-upvote-btn');
-        if (upBtn && !upBtn.disabled) {
-            // Delayed small confetti after server responds
-            setTimeout(() => {
-                if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-                // Tiny burst only — reuse fire with shorter duration
-                fireConfetti(1200);
-            }, 350);
-        }
-    });
-
     // =============================================================
     // v2.2 DEMONSTRATION ACTIVITY INDICATOR
     // Simulates activity for UI demonstration; not real usage data.
@@ -2329,6 +2196,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // The feed, analytics and map are all views of the same community data; render them together.
+    const renderCommunityViews = () => {
+        renderCommunityFeed();
+        renderAnalytics(communityReportsList);
+        renderHoaxMap(communityReportsList);
+    };
+
+    // Load once everything above is defined.
+    loadCommunityFeed();
 
     // Branded console signature
     const sigCss = 'background:linear-gradient(135deg,#C84B31,#5C8374);color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:bold';
