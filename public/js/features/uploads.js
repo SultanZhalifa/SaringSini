@@ -35,8 +35,6 @@ export function createUploadSlot({ ids, messages }) {
     const preview = (file, isVideo) => {
         releasePreviewUrl();
         previewUrl = URL.createObjectURL(file);
-        // Only ever a blob: URL for the visitor's own file; never let anything else reach src.
-        if (!previewUrl.startsWith('blob:')) return;
 
         if (isVideo) {
             image.removeAttribute('src');
