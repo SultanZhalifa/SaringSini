@@ -378,7 +378,7 @@ textarea:focus {
 .skeleton-line.long { width: 100%; }
 
 /* =========================================================
-   v2.0 New Components: Voice Input, WA Share, PDF, Lang Selector, URL Checker
+   New Components: Voice Input, WA Share, PDF, Lang Selector, URL Checker
    ========================================================= */
 
 /* Tab selector with horizontal scroll for narrow screens */
@@ -489,19 +489,4 @@ textarea:focus {
     color: var(--text-muted);
     line-height: 1.45;
     margin-top: 0.2rem;
-}
-
-/* Skeleton loader animation utility (already partially exists, add main keyframe) */
-@keyframes skeleton-shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
-.skeleton-loading {
-    background: linear-gradient(90deg, var(--bg-secondary) 0%, var(--card-border) 50%, var(--bg-secondary) 100%);
-    background-size: 200% 100%;
-    animation: skeleton-shimmer 1.5s infinite;
-    border-radius: 8px;
-    color: transparent !important;
-    pointer-events: none;
 }

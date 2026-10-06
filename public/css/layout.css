@@ -1,7 +1,7 @@
 /* App shell: header, panels, bottom and side navigation, cards, footer. */
 
 /* ==========================================================================
-   Mobile-First App Shell Layout & Navigation (Victory Overhaul)
+   Mobile-First App Shell Layout & Navigation
    ========================================================================== */
 
 /* Main Mobile App Shell Frame */
@@ -75,24 +75,7 @@
     -webkit-text-fill-color: transparent;
 }
 
-.header-badge {
-    background-color: var(--blue-light);
-    border: 1px solid rgba(200, 75, 49, 0.18);
-    color: var(--blue);
-    padding: 0.15rem 0.55rem;
-    border-radius: 9999px;
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-}
-
 /* Header Actions Group */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
 
 /* Dark/Light Theme Toggle Button */
 /* Scrollable Inner Content Area */
@@ -267,12 +250,6 @@
 }
 
 /* Legacy Overrides for grids (Prevent any layout breaks) */
-.workspace-grid, .lower-workspace-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    width: 100%;
-}
 
 /* Footer */
 .app-footer {
@@ -292,24 +269,11 @@
     display: none !important;
 }
 
-/* Mobile responsiveness for header actions */
-@media (max-width: 380px) {
-    .header-actions {
-        gap: 0.35rem;
-    }
-    .header-badge {
-        font-size: 0.6rem;
-        padding: 0.12rem 0.45rem;
-    }
-}
-
 /* ==========================================================================
-   [NEW] Premium Left Sidebar & Responsive Widescreen Layouts (Universal Fit)
+   Premium Left Sidebar & Responsive Widescreen Layouts (Universal Fit)
    ========================================================================== */
 
 /* Left Sidebar is hidden by default (Mobile / Tablet View) */
 .sidebar-nav {
     display: none;
 }
-
-/* Responsive Overrides for Widescreen Desktop / Large Tablet Devices */

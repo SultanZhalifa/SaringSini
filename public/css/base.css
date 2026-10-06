@@ -1,7 +1,5 @@
 /* Design tokens, reset and global motion preferences. */
 
-/* SaringSini v2.0 - Warm Earth Premium Theme (Light + Dark) */
-
 :root {
     /* Warm Earth Background Tones - Cream / Ivory */
     --bg-light: #FDF8F0;
@@ -26,7 +24,6 @@
     /* Accent - Peach (warm secondary accent) */
     --purple: #D17A4A;
     --purple-light: #FCEFE3;
-    --purple-border: #F2D6BD;
 
     /* Secondary - Sage Green (trust + calm) */
     --cyan: #5C8374;
@@ -34,7 +31,6 @@
     --cyan-border: #BDD3C6;
     --sage: #5C8374;
     --sage-dark: #436554;
-    --sage-light: #E6EFEA;
 
     /* Success - Warm Olive */
     --emerald: #6B8E4E;
@@ -50,7 +46,6 @@
     --red: #B8392E;
     --red-light: #FBE4DF;
     --red-border: #F0B6AC;
-    --brick: #B8392E;
 
     /* Accent Peach */
     --accent: #E8A87C;
@@ -63,13 +58,7 @@
     /* Warm shadows - based on warm brown instead of pure black */
     --shadow-soft: 0 1px 3px rgba(61, 40, 23, 0.05), 0 4px 12px rgba(61, 40, 23, 0.04);
     --shadow-medium: 0 2px 8px rgba(61, 40, 23, 0.08), 0 8px 24px rgba(61, 40, 23, 0.06);
-    --shadow-card: 0 1px 2px rgba(61, 40, 23, 0.05), 0 2px 8px rgba(61, 40, 23, 0.04);
     --shadow-warm-lg: 0 12px 32px rgba(61, 40, 23, 0.12);
-
-    /* Phone mockup - tetap dark untuk authenticity iOS */
-    --phone-bg: #1c1c1e;
-    --phone-bezel: #2c2c2e;
-    --phone-screen: #efeae2;
 }
 
 html {

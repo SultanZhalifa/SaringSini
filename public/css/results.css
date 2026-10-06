@@ -1,6 +1,6 @@
 /* Analysis result: gauge, status, mitigation, claims, reply templates, language, export. */
 
-/* [NEW] Dynamic Danger Glow Animations (Victory Update!) */
+/* Dynamic Danger Glow Animations */
 .glow-safe-pulse {
     border-color: var(--emerald) !important;
     box-shadow: 0 0 20px rgba(5, 150, 105, 0.15), var(--shadow-soft) !important;
