@@ -1,0 +1,40 @@
+/* Toast notifications. */
+
+/* Toast Copy Alerts */
+.toast-notification {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(15px);
+    background-color: var(--text-primary);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.75rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-notification.toast-safe {
+    background-color: var(--emerald);
+    color: #ffffff;
+}
+
+.toast-notification.toast-warning {
+    background-color: var(--amber);
+    color: #ffffff;
+}
+
+.toast-notification.toast-danger {
+    background-color: var(--red);
+    color: #ffffff;
+}

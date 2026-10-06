@@ -57,6 +57,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - `public/app.js` (satu closure sepanjang sekitar 2.200 baris) dan empat skrip terpisah dipecah menjadi modul ES di `public/js/` (`core/`, `features/`, `lib/`) dengan satu titik masuk, `js/main.js`. Tampilan tidak berubah. Modul saling mengabari lewat import dan event `saringsini:analysis` serta `saringsini:community`, tidak lagi lewat global `window.__saringSini*` dan `window.HoaxDNA`. Duplikasi (empat salinan toast, dua helper haptic, tujuh pola `fetch`, dua zona unggah, ambang risiko) digabung ke `core/`.
 - Service worker memasukkan semua modul JS dan stylesheet ke cache awal (sebelumnya hanya `app.js`); test menjaga daftar ini tetap sinkron dengan isi `public/`.
 - Penghitung angka (beranda, analitik, indikator aktivitas, skor coach) langsung menampilkan nilai akhir bila pengguna meminta animasi dikurangi.
+- `public/index.css` (±4.900 baris) dipecah menjadi stylesheet per fitur di `public/css/` (dasar, tata letak, periksa, hasil, simulator, komunitas, kuis, dan seterusnya). Berkas dimuat dengan urutan yang menjaga cascade; seluruh 808 blok aturan CSS tetap ada tanpa perubahan, dan computed style setiap elemen di 26 keadaan UI pada tujuh lebar layar sama dengan sebelumnya. `VERSION` service worker menjadi `v2.3.4`.
 - Font Plus Jakarta Sans disajikan dari origin sendiri (`public/fonts`, lisensi SIL OFL) alih-alih Google Fonts. Browser tidak lagi menghubungi pihak ketiga, sehingga alamat IP pengunjung tidak terlihat oleh Google, dan CSP kini `default-src 'self'` tanpa pengecualian origin untuk gaya maupun font. Service worker menyimpan font di cache awal; `VERSION` menjadi `v2.3.3`.
 - CI dan CodeQL kini juga berjalan untuk pull request yang menarget branch selain `master` (PR bertumpuk); push tetap hanya untuk `master`.
 - Content-Security-Policy kini melarang atribut `style` inline (`style-src-attr 'none'`); semua inline style dipindahkan ke CSS.
@@ -64,6 +65,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 ### Removed
 - Kode mati di `public/` (hook monkey-patch yang tidak dipakai, variabel tak terpakai, `escapeHtml` ganda, `cleanEmojiText`) dan polling `setInterval`/`MutationObserver` yang tidak perlu.
 - `test/check.js` (digantikan ESLint).
+- CSS mati di `public/css`, dibuktikan dengan memeriksa bahwa kelasnya tidak muncul di HTML, JS, maupun kode server: mockup iPhone lama untuk simulator (±600 baris, tidak ada elemennya sejak chat WhatsApp baru), aturan `.header-actions`, `.header-badge`, `.user-stats-bar`, `.stat-pill`, `.workspace-grid`, `.skeleton`, `.sender-mama/papa/tante`, dua keyframes skeleton yang tidak dipakai, dan tujuh variabel CSS yang tidak pernah dibaca. Computed style semua elemen di semua keadaan UI yang diuji tidak berubah.
 - Kode mati hasil pemecahan `app.js`: pindah tab di input suara (tombol hanya ada di tab teks), penghitung `[data-count-to]` tanpa elemen pemakai, penghapusan `data-theme` yang tak pernah terpasang, dan `avatarClass` persona coach.
 
 ---

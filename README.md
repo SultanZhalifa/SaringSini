@@ -218,7 +218,7 @@ Sebelum deployment yang menerima data pengguna nyata, rancang external storage, 
 │   ├── lib/                # Validasi, sanitasi, normalisasi keluaran AI, deteksi tipe file
 │   └── data/               # Data seed demonstrasi
 ├── public/
-│   ├── index.html, index.css, css/   # Antarmuka dan gaya
+│   ├── index.html, css/              # Antarmuka dan gaya (satu stylesheet per fitur)
 │   ├── sw.js, manifest.webmanifest   # PWA dan cache offline
 │   └── js/
 │       ├── main.js                   # Titik masuk modul browser
