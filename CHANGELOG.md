@@ -40,6 +40,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - Input pengguna pada prompt dibungkus sebagai data bertag, dan `X-XSS-Protection` diganti `0` sesuai rekomendasi OWASP.
 
 ### Fixed
+- Tautan "Lewati ke konten utama" ditambahkan ke halaman. CSS-nya sudah ada tetapi elemennya tidak, sehingga pengguna keyboard dan pembaca layar harus melewati seluruh header dan navigasi di setiap halaman. Tautan ini baru terlihat saat difokuskan, dan `main` kini dapat menerima fokus agar loncatannya berfungsi di semua browser.
 - Lima variabel CSS dipakai tetapi tidak pernah didefinisikan (`--secondary`, `--danger`, `--success`, `--warning`, `--border`), sehingga deklarasinya diabaikan diam-diam. Akibatnya lencana "EKSKLUSIF" pada kartu DNA hoaks tak terlihat (teks putih tanpa latar), trek slider nada tanpa gradien, judul "Kekuatan Komunikasi" dan "Saran Perbaikan" di hasil coach tanpa warna, serta garis tepi rekomendasi dan gelembung error coach tanpa warna. Semuanya kini memakai token yang ada (`--sage`, `--red`, `--emerald`, `--amber`, `--card-border`), dan sebuah test memastikan setiap variabel yang dibaca stylesheet terdefinisi.
 - Wilayah pada peta kini dapat dipilih dengan keyboard (Enter atau Spasi). Sebelumnya handler memanggil `click()` pada elemen SVG, sehingga tombol keyboard tidak berfungsi.
 - Posisi slider nada paling formal (`tone = 0`) diperlakukan sebagai nada netral.
