@@ -1,7 +1,7 @@
 // SaringSini Frontend Interactive Logic (Light Mode, Emoji-Free, & Premium Features)
 
 // -------------------------------------------------------------
-// Global Error Boundary (production-grade error handling)
+// Global Error Boundary (basic user-facing error handling)
 // Catches uncaught errors and unhandled promise rejections so the UI
 // never silently dies. Surfaces friendly toast + logs to console
 // for ops debugging.
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Check if already upvoted by this client
             const hasUpvoted = post.upvotedClients && post.upvotedClients.includes(clientId);
             const upvoteClass = hasUpvoted ? 'community-upvote-btn upvoted' : 'community-upvote-btn';
-            const upvoteText = hasUpvoted ? 'Terverifikasi' : 'Bantu Sebar Fakta';
+            const upvoteText = hasUpvoted ? 'Sudah Didukung' : 'Dukung Klarifikasi';
             
             item.innerHTML = `
                 <div class="community-item-header">
@@ -612,24 +612,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, stepTime);
 
         // 2. Set Status Badge, Color Class & Dynamic Glowing Pulse (Victory Update!)
-        resBadge.textContent = data.statusBadge || 'Verifikasi';
+        resBadge.textContent = `Indikasi AI: ${data.statusBadge || 'Perlu verifikasi'}`;
         resBadge.className = 'status-badge'; 
         
         let headerColor = '#0f172a';
         if (hoaxPercentage < 30) {
             resBadge.classList.add('safe');
             resultView.classList.add('glow-safe-pulse'); // Glow green
-            resStatusTitle.textContent = 'Faktual dan Aman';
+            resStatusTitle.textContent = 'Indikasi Risiko Rendah';
             headerColor = '#059669'; 
         } else if (hoaxPercentage < 70) {
             resBadge.classList.add('warning');
             resultView.classList.add('glow-warning-pulse'); // Glow yellow
-            resStatusTitle.textContent = 'Butuh Kewaspadaan atau Menyesatkan';
+            resStatusTitle.textContent = 'Indikasi Perlu Verifikasi';
             headerColor = '#d97706'; 
         } else {
             resBadge.classList.add('danger');
             resultView.classList.add('glow-danger-pulse'); // Glow red pulsing
-            resStatusTitle.textContent = 'Hoaks Parah atau Berbahaya';
+            resStatusTitle.textContent = 'Indikasi Risiko Tinggi';
             headerColor = '#dc2626'; 
         }
         resStatusTitle.style.color = headerColor;
@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 claimCard.className = 'claim-card';
                 
                 const isFactual = item.isFactual;
-                const statusText = isFactual ? 'Faktual' : 'Hoaks';
+                const statusText = isFactual ? 'Indikasi faktual' : 'Perlu verifikasi';
                 const titleColor = isFactual ? 'var(--emerald)' : 'var(--red)';
                 
                 const iconSvg = isFactual 
@@ -826,11 +826,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Draw Header Logo & Title
         ctx.fillStyle = '#0f172a'; 
         ctx.font = 'bold 28px Outfit, system-ui';
-        ctx.fillText('SaringSini Fakta', 50, 70);
+        ctx.fillText('SaringSini', 50, 70);
         
         ctx.fillStyle = '#64748b'; 
         ctx.font = '500 13px Plus Jakarta Sans, system-ui';
-        ctx.fillText('LAPORAN KLARIFIKASI INFORMASI RESMI', 50, 95);
+        ctx.fillText('RINGKASAN INDIKASI AWAL BERBANTUAN AI', 50, 95);
         
         // Draw Hoax Meter Gauge
         const percent = currentAnalysis.hoaxPercentage || 0;
@@ -862,11 +862,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx.fillStyle = '#64748b';
         ctx.font = 'bold 11px Plus Jakarta Sans, system-ui';
-        ctx.fillText('TINGKAT HOAKS', cX, cY + 22);
+        ctx.fillText('SKOR INDIKASI AI', cX, cY + 22);
         
         // Draw Status Pill/Badge
         ctx.textAlign = 'left';
-        const badgeText = (currentAnalysis.statusBadge || 'Verifikasi').toUpperCase();
+        const badgeText = `AI: ${currentAnalysis.statusBadge || 'Perlu verifikasi'}`.toUpperCase();
         
         const bX = 320;
         const bY = 160;
@@ -904,7 +904,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.textAlign = 'left';
         ctx.fillStyle = '#0f172a';
         ctx.font = 'bold 20px Outfit, system-ui';
-        ctx.fillText('Kesimpulan Analisis Fakta:', bX, 235);
+        ctx.fillText('Ringkasan Indikasi AI:', bX, 235);
         
         ctx.fillStyle = '#475569';
         ctx.font = '500 15px Plus Jakarta Sans, system-ui';
@@ -913,12 +913,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Draw Footer Branding
         ctx.fillStyle = '#94a3b8';
         ctx.font = '500 12px Plus Jakarta Sans, system-ui';
-        ctx.fillText('Platform Terpercaya Pemeriksa Hoaks Keluarga', 50, 440);
-        ctx.fillText('Diperiksa secara real-time oleh Google Gemini AI', 50, 455);
+        ctx.fillText('Alat bantu literasi digital keluarga Indonesia', 50, 440);
+        ctx.fillText('Hasil AI dapat salah; verifikasi melalui sumber otoritatif', 50, 455);
         
         const dataUrl = canvas.toDataURL('image/png');
         const link = document.createElement('a');
-        link.download = 'SaringSini_Laporan_Klarifikasi.png';
+        link.download = 'SaringSini_Indikasi_Awal.png';
         link.href = dataUrl;
         link.click();
     });
@@ -1429,7 +1429,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 doc.text('SaringSini', margin, 42);
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(11);
-                doc.text('Laporan Klarifikasi Hoaks Resmi', margin, 60);
+                doc.text('Ringkasan Indikasi Awal Berbantuan AI', margin, 60);
                 doc.setFontSize(9);
                 const tanggal = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
                 doc.text(tanggal, pageW - margin, 42, { align: 'right' });
@@ -1446,13 +1446,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 doc.text(`${percent}%`, margin + 60, y + 50, { align: 'center' });
                 doc.setFontSize(9);
                 doc.setFont('helvetica', 'normal');
-                doc.text('TINGKAT HOAKS', margin + 60, y + 70, { align: 'center' });
+                doc.text('SKOR INDIKASI AI', margin + 60, y + 70, { align: 'center' });
 
                 // Status + Category
                 doc.setTextColor(61, 40, 23);
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(16);
-                const statusText = currentAnalysis.statusBadge || 'Verifikasi';
+                const statusText = `Indikasi AI: ${currentAnalysis.statusBadge || 'Perlu verifikasi'}`;
                 doc.text(statusText, margin + 140, y + 28);
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(11);
@@ -1465,7 +1465,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(13);
                 doc.setTextColor(61, 40, 23);
-                doc.text('Ringkasan Analisis', margin, y);
+                doc.text('Ringkasan Indikasi AI', margin, y);
                 y += 18;
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(11);
@@ -1479,7 +1479,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     doc.setFont('helvetica', 'bold');
                     doc.setFontSize(13);
                     doc.setTextColor(61, 40, 23);
-                    doc.text('Daftar Klaim & Fakta', margin, y);
+                    doc.text('Daftar Indikasi Klaim', margin, y);
                     y += 16;
                     doc.setFontSize(10);
                     currentAnalysis.claims.forEach((c, i) => {
@@ -1489,7 +1489,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         doc.circle(margin + 6, y - 3, 4, 'F');
                         doc.setFont('helvetica', 'bold');
                         doc.setTextColor(61, 40, 23);
-                        const claimTitle = `[${isFact ? 'Faktual' : 'Hoaks'}] ${cleanEmojiText(c.claim || '')}`;
+                        const claimTitle = `[${isFact ? 'Indikasi faktual' : 'Perlu verifikasi'}] ${cleanEmojiText(c.claim || '')}`;
                         const claimLines = doc.splitTextToSize(claimTitle, contentW - 18);
                         doc.text(claimLines, margin + 18, y);
                         y += claimLines.length * 13 + 2;
@@ -1537,11 +1537,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     doc.setPage(p);
                     doc.setFontSize(8);
                     doc.setTextColor(150, 130, 110);
-                    doc.text('SaringSini - Asisten Anti-Hoaks Keluarga Indonesia', margin, 825);
+                    doc.text('SaringSini - Hasil AI dapat salah; verifikasi sumber penting', margin, 825);
                     doc.text(`Halaman ${p} dari ${pageCount}`, pageW - margin, 825, { align: 'right' });
                 }
 
-                doc.save(`SaringSini_Laporan_${Date.now()}.pdf`);
+                doc.save(`SaringSini_Indikasi_Awal_${Date.now()}.pdf`);
                 showToast('Laporan PDF berhasil diunduh', 'safe');
             } catch (e) {
                 console.error('PDF export error:', e);
@@ -1845,8 +1845,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (regionLabel) regionLabel.textContent = region.replace(/-/g, ' / ');
                 if (countLabel) {
                     countLabel.textContent = count === 0
-                        ? 'Belum ada laporan hoaks tercatat dari wilayah ini.'
-                        : `${count} laporan terverifikasi dari wilayah ini.`;
+                        ? 'Belum ada entri demo yang dialokasikan ke wilayah ini.'
+                        : `${count} entri demo dialokasikan secara sintetis ke wilayah ini.`;
                 }
             }
         });
@@ -2079,12 +2079,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const ONBOARDING_STEPS = [
         {
             title: 'Selamat Datang di SaringSini',
-            description: 'Asisten anti-hoaks bertenaga AI Gemini untuk menjaga kerukunan grup WhatsApp keluarga Indonesia dari berita palsu.',
+            description: 'Alat bantu literasi digital keluarga Indonesia yang memberikan indikasi awal berbantuan AI dan latihan komunikasi.',
             icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M2 13h20"/><path d="M2 17h20"/><path d="M6 21h12"/></svg>'
         },
         {
             title: 'Periksa Pesan Mencurigakan',
-            description: 'Tempel teks, unggah screenshot, dikte suara, atau cek link langsung. AI Gemini akan menganalisis tingkat hoaks dalam hitungan detik.',
+            description: 'Tempel teks, unggah media, dikte suara, atau masukkan link untuk memperoleh indikasi awal dari Gemini. Hasil dapat salah dan perlu diverifikasi.',
             icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
         },
         {
@@ -2093,8 +2093,8 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
         },
         {
-            title: 'Jadilah Pahlawan Fakta',
-            description: 'Bergabung dengan papan komunitas, ikut Tantangan Quiz, dan naikkan peringkatmu di Leaderboard Nasional. Mari selamatkan 15.000 keluarga!',
+            title: 'Jelajahi Fitur Demonstrasi',
+            description: 'Coba feed komunitas, kuis, leaderboard, dan peta dengan data simulasi. Angka yang ditampilkan bukan metrik penggunaan atau dampak nyata.',
             icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>'
         }
     ];
@@ -2283,8 +2283,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =============================================================
-    // v2.2 LIVE ACTIVITY INDICATOR (Social Proof)
-    // Simulates "X keluarga sedang memeriksa hoaks sekarang"
+    // v2.2 DEMONSTRATION ACTIVITY INDICATOR
+    // Simulates activity for UI demonstration; not real usage data.
     // Uses smooth random walk so number feels organic, not robotic
     // =============================================================
     const liveCountEl = document.getElementById('live-activity-count');

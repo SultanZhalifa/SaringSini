@@ -1,0 +1,34 @@
+name: Pertanyaan penggunaan
+description: Tanyakan setup, perilaku aplikasi, atau cara berkontribusi
+title: "[Question]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih sudah bertanya. Jangan sertakan API key, isi percakapan pribadi, file sensitif, atau data pribadi dalam issue publik.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pengecekan awal
+      options:
+        - label: Saya sudah membaca README dan SUPPORT.md.
+          required: true
+        - label: Saya sudah mencari issue yang ada dan belum menemukan jawaban.
+          required: true
+        - label: Saya sudah menghapus rahasia dan data pribadi dari informasi yang akan dibagikan.
+          required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Pertanyaan
+      description: Jelaskan tujuan dan bagian yang belum jelas.
+      placeholder: Saya mencoba..., tetapi belum memahami...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Konteks tambahan
+      description: Sertakan versi Node.js, OS, atau langkah yang sudah dicoba jika relevan.
+    validations:
+      required: false

@@ -1,337 +1,243 @@
-# SaringSini v2.3 — Asisten Filter Hoaks dan Coaching Komunikasi Anti-Hoaks Keluarga
-
-[![Competition](https://img.shields.io/badge/Competition-JuaraVibeCoding_2026-brightgreen?style=for-the-badge&logo=google-gemini&logoColor=white)](#)
-[![Tech Stack](https://img.shields.io/badge/Stack-Node.js_|_Express_|_Gemini_3.5_Flash-blue?style=for-the-badge&logo=node.js&logoColor=white)](#)
-[![Platform](https://img.shields.io/badge/Platform-Android_|_iOS_|_Desktop_|_PWA-orange?style=for-the-badge)](#)
+# SaringSini
 
 [![CI](https://github.com/SultanZhalifa/SaringSini/actions/workflows/ci.yml/badge.svg)](https://github.com/SultanZhalifa/SaringSini/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![good first issues](https://img.shields.io/github/issues/SultanZhalifa/SaringSini/good%20first%20issue?label=good%20first%20issues&color=7057ff)](https://github.com/SultanZhalifa/SaringSini/labels/good%20first%20issue)
-[![Open Issues](https://img.shields.io/github/issues/SultanZhalifa/SaringSini)](https://github.com/SultanZhalifa/SaringSini/issues)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
-Selamat datang di repositori resmi **SaringSini v2.3** — platform Single Page Application (SPA) mobile-first bertenaga **Gemini 3.5 Flash** yang dikembangkan untuk ajang **#JuaraVibeCoding 2026**.
+**SaringSini** adalah proyek open-source Indonesia yang mengeksplorasi cara membantu keluarga menilai pesan mencurigakan dan membicarakan misinformasi tanpa memperkeruh hubungan. Aplikasi ini menyediakan indikasi awal berbantuan AI, template balasan yang lebih santun, simulasi percakapan keluarga, serta materi literasi digital.
 
-Aplikasi ini memecahkan masalah sosial nyata masyarakat Indonesia: **penyebaran hoaks di grup WhatsApp keluarga tanpa merusak silaturahmi**. Versi 2.3 menghadirkan **tiga fitur WOW Factor**: **Bahasa Mama Mode** (coaching komunikasi via AI role-play orang tua), **AI Tone Adjuster Slider** (regenerate balasan realtime), dan **Hoax DNA Visualization** (sidik jari generatif unik per analisis) — di atas fondasi palet **Warm Earth** yang nyaman di mata, PWA installable, dan multimodal AI engine (teks/screenshot/deepfake/URL).
+Proyek ini masih berada pada tahap awal dan terutama ditujukan untuk pengembangan lokal, demonstrasi, pembelajaran, dan kontribusi komunitas. Hasil AI dapat tidak lengkap atau salah. SaringSini bukan layanan pemeriksa fakta resmi dan bukan pengganti pemeriksa fakta profesional atau sumber otoritatif.
 
----
+## English overview
 
-## 🎬 Demo
+SaringSini is an early-stage Indonesian open-source project that explores AI-assisted assessment of suspicious family messages and more constructive ways to discuss misinformation. It can provide preliminary AI indications, draft respectful replies, and offer communication practice scenarios. Its output may be incomplete or wrong and must not be treated as authoritative fact-checking. The current repository is intended primarily for local development, demonstrations, learning, and community contribution.
 
-> **Live demo:** _menyusul_ — aplikasi di-deploy ke Google Cloud Run. Setelah URL publik tersedia, tautannya akan dicantumkan di sini. Sementara itu, cara tercepat mencoba adalah menjalankannya secara lokal (lihat [Cara Menjalankan Secara Lokal](#cara-menjalankan-secara-lokal)).
+The primary project language is Indonesian. International reviewers can use this overview together with the [setup](#menjalankan-secara-lokal), [limitations](#batasan-penting), [roadmap](ROADMAP.md), [support guide](SUPPORT.md), and [contribution guide](CONTRIBUTING.md).
 
-Cuplikan layar aplikasi (tersedia lengkap di [`docs/screenshots/`](docs/screenshots)):
+## Tautan proyek
+
+- [Roadmap](ROADMAP.md)
+- [Dukungan dan pertanyaan](SUPPORT.md)
+- [Panduan kontribusi](CONTRIBUTING.md)
+- [Kebijakan keamanan](SECURITY.md)
+- [Kode etik](CODE_OF_CONDUCT.md)
+- [Changelog](CHANGELOG.md)
+- [Lisensi MIT](LICENSE)
+
+## Status demo
+
+Belum ada live demo publik yang dipelihara oleh proyek. Cara yang tersedia untuk mencoba SaringSini adalah menjalankannya secara lokal. Screenshot berikut berasal dari demonstrasi aplikasi dan tidak membuktikan adopsi atau penggunaan produksi.
 
 | Beranda | Periksa AI | Hasil Analisis |
 |---|---|---|
-| ![Beranda](docs/screenshots/JUARAVIBECODING1.png) | ![Periksa AI](docs/screenshots/JUARAVIBECODING2.png) | ![Hasil Analisis](docs/screenshots/JUARAVIBECODING3.png) |
+| ![Tampilan beranda demonstrasi SaringSini](docs/screenshots/JUARAVIBECODING1.png) | ![Form penilaian awal berbantuan AI](docs/screenshots/JUARAVIBECODING2.png) | ![Contoh hasil penilaian awal berbantuan AI](docs/screenshots/JUARAVIBECODING3.png) |
 
 | Simulator Chat | Komunitas |
 |---|---|
-| ![Simulator Chat](docs/screenshots/JUARAVIBECODING4.png) | ![Komunitas](docs/screenshots/JUARAVIBECODING5.png) |
+| ![Simulator percakapan keluarga](docs/screenshots/JUARAVIBECODING4.png) | ![Feed komunitas demonstrasi](docs/screenshots/JUARAVIBECODING5.png) |
 
-> ⚠️ **Catatan transparansi:** sebagian metrik pada antarmuka (mis. jumlah keluarga terbantu, papan peringkat) bersifat data demonstrasi untuk kepentingan lomba dan belum mencerminkan penggunaan nyata di produksi.
+> **Transparansi data demonstrasi:** angka keluarga terbantu, aktivitas langsung, leaderboard, target solidaritas, peringkat, dan sebaran wilayah di antarmuka adalah data sintetis untuk demonstrasi. Angka tersebut bukan metrik pengguna, adopsi, dampak, atau aktivitas produksi.
 
----
+## Kemampuan saat ini
 
-## Highlights v2.3 (Triple-Threat Vibe Features)
+- Penilaian awal berbantuan Gemini untuk teks, screenshot, gambar/video, dan URL yang dikirim pengguna.
+- Tiga variasi template balasan: sopan, santai, dan humor.
+- Konversi template ke Bahasa Jawa Krama, Sunda Halus, Minang, dan Batak melalui Gemini.
+- Simulasi percakapan keluarga dan latihan komunikasi berbantuan AI.
+- Pengaturan nada balasan dari formal hingga santai.
+- Feed komunitas demonstrasi dengan penyimpanan JSON lokal.
+- Ekspor PNG/PDF, berbagi melalui WhatsApp, input suara melalui Web Speech API, dan PWA shell.
+- Materi edukasi, kuis, dashboard, dan peta demonstrasi.
 
-### Tiga Fitur WOW Factor (Uniqueness Play)
+Istilah seperti penilaian media AI atau pemeriksaan URL dalam proyek ini berarti **indikasi awal yang dihasilkan model**, bukan analisis forensik tervalidasi, pemindaian keamanan jaringan, atau keputusan faktual resmi.
 
-**1. Bahasa Mama Mode** — Coaching Komunikasi Anti-Hoaks
-- 4 persona AI orang tua (Mama, Papa, Om Heri, Tante Rosa) dengan karakter unik
-- Multi-turn chat realistis: AI defensif di awal, melunak jika argumen user sopan + bersumber + logis
-- Mood indicator live: Skeptis → Mulai Mendengar → Mempertimbangkan → Mendukung
-- AI Evaluator: skor komunikasi 0-100 + kekuatan + saran perbaikan + rekomendasi
-- Endpoint: `POST /api/coach`, `POST /api/coach/evaluate`
+## Batasan penting
 
-**2. AI Tone Adjuster Slider** — Regenerate Balasan Realtime
-- Slider 0-100: Formal Surat Resmi ↔ Bercanda Ringan
-- 5 tingkat tone, realtime regenerate via Gemini
-- Debounced 600ms + AbortController untuk efisiensi
-- Endpoint: `POST /api/retone`
+### Hasil AI
 
-**3. Hoax DNA Visualization** — Generative Art Fingerprint
-- Sidik jari SVG unik per analisis (Mulberry32 PRNG + djb2 hash)
-- Mirror symmetric pattern + helix curves overlay
-- Color mapping per skor (sage/amber/terracotta)
-- Download as 3x scaled PNG + WhatsApp share
+SaringSini meminta Gemini menghasilkan penilaian dan saran berdasarkan materi yang diberikan. Implementasi saat ini tidak melakukan pencarian sumber, retrieval, pemeriksaan silang otomatis, atau penyertaan sitasi. Karena itu:
 
-### Highlights Lainnya
+- hasil dapat tidak lengkap, keliru, atau terlalu yakin;
+- skor dan label merupakan keluaran model, bukan probabilitas yang telah dikalibrasi;
+- indikasi media AI/deepfake bukan hasil laboratorium forensik;
+- penilaian URL bukan pengganti pemeriksaan domain, sandbox, atau layanan keamanan khusus;
+- klaim yang berpengaruh pada kesehatan, keuangan, keselamatan, atau hukum harus diverifikasi melalui sumber otoritatif.
 
-- **Palet Warm Earth** — cream `#FDF8F0`, terracotta `#C84B31`, sage green `#5C8374`, warm brown text. Hangat, premium, eye-friendly.
-- **Simulator Chat WhatsApp-Style** — natural chat window (bukan phone mockup awkward), warm gradient header, day divider, typing indicator inline, quick suggestion chips, family roster (Mama, Papa, Om, Tante).
-- **Hoax Trend Analytics Dashboard** — stat cards live, bar chart distribusi kategori, AI daily insight auto-generated.
-- **Live Hoax Map Indonesia** — interactive SVG dengan 7 wilayah, heatmap intensity, critical pulse animation.
-- **Quiz Edukasi Literasi Digital** — 10 pertanyaan real hoax Indonesia, progress bar, share score via WhatsApp.
-- **Family Onboarding Tour** — 4-step interactive guide untuk first-time users.
-- **Voice Input (Web Speech API)** — orang tua bisa dikte pesan ke field "Periksa AI" dalam Bahasa Indonesia (`id-ID`).
-- **WhatsApp Deep Link Share** — tombol hijau WA di setiap kartu balasan; buka chat WA dengan template sopan sudah terisi.
-- **URL Phishing Checker** — tab baru untuk menganalisis link mencurigakan (APK fake, scam BPJS, typosquat bank, dll).
-- **Bahasa Daerah Templates** — konversi balasan ke Bahasa Jawa Krama, Sunda Halus, Minang, dan Batak.
-- **PDF Report Export** — laporan PDF branded (terracotta header, gauge score, claims, tiga template balasan, footer) via jsPDF lazy-loaded.
-- **PWA Installable** — manifest, service worker (stale-while-revalidate + network-first untuk API), banner install in-app, offline fallback.
-- **Accessibility WCAG 2.1 AA** — skip link, ARIA roles/labels, keyboard navigation, focus rings, `prefers-reduced-motion`, contrast ratio AA.
-- **Persistent JSON Database** — community board sekarang tahan restart server (`data/community.json`).
+### Privasi dan alur data
 
----
+Perilaku berikut didasarkan pada implementasi saat ini:
 
-## Fitur Utama (5-Tab Mobile Dashboard Shell)
+- Teks, URL, riwayat coaching, template balasan, dan media yang dianalisis dikirim dari server ke layanan Gemini untuk menghasilkan respons.
+- File upload dibatasi 5 MB dan diterima melalui penyimpanan in-memory Multer. Aplikasi tidak menulis file upload tersebut ke `data/community.json`.
+- Setelah analisis, potongan teks pesan—atau klaim pertama yang dihasilkan AI ketika tidak ada teks—dapat otomatis ditambahkan ke feed komunitas demonstrasi.
+- Feed tersebut, termasuk potongan teks, skor/label AI, jumlah dukungan, dan daftar UUID klien yang sudah mendukung suatu entri, ditulis ke `data/community.json` pada instance server.
+- UUID klien dibuat dan disimpan di browser. Ketika pengguna mendukung entri komunitas, UUID itu juga dikirim ke server dan dapat disimpan di `upvotedClients` untuk mencegah dukungan berulang pada instance tersebut.
 
-### 1. Beranda — Home Dashboard dan Pelacak Solidaritas
-- Statistik streak harian dan poin pengguna dengan animasi count-up.
-- Banner waspada phising WhatsApp dinamis.
-- 4 Quick Action cards (warna terracotta, olive, peach, sage).
-- Progress bar solidaritas warga nasional (9.842 dari 15.000 keluarga).
-- Banner edukasi hukum (UU ITE Pasal 28 ayat 1).
+Jangan memasukkan rahasia, kredensial, atau informasi pribadi/sensitif. Proyek belum menjanjikan masa retensi, penghapusan otomatis, enkripsi aplikasi, anonimisasi formal, atau kepatuhan terhadap standar privasi tertentu.
 
-### 2. Periksa AI — Gemini 3.5 Flash Multimodal Engine + Voice/URL
-**Empat tab input baru:**
-- **Teks** — paste pesan + tombol mic untuk voice input (Web Speech API).
-- **Screenshot** — drag-drop atau pilih file screenshot chat WhatsApp.
-- **Deepfake AI** — deteksi gambar/video buatan AI atau deepfake wajah.
-- **Cek Link** — analisis URL phishing, scam APK, typosquat bank.
+### Persistence dan deployment
 
-**Hasil analisis:**
-- Speedometer gauge animated (terracotta → amber → brick red).
-- Status badge dinamis dengan glowing pulse (Aman/Waspada/Hoaks Parah).
-- Pusat Mitigasi Risiko (CekRekening.id, PatroliSiber.id, AduanKonten.id, TurnBackHoax.id).
-- Daftar klaim faktual vs hoaks.
-- 3 template balasan sopan (Sopan/Santai/Humor) + konversi 4 bahasa daerah.
-- Tombol Salin + tombol WhatsApp share langsung.
-- Ekspor PNG infografis + ekspor PDF laporan resmi.
+`data/community.json` adalah mekanisme persistence lokal/demo. Data dapat bertahan setelah proses Node.js dimulai ulang apabila instance masih memakai filesystem yang sama, tetapi mekanisme ini bukan database produksi:
 
-### 3. Simulator Chat WhatsApp (Sandbox)
-- iPhone 14 Pro mockup pixel-perfect dengan dynamic island, status bar, home indicator.
-- Auto-redirect dari tab "Periksa" saat klik tombol Salin.
-- Anggota keluarga simulasi (Mama, Papa, Om Heri, Tante Rosa) memberikan respon kontekstual berdasarkan hasil analisis.
+- filesystem container pada platform ephemeral dapat hilang ketika instance dihentikan atau diganti;
+- beberapa instance dapat memiliki salinan data yang berbeda;
+- penyimpanan file lokal dan rate limiter in-memory tidak terkoordinasi antar-instance;
+- deployment produksi yang membutuhkan data durable harus menggunakan managed external storage atau database yang sesuai.
 
-### 4. Papan Komunitas (Persistent JSON Feed)
-- Database `data/community.json` (tahan restart server).
-- Filter pencarian teks + kategori (Kesehatan, Scam, Keluarga).
-- Tombol "Bantu Sebar Fakta" (Upvote) dengan proteksi UUID klien.
-- Auto-injection setiap pemeriksaan baru ke feed.
+### Accessibility
 
-### 5. Edukasi dan Peringkat
-- Papan Peringkat Pahlawan Fakta nasional.
-- Hub literasi digital (accordion) berisi tips identifikasi hoaks.
-- Trending Hoaxes card.
+Proyek memiliki beberapa fondasi aksesibilitas, termasuk semantic HTML, sebagian ARIA labels/roles, focus styles, skip link, dan dukungan `prefers-reduced-motion`. Implementasi belum diaudit untuk kepatuhan penuh WCAG 2.1 AA. Dark mode tidak tersedia. Audit alt text dan ikon tetap tersedia sebagai [issue #5](https://github.com/SultanZhalifa/SaringSini/issues/5) untuk kontributor.
 
----
+### PWA dan offline
 
-## Color Palette (Warm Earth)
+Service worker menyimpan app shell dan sebagian aset agar antarmuka dasar dapat dibuka kembali ketika offline. Fitur AI, sinkronisasi feed, dan operasi API tetap membutuhkan koneksi jaringan dan server yang tersedia.
 
-```css
---bg-light:      #FDF8F0  /* cream */
---bg-secondary:  #F5EDDF  /* warmer cream */
---card-bg:       #FFFBF3  /* ivory */
---primary:       #C84B31  /* terracotta */
---primary-dark:  #A23C24
---secondary:     #5C8374  /* sage green */
---accent:        #E8A87C  /* peach */
---text-primary:  #3D2817  /* warm brown */
---text-muted:    #7A6A5A
---border:        #E8DCC4  /* soft sand */
---success:       #6B8E4E  /* olive */
---warning:       #D97706  /* amber */
---danger:        #B8392E  /* brick red */
-```
+## Asal-usul proyek
 
----
+SaringSini awalnya dikembangkan sebagai submission **#JuaraVibeCoding 2026**. Riwayat tersebut tetap menjadi bagian dari identitas proyek, tetapi arah pemeliharaan saat ini adalah menjadikannya eksperimen open-source Indonesia yang jujur mengenai kemampuan, data demonstrasi, dan keterbatasannya.
 
-## Tech Stack dan Pengamanan API
+## Tech stack
 
-| Layer | Teknologi | Fungsi |
-|---|---|---|
-| Backend | Node.js 18+ Express.js 4.19+ | Penyajian file statis, gateway API, SPA fallback routing |
-| AI Engine | Google Gemini 3.5 Flash | Analisis hoaks multimodal (teks, gambar, video, URL) |
-| Translate | Google Gemini 3.5 Flash | Konversi template balasan ke bahasa daerah |
-| Voice | Web Speech API (browser-native) | Voice-to-text Bahasa Indonesia (`id-ID`) |
-| PDF | jsPDF 2.5.1 (CDN, lazy-loaded) | Generator laporan PDF branded |
-| Security | Rate Limiter 6 req/min, CSP headers, XSS protection | Proteksi quota dan keamanan |
-| Persistence | JSON file (`data/community.json`) | Database tahan restart untuk feed komunitas |
-| Frontend | HTML5, CSS3 (warm palette), Vanilla JS ES6+ | SPA premium responsive |
-| PWA | Service Worker + Web App Manifest | Installable, offline-capable, app shortcuts |
-| Deployment | Docker + Google Cloud Run | Container portable, auto-scaling |
+| Area | Implementasi saat ini |
+|---|---|
+| Backend | Node.js 18+ dan Express 4 |
+| AI | Google Gemini melalui `@google/generative-ai` |
+| Upload | Multer memory storage, maksimum 5 MB |
+| Frontend | HTML, CSS, dan Vanilla JavaScript |
+| Persistence | `data/community.json` untuk pengembangan lokal/demo |
+| Proteksi dasar | Beberapa HTTP headers dan rate limiter in-memory per proses |
+| PWA | Service worker dan Web App Manifest |
+| Container | Dockerfile berbasis Node 20 Alpine |
 
-### Security Headers (production-grade)
+### Security baseline
+
+Server saat ini mengirim header berikut:
+
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy: camera=(), microphone=(self), geolocation=()`
 - `X-XSS-Protection: 1; mode=block`
-- `Cache-Control: public, max-age=86400` untuk assets statis
-- Rate limit 6 request/menit per IP untuk endpoint AI
 
----
+Endpoint AI memakai rate limiter ringan sebesar enam permintaan per menit per alamat yang dilihat proses server. Store limiter berada di memori, akan reset saat proses dimulai ulang, dan tidak dibagikan antar-instance. Content-Security-Policy belum diterapkan. Lihat [SECURITY.md](SECURITY.md) untuk mekanisme dan batasan keamanan yang sudah diverifikasi.
 
-## API Endpoints
+## API endpoints
 
 | Endpoint | Method | Deskripsi |
 |---|---|---|
-| `/api/health` | GET | Health check (status, version, gemini connection, report count) |
-| `/api/community` | GET | List laporan komunitas (persistent JSON) |
-| `/api/community/:id/upvote` | POST | Upvote dengan proteksi UUID klien |
-| `/api/analyze` | POST | Analisis multimodal (text/image/url) + rate limit |
-| `/api/translate-replies` | POST | Konversi balasan ke bahasa daerah |
-| `/api/coach` | POST | **[v2.3]** Bahasa Mama Mode - multi-turn role-play AI orang tua |
-| `/api/coach/evaluate` | POST | **[v2.3]** Evaluasi komunikasi user setelah sesi coaching |
-| `/api/retone` | POST | **[v2.3]** AI Tone Slider - regenerate balasan dengan tingkat formalitas baru |
-| `/api/stats` | GET | Statistik publik (totalChecks, familiesSaved, dll) |
+| `/api/health` | GET | Status proses, versi, konfigurasi Gemini, dan jumlah entri feed |
+| `/api/community` | GET | Feed komunitas lokal/demo |
+| `/api/community/:id/upvote` | POST | Dukungan entri dengan pemeriksaan UUID klien per instance |
+| `/api/analyze` | POST | Penilaian awal berbantuan AI untuk teks/media/URL |
+| `/api/translate-replies` | POST | Konversi template balasan ke bahasa daerah |
+| `/api/coach` | POST | Simulasi percakapan keluarga berbantuan AI |
+| `/api/coach/evaluate` | POST | Feedback AI untuk latihan komunikasi |
+| `/api/retone` | POST | Penulisan ulang nada balasan melalui AI |
+| `/api/stats` | GET | Statistik demonstrasi; bukan metrik dampak atau penggunaan produksi |
 
----
+Contoh request/response API sengaja tetap tersedia sebagai peluang kontribusi di [issue #3](https://github.com/SultanZhalifa/SaringSini/issues/3).
 
-## Cara Menjalankan Secara Lokal
+## Menjalankan secara lokal
 
 ### Prasyarat
-- Node.js 18+
-- Google AI Studio API Key — dapatkan gratis di [aistudio.google.com](https://aistudio.google.com/)
 
-### Langkah-langkah
-1. Klon atau buka folder proyek ini.
-2. Instal dependensi:
+- Node.js 18 atau lebih baru
+- Google AI Studio API key untuk fitur berbasis Gemini
+
+### Langkah
+
+1. Klon repositori dan masuk ke direktori proyek.
+2. Instal dependency yang terkunci:
+
    ```bash
-   npm install
+   npm ci
    ```
+
 3. Salin konfigurasi environment:
+
    ```bash
-   copy .env.example .env
+   cp .env.example .env
    ```
-4. Buka `.env` dan masukkan API Key:
+
+   Pada Windows Command Prompt, gunakan `copy .env.example .env`.
+
+4. Isi API key pada `.env`:
+
    ```env
    GEMINI_API_KEY=your_api_key_here
    ```
+
 5. Jalankan server:
+
    ```bash
    npm run dev
    ```
-6. Buka browser di **http://localhost:3000**.
 
-### Production Mode
+6. Buka <http://localhost:3000>.
+
+Server tetap dapat boot tanpa `GEMINI_API_KEY` untuk pengembangan antarmuka dan smoke test, tetapi endpoint berbasis AI akan mengembalikan error konfigurasi.
+
+### Mode production
+
 ```bash
 npm run start:prod
 ```
-Akan mengaktifkan: cache-control headers, error message production-safe, dan optimasi lain.
 
----
+Mode ini mengaktifkan cache headers untuk aset dan menyembunyikan detail error dari respons. Nama mode tersebut tidak berarti aplikasi telah diaudit atau siap untuk beban produksi.
 
-## Deployment ke Google Cloud Run
+## Contoh deployment container
+
+Dockerfile dapat digunakan sebagai titik awal deployment container. Contoh berikut tidak membuat storage lokal menjadi durable:
 
 ```bash
 gcloud run deploy saringsini --source . --platform managed --allow-unauthenticated --region asia-southeast2 --set-env-vars GEMINI_API_KEY=YOUR_KEY,NODE_ENV=production
 ```
 
-Dockerfile sudah disediakan dengan multi-stage build dan optimasi production.
+Sebelum deployment yang menerima data pengguna nyata, rancang external storage, kebijakan privasi, observability, pengelolaan rahasia, dan hardening keamanan sesuai kebutuhan lingkungan Anda.
 
----
+## Struktur ringkas
 
-## PWA Installation
-
-Pengguna mobile (Android Chrome / iOS Safari) akan melihat banner install di atas setelah 4 detik penggunaan. Klik **Pasang** untuk menambahkan ke home screen — aplikasi akan berjalan standalone tanpa browser bar dan support offline.
-
-**App Shortcuts** (long-press icon di home screen):
-- Periksa Hoaks (langsung ke tab Periksa)
-- Papan Komunitas (langsung ke tab Komunitas)
-
----
-
-## Accessibility Checklist (WCAG 2.1 AA)
-
-- ✅ Skip-to-content link (visible saat focus)
-- ✅ ARIA roles (`role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-live="polite"`)
-- ✅ ARIA labels untuk semua tombol icon-only
-- ✅ Keyboard navigation (Tab, Enter, Esc)
-- ✅ Focus rings visible (2px terracotta outline)
-- ✅ `prefers-reduced-motion: reduce` disable semua animation
-- ✅ `prefers-color-scheme: dark` fallback otomatis ke dark theme
-- ✅ Color contrast ≥ 4.5:1 untuk semua text (warm palette diuji)
-- ✅ Touch target minimum 44×44px
-- ✅ Semantic HTML (`<nav>`, `<main>`, `<header>`, `<section>`)
-
----
-
-## Pemenuhan Kriteria Penilaian
-
-| Kriteria | Bobot | Implementasi |
-|---|---|---|
-| **Problem** | 30% | Menyelesaikan masalah nyata penyebaran hoaks di grup WhatsApp keluarga Indonesia yang memecah belah kerukunan. Hyper-local: 4 bahasa daerah, referensi UU ITE, mitigasi via portal nasional. |
-| **Solution** | 40% | Aplikasi fungsional penuh bertenaga Gemini 3.5 Flash multimodal (text + image + URL + voice). PWA installable, persistent JSON database, 10+ fitur differentiator. Production-ready dengan rate limit, security headers, error boundary global, dan accessibility WCAG 2.1 AA. |
-| **Uniqueness** | 30% | Warm Earth palette (berbeda dari kompetitor). Voice input untuk orang tua. WhatsApp deep link. Bahasa daerah templates (Jawa/Sunda/Minang/Batak). URL phishing checker. PDF export branded. iPhone 14 Pro mockup. Pahlawan Fakta gamification. |
-
----
-
-## Struktur Project (v2.3 - Modular)
-
-```
-JUARAVIBECODING/
-├── public/
-│   ├── index.html               (SPA shell + 5 tab panels + WOW features)
-│   ├── index.css                (warm palette + core components, ~4860 lines)
-│   ├── app.js                   (core interactive logic, voice, PWA, ~2330 lines)
-│   ├── css/                     (v2.3 modular stylesheets)
-│   │   ├── coach.css            (Bahasa Mama Mode styling)
-│   │   ├── tone-slider.css      (AI Tone Slider styling)
-│   │   ├── hoax-dna.css         (Hoax DNA Viz styling)
-│   │   └── polish.css           (UX polish layer: focus rings, transitions, etc)
-│   ├── js/                      (v2.3 feature modules)
-│   │   ├── coach.js             (Bahasa Mama conversational logic)
-│   │   ├── tone-slider.js       (Tone regenerate w/ debounce + abort)
-│   │   ├── hoax-dna.js          (Generative SVG fingerprint engine)
-│   │   └── dna-integrator.js    (DNA auto-render from analysis result)
-│   ├── sw.js                    (service worker - stale-while-revalidate)
-│   ├── manifest.webmanifest     (PWA manifest with shortcuts)
-│   └── icons/
-│       ├── favicon.svg
-│       ├── icon-192.svg
-│       └── icon-512.svg
-├── data/
-│   └── community.json           (persistent community reports DB)
-├── docs/
-│   └── screenshots/             (submission screenshots)
-├── server.js                    (Express + Gemini integration + 9 endpoints)
-├── package.json
-├── Dockerfile                   (multi-stage + tini + non-root)
-├── .github/                     (workflow CI, template issue & PR, CODEOWNERS)
-├── test/                        (check.js syntax lint + smoke.js health test)
-├── .env.example
-├── .gitignore
-├── .dockerignore
+```text
+.
+├── public/                 # Antarmuka, aset, PWA, dan modul browser
+├── test/                   # Syntax check dan smoke test
+├── docs/screenshots/       # Screenshot demonstrasi
+├── .github/                # CI dan template kontribusi
+├── server.js               # Express dan integrasi Gemini
+├── Dockerfile
+├── ROADMAP.md
+├── SUPPORT.md
 ├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
 ├── SECURITY.md
-├── LICENSE
-├── CHANGELOG.md
 └── README.md
 ```
 
----
+Folder `data/` dibuat saat runtime dan diabaikan oleh Git.
 
-## Testing & Continuous Integration
+## Testing dan CI
 
-Proyek ini menyertakan pengecekan ringan tanpa dependensi tambahan, dijalankan otomatis oleh **GitHub Actions** pada Node.js 18, 20, dan 22 di setiap push dan pull request:
+CI menjalankan pengecekan berikut pada Node.js 18, 20, dan 22:
 
 ```bash
-npm run check   # syntax check semua file JavaScript (node --check)
-npm run smoke   # nyalakan server & verifikasi endpoint /api/health
-npm test        # check + smoke sekaligus
+npm run check   # node --check untuk file JavaScript
+npm run smoke   # boot server tanpa API key dan cek endpoint publik
+npm test        # check + smoke
 ```
 
----
+Pengecekan ini merupakan baseline ringan. Pengecekan tersebut belum mencakup akurasi AI, keamanan menyeluruh, aksesibilitas, browser end-to-end, atau durability penyimpanan.
 
 ## Berkontribusi
 
-Kontribusi sangat kami sambut! 🎉 Baik itu laporan bug, ide fitur, perbaikan dokumentasi, maupun kode.
+Kontribusi untuk bug, dokumentasi, pengujian, aksesibilitas, dan fitur terfokus sangat diterima.
 
-- 📋 Baca [**CONTRIBUTING.md**](CONTRIBUTING.md) untuk panduan setup dan alur kerja.
-- 🤝 Patuhi [**Kode Etik**](CODE_OF_CONDUCT.md) kami.
-- 🔒 Laporkan isu keamanan secara privat sesuai [**SECURITY.md**](SECURITY.md).
-- 🌱 Baru pertama kali? Mulai dari label [**good first issue**](https://github.com/SultanZhalifa/SaringSini/labels/good%20first%20issue) dan [**help wanted**](https://github.com/SultanZhalifa/SaringSini/labels/help%20wanted).
+- Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum memulai.
+- Lihat [issue terbuka](https://github.com/SultanZhalifa/SaringSini/issues), termasuk label [`good first issue`](https://github.com/SultanZhalifa/SaringSini/labels/good%20first%20issue).
+- Gunakan [SUPPORT.md](SUPPORT.md) untuk memilih kanal pertanyaan atau laporan yang tepat.
+- Jangan melaporkan kerentanan melalui issue publik; ikuti [SECURITY.md](SECURITY.md).
+
+Roadmap adalah arah perencanaan, bukan janji jadwal. Issue #1, #2, #3, #5, #6, dan #7 tetap dipertahankan sebagai peluang kontribusi komunitas.
 
 ## Lisensi
 
-Didistribusikan di bawah [Lisensi MIT](LICENSE). Bebas digunakan, dimodifikasi, dan disebarluaskan dengan tetap mencantumkan atribusi.
-
----
-
-*Dibuat untuk mendukung kesuksesan Sultan di ajang #JuaraVibeCoding 2026.*
+SaringSini didistribusikan di bawah [Lisensi MIT](LICENSE).

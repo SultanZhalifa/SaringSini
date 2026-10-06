@@ -30,8 +30,8 @@ if (apiKey) {
 }
 
 // -------------------------------------------------------------
-// Persistent JSON File Database for Community Reports
-// (Fallback strategy: in-memory + JSON disk persistence)
+// Local/demo JSON persistence for community reports.
+// This store is per instance and is not durable production storage.
 // -------------------------------------------------------------
 const DB_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DB_DIR, 'community.json');
@@ -168,7 +168,7 @@ function stripEmojis(obj) {
 }
 
 // -------------------------------------------------------------
-// API Rate Limiter
+// Lightweight in-memory API rate limiter (per process/instance)
 // -------------------------------------------------------------
 const rateLimitStore = new Map();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
@@ -378,7 +378,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 4. Analyze content with Gemini (multimodal: text / image / video / url)
+// 4. Generate an AI-assisted assessment (multimodal: text / image / video / url)
 app.post('/api/analyze', checkRateLimit, upload.single('screenshot'), async (req, res) => {
   try {
     if (!genAI) {
@@ -440,7 +440,8 @@ app.post('/api/analyze', checkRateLimit, upload.single('screenshot'), async (req
     let analysisData = JSON.parse(responseText);
     analysisData = stripEmojis(analysisData);
 
-    // Auto-inject into community feed
+    // Auto-inject a text/claim snippet into the local demonstration feed.
+    // Uploaded file bytes are not written to the JSON feed.
     const snippetText = message || (analysisData.claims && analysisData.claims[0] ? analysisData.claims[0].claim : "Analisis tangkapan layar chat.");
     if (snippetText && snippetText.trim().length > 5) {
       const randNum = Math.floor(1000 + Math.random() * 9000);
@@ -668,7 +669,8 @@ Output: HANYA TEKS BALASAN BARU. Tidak perlu format JSON, tidak perlu prefix "Ba
   }
 });
 
-// 9. Statistics endpoint for the homepage (real counts)
+// 9. Demonstration statistics endpoint for the homepage.
+// familiesSaved and target are synthetic UI values, not impact metrics.
 app.get('/api/stats', (req, res) => {
   const totalChecks = communityReports.length;
   const totalUpvotes = communityReports.reduce((sum, r) => sum + (r.upvotes || 0), 0);

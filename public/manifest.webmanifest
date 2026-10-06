@@ -1,7 +1,7 @@
 {
-  "name": "SaringSini - Filter Hoaks Keluarga",
+  "name": "SaringSini - Penilaian Awal Pesan Keluarga",
   "short_name": "SaringSini",
-  "description": "Asisten anti-hoaks untuk grup WhatsApp keluarga Indonesia. Deteksi hoaks, scam, deepfake, dan buat balasan sopan dengan AI Gemini.",
+  "description": "Alat bantu literasi digital keluarga Indonesia untuk indikasi awal berbantuan AI dan penyusunan balasan yang lebih santun.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -26,16 +26,16 @@
   ],
   "shortcuts": [
     {
-      "name": "Periksa Hoaks",
-      "short_name": "Periksa",
-      "description": "Periksa pesan WhatsApp secara instan",
+      "name": "Nilai Pesan",
+      "short_name": "Nilai",
+      "description": "Dapatkan indikasi awal berbantuan AI untuk pesan",
       "url": "/?tab=periksa",
       "icons": [{ "src": "icons/icon-192.svg", "sizes": "192x192" }]
     },
     {
       "name": "Papan Komunitas",
       "short_name": "Komunitas",
-      "description": "Lihat laporan komunitas terbaru",
+      "description": "Lihat feed komunitas demonstrasi",
       "url": "/?tab=komunitas",
       "icons": [{ "src": "icons/icon-192.svg", "sizes": "192x192" }]
     }
