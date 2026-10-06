@@ -11,6 +11,23 @@ test('boots under the strict CSP with no script errors or violations', async ({ 
   expect(problems).toEqual([]);
 });
 
+test('everything, fonts included, comes from this origin', async ({ page, problems }) => {
+  const origins = new Set();
+  page.on('request', (request) => {
+    if (request.url().startsWith('http')) origins.add(new URL(request.url()).origin);
+  });
+
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+
+  const loadedFonts = await page.evaluate(() =>
+    [...document.fonts].filter((face) => face.status === 'loaded').map((face) => face.family),
+  );
+  expect(loadedFonts).toContain('Plus Jakarta Sans');
+  expect([...origins]).toEqual([new URL(page.url()).origin]);
+  expect(problems).toEqual([]);
+});
+
 test('model output containing markup is rendered as inert text', async ({ page, problems }) => {
   await analyze(page, 'pesan biasa untuk dianalisis');
 

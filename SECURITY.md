@@ -33,7 +33,7 @@ Laporan akan ditinjau dan ditangani sesuai kapasitas maintainer, tingkat risiko,
 Mekanisme berikut diverifikasi oleh test otomatis proyek (integrasi dan Playwright):
 
 - `GEMINI_API_KEY` dibaca di server dan tidak dimasukkan ke bundle browser.
-- Content-Security-Policy tanpa inline script, inline style, maupun script pihak ketiga (`script-src 'self'`, `style-src-attr 'none'`, `object-src 'none'`, `frame-ancestors 'none'`). Pustaka PDF disajikan dari origin sendiri. Mode production menambahkan `Strict-Transport-Security` dan `upgrade-insecure-requests`.
+- Content-Security-Policy tanpa inline script, inline style, maupun script pihak ketiga (`script-src 'self'`, `style-src-attr 'none'`, `object-src 'none'`, `frame-ancestors 'none'`). Skrip, gaya, font, dan pustaka PDF disajikan dari origin sendiri. Mode production menambahkan `Strict-Transport-Security` dan `upgrade-insecure-requests`.
 - Header `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, serta COOP/CORP. `X-XSS-Protection: 0` sesuai rekomendasi OWASP untuk fitur legacy tersebut.
 - Teks dari feed komunitas, keluaran AI, dan input pengguna dirender dengan `textContent`, bukan `innerHTML`. Keluaran model dinormalisasi (tipe, panjang, label yang diizinkan) sebelum disimpan atau dikirim ke klien.
 - Setiap endpoint memvalidasi tipe dan panjang input. Body JSON dibatasi 64 KB. URL harus `http(s)` dan tidak pernah di-fetch oleh server.
@@ -52,7 +52,6 @@ Mekanisme berikut diverifikasi oleh test otomatis proyek (integrasi dan Playwrig
 - Proyek belum menjalani audit keamanan independen. Mekanisme di atas diverifikasi oleh test proyek sendiri, bukan oleh penilaian pihak ketiga.
 - Mitigasi prompt injection bersifat parsial. Keluaran model diperlakukan sebagai tidak tepercaya, tetapi tidak ada jaminan model akan selalu mematuhi instruksi.
 - Rate limiter dan `data/community.json` bersifat lokal per proses/instance dan bukan kontrol terdistribusi. Identitas klien untuk dukungan komunitas dibuat di browser, sehingga dukungan bukan ukuran integritas yang kuat.
-- Font dimuat dari Google Fonts, sehingga alamat IP pengunjung terlihat oleh Google.
 - Teks dan file yang dianalisis dikirim ke Gemini. File upload tidak ditulis ke `data/community.json`, tetapi potongan teks atau klaim hasil AI dapat ditambahkan ke feed demonstrasi dan disimpan di file tersebut. Penyamaran data pribadi di feed bukan anonimisasi formal.
 - Proyek belum menjanjikan retensi, penghapusan otomatis, enkripsi aplikasi, atau compliance tertentu.
 
