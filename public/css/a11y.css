@@ -1,0 +1,38 @@
+/* Focus ring and skip link. */
+
+/* Improved focus ring on all interactive elements (accessibility) */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Skip link for keyboard users — hidden until focused (body uses position: fixed) */
+.skip-link {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    background-color: var(--primary);
+    color: #ffffff;
+    padding: 0.5rem 0.85rem;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    z-index: 9999;
+    transform: translateY(-200%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    outline: 2px solid var(--primary-dark);
+    outline-offset: 2px;
+}

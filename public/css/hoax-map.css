@@ -1,0 +1,145 @@
+/* Hoax map of Indonesia. */
+
+/* =========================================================
+   HOAX MAP INDONESIA - Interactive SVG visualization
+   ========================================================= */
+.hoax-map-card {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.hoax-map-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.hoax-map-svg {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+}
+
+.map-region {
+    fill: var(--cyan-light);
+    stroke: var(--cyan-border);
+    stroke-width: 1.5;
+    cursor: pointer;
+    transition: fill 0.4s ease, transform 0.2s ease;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.map-region:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 4px 8px rgba(61, 40, 23, 0.15));
+}
+
+.map-region.intensity-low {
+    fill: #E6EFEA;
+    stroke: #BDD3C6;
+}
+
+.map-region.intensity-mid {
+    fill: #F2D88A;
+    stroke: #D97706;
+}
+
+.map-region.intensity-high {
+    fill: #F0B6AC;
+    stroke: var(--red);
+}
+
+.map-region.intensity-critical {
+    fill: var(--red);
+    stroke: #8E2A22;
+    animation: critical-pulse 2.4s infinite;
+}
+
+@keyframes critical-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.map-region.active-region {
+    stroke-width: 3;
+    stroke: var(--primary);
+}
+
+.map-labels text {
+    fill: var(--text-secondary);
+    pointer-events: none;
+    user-select: none;
+}
+
+.map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.85rem;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+}
+
+.map-legend-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.map-legend-scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.legend-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.legend-dot.intensity-low { background-color: #BDD3C6; }
+.legend-dot.intensity-mid { background-color: #F2D88A; }
+.legend-dot.intensity-high { background-color: #F0B6AC; }
+.legend-dot.intensity-critical { background-color: var(--red); }
+
+.legend-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.map-detail-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.7rem 0.9rem;
+    background-color: var(--bg-secondary);
+    border-left: 3px solid var(--primary);
+    border-radius: 8px;
+    min-height: 44px;
+}
+
+.map-detail-region {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.map-detail-count {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+}
