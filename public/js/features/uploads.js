@@ -39,11 +39,13 @@ export function createUploadSlot({ ids, messages }) {
         if (isVideo) {
             image.removeAttribute('src');
             image.classList.add('hidden');
+            // codeql[js/xss-through-dom]: previewUrl is a blob: URL of the file the visitor picked; it cannot carry markup.
             video.src = previewUrl;
             video.classList.remove('hidden');
         } else {
             video?.removeAttribute('src');
             video?.classList.add('hidden');
+            // codeql[js/xss-through-dom]: same blob: URL as above.
             image.src = previewUrl;
             image.classList.remove('hidden');
         }
