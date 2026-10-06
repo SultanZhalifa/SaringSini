@@ -126,10 +126,9 @@
     <link rel="apple-touch-icon" href="icons/icon-192.svg">
     <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
 
-    <!-- Google Fonts (preconnect + display=swap to avoid blocking render) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Self-hosted font; the Latin subset is needed on every page, so fetch it early -->
+    <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/fonts.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="index.css">

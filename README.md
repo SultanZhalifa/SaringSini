@@ -116,7 +116,7 @@ SaringSini awalnya dikembangkan sebagai submission **#JuaraVibeCoding 2026**. Ri
 
 Mekanisme berikut diverifikasi oleh test otomatis (integrasi dan Playwright):
 
-- **Content-Security-Policy** tanpa inline script, inline style, maupun script pihak ketiga (`script-src 'self'`, `style-src-attr 'none'`, `object-src 'none'`, `frame-ancestors 'none'`). jsPDF disajikan dari origin sendiri.
+- **Content-Security-Policy** tanpa inline script, inline style, maupun script pihak ketiga (`script-src 'self'`, `style-src-attr 'none'`, `object-src 'none'`, `frame-ancestors 'none'`). Seluruh sumber (skrip, gaya, font, dan jsPDF) disajikan dari origin sendiri; tidak ada permintaan ke pihak ketiga dari browser.
 - Header `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, COOP/CORP, serta `Strict-Transport-Security` pada mode production. `X-XSS-Protection: 0`, sesuai rekomendasi OWASP untuk fitur legacy tersebut.
 - Teks dari feed komunitas, keluaran AI, dan input pengguna dirender melalui `textContent`; keluaran model dinormalisasi (tipe, panjang, label yang diizinkan) sebelum disimpan atau dikirim ke klien.
 - Setiap endpoint memvalidasi tipe dan panjang input; body JSON dibatasi 64 KB; URL harus `http(s)` dan tidak pernah di-fetch oleh server.

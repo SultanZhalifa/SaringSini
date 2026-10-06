@@ -56,6 +56,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - `public/app.js` (satu closure sepanjang sekitar 2.200 baris) dan empat skrip terpisah dipecah menjadi modul ES di `public/js/` (`core/`, `features/`, `lib/`) dengan satu titik masuk, `js/main.js`. Tampilan tidak berubah. Modul saling mengabari lewat import dan event `saringsini:analysis` serta `saringsini:community`, tidak lagi lewat global `window.__saringSini*` dan `window.HoaxDNA`. Duplikasi (empat salinan toast, dua helper haptic, tujuh pola `fetch`, dua zona unggah, ambang risiko) digabung ke `core/`.
 - Service worker memasukkan semua modul JS dan stylesheet ke cache awal (sebelumnya hanya `app.js`); test menjaga daftar ini tetap sinkron dengan isi `public/`.
 - Penghitung angka (beranda, analitik, indikator aktivitas, skor coach) langsung menampilkan nilai akhir bila pengguna meminta animasi dikurangi.
+- Font Plus Jakarta Sans disajikan dari origin sendiri (`public/fonts`, lisensi SIL OFL) alih-alih Google Fonts. Browser tidak lagi menghubungi pihak ketiga, sehingga alamat IP pengunjung tidak terlihat oleh Google, dan CSP kini `default-src 'self'` tanpa pengecualian origin untuk gaya maupun font. Service worker menyimpan font di cache awal; `VERSION` menjadi `v2.3.3`.
 - CI dan CodeQL kini juga berjalan untuk pull request yang menarget branch selain `master` (PR bertumpuk); push tetap hanya untuk `master`.
 - Content-Security-Policy kini melarang atribut `style` inline (`style-src-attr 'none'`); semua inline style dipindahkan ke CSS.
 

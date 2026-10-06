@@ -37,7 +37,6 @@ Item berikut bersifat rencana pemeliharaan, bukan janji rilis. Semuanya terpisah
 
 - Migrasi ke SDK Gemini yang masih dipelihara (`@google/genai`). Pemakaian SDK terisolasi di `src/services/gemini.js`, tetapi migrasi perlu diverifikasi dengan API key sungguhan sebelum digabung.
 - Memecah `public/index.css` menjadi berkas per fitur, dengan test Playwright sebagai jaring pengaman. (`public/app.js` sudah dipecah menjadi modul ES di `public/js/`.)
-- Self-host font agar tidak ada permintaan ke Google Fonts.
 - Menjadikan publikasi ke feed komunitas sebagai opt-in dengan persetujuan eksplisit (lihat juga item consent di bawah).
 
 ## Longer-term exploration — sekitar 5–6 bulan
