@@ -1,0 +1,19 @@
+<!doctype html>
+<!--
+  A stand-in for the SaringSini page as it shipped before the move to ES modules: one
+  classic script, one lazily loaded script and a stylesheet, handled by the service worker
+  in sw.js (a verbatim copy of public/sw.js from that release, cache version v2.3.1).
+  It exists only so upgrade.spec.js can start from a browser that already has the old
+  worker installed. Do not edit sw.js: its exact bytes are the point.
+-->
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>SaringSini (legacy shell)</title>
+  <link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <h1 id="legacy-marker">legacy shell</h1>
+  <script src="/app.js"></script>
+</body>
+</html>

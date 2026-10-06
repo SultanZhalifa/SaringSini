@@ -28,6 +28,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 - Graceful shutdown (`SIGTERM`) dan penulisan data feed secara atomik.
 - Suite pengujian: unit, integrasi (dengan Gemini palsu), smoke test proses sungguhan, dan end-to-end Playwright.
 - ESLint, workflow CodeQL, `npm audit` serta build image Docker di CI, dan Dependabot.
+- Tes e2e jalur upgrade service worker: browser yang sudah memasang worker lama (cache `v2.3.1`, salinan verbatim di `test/e2e/legacy-shell`) berpindah ke rilis terbaru dan tetap berjalan offline.
 - Unit test untuk logika browser (ambang risiko, balasan simulator, insight analitik, penempatan peta, DNA hoaks) dan untuk kelengkapan cache offline serta impor modul.
 
 ### Security
