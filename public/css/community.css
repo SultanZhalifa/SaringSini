@@ -116,7 +116,7 @@
     border-color: var(--blue);
 }
 
-/* [NEW] Filter Bar & Category Tabs Styling (Victory Update!) */
+/* Filter Bar & Category Tabs Styling */
 .community-filter-row {
     margin-bottom: 0.75rem;
 }
@@ -196,11 +196,6 @@
 }
 
 /* Sidebar Columns */
-.side-panel-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
 
 .side-card {
     padding: 1.25rem 1.5rem;

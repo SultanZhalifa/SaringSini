@@ -2,7 +2,7 @@
 // Caching strategy: stale-while-revalidate for shell, network-first for API
 
 // Bump when cached assets change shape so clients drop their old caches.
-const VERSION = 'saringsini-v2.3.4';
+const VERSION = 'saringsini-v2.3.5';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -26,7 +26,6 @@ const SHELL_ASSETS = [
   '/css/home.css',
   '/css/layout.css',
   '/css/onboarding.css',
-  '/css/phone-mockup.css',
   '/css/polish.css',
   '/css/pwa.css',
   '/css/quiz.css',
