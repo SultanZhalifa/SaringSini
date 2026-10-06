@@ -2,7 +2,7 @@
 // Caching strategy: stale-while-revalidate for shell, network-first for API
 
 // Bump when cached assets change shape so clients drop their old caches.
-const VERSION = 'saringsini-v2.3.2';
+const VERSION = 'saringsini-v2.3.3';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -14,6 +14,7 @@ const SHELL_ASSETS = [
   '/manifest.webmanifest',
   '/index.css',
   '/css/coach.css',
+  '/css/fonts.css',
   '/css/hoax-dna.css',
   '/css/polish.css',
   '/css/tone-slider.css',
@@ -57,6 +58,10 @@ const SHELL_ASSETS = [
   '/js/features/tone-slider.js',
   '/js/features/uploads.js',
   '/js/features/voice-input.js',
+  '/fonts/plus-jakarta-sans-latin.woff2',
+  '/fonts/plus-jakarta-sans-latin-ext.woff2',
+  '/fonts/plus-jakarta-sans-vietnamese.woff2',
+  '/fonts/plus-jakarta-sans-cyrillic-ext.woff2',
   '/icons/favicon.svg',
   '/icons/icon-192.svg',
   '/icons/icon-512.svg'

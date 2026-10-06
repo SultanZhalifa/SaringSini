@@ -25,7 +25,7 @@ const readShellAssets = () => {
 
 test('the service worker precaches every script and stylesheet, so the app starts offline', () => {
   const shell = readShellAssets();
-  const needed = ['/', '/index.html', '/index.css', ...listFiles('css', 'js')];
+  const needed = ['/', '/index.html', '/index.css', ...listFiles('css', 'js', 'fonts').filter((file) => !file.endsWith('.txt'))];
 
   for (const asset of needed) assert.ok(shell.includes(asset), `${asset} is missing from SHELL_ASSETS in public/sw.js`);
   assert.equal(new Set(shell).size, shell.length, 'SHELL_ASSETS lists a file twice');
@@ -77,4 +77,17 @@ test('browser modules talk through imports and events, not window globals', () =
     const source = fs.readFileSync(path.join(PUBLIC, file), 'utf8');
     assert.doesNotMatch(source, /window\.__\w+/, `${file} uses a window.__ global`);
   }
+});
+
+test('every font file referenced by the stylesheets exists and no stylesheet points off-site', () => {
+  for (const file of listFiles('css')) {
+    const source = fs.readFileSync(path.join(PUBLIC, file), 'utf8');
+    assert.doesNotMatch(source, /https?:\/\//, `${file} references another origin`);
+    for (const [, url] of source.matchAll(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g)) {
+      assert.ok(fs.existsSync(path.join(PUBLIC, path.dirname(file), url)), `${file} references ${url}, which does not exist`);
+    }
+  }
+
+  const html = fs.readFileSync(path.join(PUBLIC, 'index.html'), 'utf8');
+  assert.doesNotMatch(html, /(?:href|src)=["']https?:\/\/(?!github\.com)/i, 'index.html loads a resource from another origin');
 });
