@@ -1,7 +1,7 @@
 /* Live activity indicator and confetti canvas. */
 
 /* =========================================================
-   v2.2 LIVE ACTIVITY INDICATOR (Social Proof)
+   LIVE ACTIVITY INDICATOR (Social Proof)
    ========================================================= */
 .live-activity-bar {
     display: flex;
@@ -68,7 +68,7 @@
 }
 
 /* =========================================================
-   v2.2 CONFETTI CELEBRATION CANVAS
+   CONFETTI CELEBRATION CANVAS
    ========================================================= */
 .confetti-canvas {
     position: fixed;
@@ -79,7 +79,3 @@
     z-index: 9997;
     display: block;
 }
-
-/* =========================================================
-   v2.2 EASTER EGG / DEVELOPER MODE PANEL
-   ========================================================= */

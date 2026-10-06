@@ -65,6 +65,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/) dan project 
 ### Removed
 - Kode mati di `public/` (hook monkey-patch yang tidak dipakai, variabel tak terpakai, `escapeHtml` ganda, `cleanEmojiText`) dan polling `setInterval`/`MutationObserver` yang tidak perlu.
 - `test/check.js` (digantikan ESLint).
+- CSS mati di `public/css`, dibuktikan dengan memeriksa bahwa kelasnya tidak muncul di HTML, JS, maupun kode server: mockup iPhone lama untuk simulator (±600 baris, tidak ada elemennya sejak chat WhatsApp baru), aturan `.header-actions`, `.header-badge`, `.user-stats-bar`, `.stat-pill`, `.workspace-grid`, `.skeleton`, `.sender-mama/papa/tante`, dua keyframes skeleton yang tidak dipakai, dan tujuh variabel CSS yang tidak pernah dibaca. Computed style semua elemen di semua keadaan UI yang diuji tidak berubah.
 - Kode mati hasil pemecahan `app.js`: pindah tab di input suara (tombol hanya ada di tab teks), penghitung `[data-count-to]` tanpa elemen pemakai, penghapusan `data-theme` yang tak pernah terpasang, dan `avatarClass` persona coach.
 
 ---

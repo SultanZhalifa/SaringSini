@@ -6,13 +6,11 @@
 
 /* Webkit Scrollbar Customizations - Hidden for premium mobile feel */
 .app-content::-webkit-scrollbar,
-.chat-messages-area::-webkit-scrollbar,
 body::-webkit-scrollbar {
     display: none;
 }
 
 .app-content,
-.chat-messages-area,
 body {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -64,7 +62,6 @@ body {
     box-shadow: 0 8px 20px -6px rgba(71, 85, 105, 0.15);
 }
 
-
 /* ============================================================
    Accessibility: Respect reduced motion preferences
    ============================================================ */
@@ -81,7 +78,7 @@ body {
 }
 
 /* =========================================================
-   v2.3 UX POLISH LAYER
+   UX POLISH LAYER
    Apply on top of everything for truly delightful interactions
    ========================================================= */
 
@@ -120,28 +117,6 @@ button:not(:disabled):active,
     transition: transform 0.08s ease;
 }
 
-/* Skeleton loading shimmer (use class .skeleton on placeholder elements) */
-.skeleton {
-    background: linear-gradient(90deg,
-        rgba(232, 220, 196, 0.35) 0%,
-        rgba(232, 220, 196, 0.65) 50%,
-        rgba(232, 220, 196, 0.35) 100%);
-    background-size: 200% 100%;
-    animation: skeletonShimmer 1.6s infinite ease-in-out;
-    border-radius: 6px;
-    color: transparent !important;
-    pointer-events: none;
-}
-
-@keyframes skeletonShimmer {
-    0% { background-position: 200% 50%; }
-    100% { background-position: -200% 50%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .skeleton { animation: none; }
-}
-
 /* Smooth tab panel transitions */
 .tab-panel.active {
     animation: tabPanelFadeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -155,10 +130,8 @@ button:not(:disabled):active,
 /* Better card hover states (only on devices with hover capability) */
 @media (hover: hover) {
     .panel.card,
-    .quick-action-card,
-    .reply-card,
-    .community-card,
-    .leaderboard-card-item {
+.quick-action-card,
+.reply-card {
         transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
                     box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     }

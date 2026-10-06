@@ -1,7 +1,7 @@
 /* Beranda: hero, stats, warning banner, quick actions, solidarity, leaderboard. */
 
 /* ==========================================================================
-   [NEW] Premium Beranda Dashboard & Leaderboard Custom Styles
+   Premium Beranda Dashboard & Leaderboard Custom Styles
    ========================================================================== */
 
 /* Beranda Hero Card - Premium Warm Terracotta Gradient Welcome Panel */
@@ -116,43 +116,6 @@
 }
 
 /* User Quick Stats */
-.user-stats-bar {
-    display: flex;
-    gap: 0.75rem;
-    width: 100%;
-    margin-top: 0.25rem;
-}
-
-.stat-pill {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    padding: 0.65rem 0.5rem;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.78rem;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--card-border);
-}
-
-.stat-pill.streak {
-    color: #ea580c;
-    border-color: #ffedd5;
-    background-color: #fff7ed;
-}
-
-.stat-pill.points {
-    color: var(--blue);
-    border-color: var(--blue-light);
-    background-color: var(--blue-light);
-}
-
-.stat-icon {
-    width: 15px;
-    height: 15px;
-}
 
 /* Waspada Banner */
 .warning-banner-card {

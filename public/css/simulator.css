@@ -1,7 +1,81 @@
 /* Family chat simulator. */
 
+/* Chat bubbles: base styles, refined further down */
+.chat-bubble {
+    max-width: 85%;
+    padding: 0.45rem 0.7rem;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    font-size: 0.76rem;
+    line-height: 1.4;
+    animation: bubbleIn 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes bubbleIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-bubble.received {
+    align-self: flex-start;
+    background-color: #ffffff;
+    color: #3b4252;
+    border-top-left-radius: 4px;
+    border-radius: 14px 14px 14px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+.chat-bubble.sent {
+    align-self: flex-end;
+    background-color: #e1ffc7;
+    color: #111b21;
+    border-top-right-radius: 4px;
+    border-radius: 14px 14px 4px 14px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+.sender-name {
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.chat-bubble.received .sender-name {
+    color: #0f766e;
+}
+
+.message-time {
+    font-size: 0.56rem;
+    color: #667781;
+    align-self: flex-end;
+    margin-top: 0.05rem;
+}
+
+/* Send button */
+
+.chat-send-btn {
+    background-color: #007aff;
+    color: #ffffff;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.chat-send-btn:hover {
+    transform: scale(1.05);
+    background-color: #0062cc;
+}
+
 /* =========================================================
-   v2.2 REDESIGNED SIMULATOR CHAT - Natural WhatsApp panel
+   REDESIGNED SIMULATOR CHAT - Natural WhatsApp panel
    (Replaces awkward phone mockup with clean, full-width chat)
    ========================================================= */
 
@@ -335,10 +409,8 @@
 }
 
 /* Sender colors (warm palette consistent) */
-.sender-mama { color: #B8392E !important; }
-.sender-papa { color: #5C8374 !important; }
+
 .sender-om   { color: #D97706 !important; }
-.sender-tante { color: #7A4A8E !important; }
 
 /* Typing indicator */
 .chat-typing-indicator {
