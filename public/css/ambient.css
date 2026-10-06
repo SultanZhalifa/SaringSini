@@ -1,0 +1,81 @@
+/* Live activity indicator and confetti canvas. */
+
+/* =========================================================
+   LIVE ACTIVITY INDICATOR (Social Proof)
+   ========================================================= */
+.live-activity-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    background-color: var(--emerald-light);
+    border: 1px solid var(--emerald-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+}
+
+.live-activity-dot-wrap {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+.live-activity-dot {
+    position: absolute;
+    inset: 2px;
+    background-color: var(--emerald);
+    border-radius: 9999px;
+    z-index: 2;
+}
+
+.live-activity-ring {
+    position: absolute;
+    inset: 0;
+    background-color: var(--emerald);
+    border-radius: 9999px;
+    opacity: 0.5;
+    animation: live-pulse-ring 2s infinite;
+}
+
+@keyframes live-pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+.live-activity-text {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: baseline;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.live-activity-count {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--emerald);
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
+}
+
+.live-activity-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* =========================================================
+   CONFETTI CELEBRATION CANVAS
+   ========================================================= */
+.confetti-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9997;
+    display: block;
+}
