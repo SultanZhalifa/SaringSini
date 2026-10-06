@@ -2,16 +2,61 @@
 // Caching strategy: stale-while-revalidate for shell, network-first for API
 
 // Bump when cached assets change shape so clients drop their old caches.
-const VERSION = 'saringsini-v2.3.1';
+const VERSION = 'saringsini-v2.3.2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
+// Everything the page needs to start, so the app works offline after the first visit.
+// A test keeps this list in step with the files in public/.
 const SHELL_ASSETS = [
   '/',
   '/index.html',
-  '/index.css',
-  '/app.js',
   '/manifest.webmanifest',
+  '/index.css',
+  '/css/coach.css',
+  '/css/hoax-dna.css',
+  '/css/polish.css',
+  '/css/tone-slider.css',
+  '/js/main.js',
+  '/js/core/analysis.js',
+  '/js/core/api.js',
+  '/js/core/client-id.js',
+  '/js/core/clipboard.js',
+  '/js/core/count-up.js',
+  '/js/core/dom.js',
+  '/js/core/error-boundary.js',
+  '/js/core/events.js',
+  '/js/core/motion.js',
+  '/js/core/risk.js',
+  '/js/core/storage.js',
+  '/js/core/toast.js',
+  '/js/core/whatsapp.js',
+  '/js/lib/dna-art.js',
+  '/js/features/analytics.js',
+  '/js/features/analyze.js',
+  '/js/features/coach.js',
+  '/js/features/community.js',
+  '/js/features/confetti.js',
+  '/js/features/education.js',
+  '/js/features/hero-stats.js',
+  '/js/features/hoax-dna.js',
+  '/js/features/hoax-map.js',
+  '/js/features/infographic.js',
+  '/js/features/input-tabs.js',
+  '/js/features/live-activity.js',
+  '/js/features/navigation.js',
+  '/js/features/onboarding.js',
+  '/js/features/pdf-report.js',
+  '/js/features/pwa.js',
+  '/js/features/quiz-data.js',
+  '/js/features/quiz.js',
+  '/js/features/replies.js',
+  '/js/features/results.js',
+  '/js/features/simulator-replies.js',
+  '/js/features/simulator.js',
+  '/js/features/tone-slider.js',
+  '/js/features/uploads.js',
+  '/js/features/voice-input.js',
   '/icons/favicon.svg',
   '/icons/icon-192.svg',
   '/icons/icon-512.svg'

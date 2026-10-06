@@ -20,7 +20,7 @@ module.exports = [
   },
   {
     files: ['public/**/*.js'],
-    languageOptions: { sourceType: 'script', globals: globals.browser },
+    languageOptions: { sourceType: 'module', globals: globals.browser },
   },
   {
     // Playwright specs run in Node but pass callbacks to page.evaluate(), which execute in the browser.
@@ -29,6 +29,6 @@ module.exports = [
   },
   {
     files: ['public/sw.js'],
-    languageOptions: { globals: globals.serviceworker },
+    languageOptions: { sourceType: 'script', globals: globals.serviceworker },
   },
 ];

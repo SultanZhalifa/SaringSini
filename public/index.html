@@ -377,7 +377,7 @@
                     </div>
                     <p class="panel-desc">Progress sintetis untuk menunjukkan tampilan target; bukan data penggunaan atau dampak nyata.</p>
                     <div class="solidarity-progress-container">
-                        <div class="solidarity-progress-fill" style="width: 65.6%;"></div>
+                        <div class="solidarity-progress-fill"></div>
                     </div>
                     <span class="solidarity-footer-text">Target demonstrasi: 15.000 poin.</span>
                 </div>
@@ -489,7 +489,7 @@
                                 </div>
                                 <div class="upload-preview hidden" id="image-preview-container-deepfake">
                                     <img id="image-preview-deepfake" src="#" alt="Pratinjau Foto AI" class="hidden">
-                                    <video id="video-preview-deepfake" class="hidden" controls style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px;"></video>
+                                    <video id="video-preview-deepfake" class="hidden" controls></video>
                                     <button type="button" class="remove-image-btn" id="remove-image-deepfake">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -613,7 +613,7 @@
                         </div>
 
                         <!-- HOAX DNA - Generative SVG Fingerprint (uniqueness feature) -->
-                        <div class="hoax-dna-section" id="hoax-dna-section" style="display:none;">
+                        <div class="hoax-dna-section hidden" id="hoax-dna-section">
                             <div class="hoax-dna-header">
                                 <div class="hoax-dna-title-row">
                                     <svg viewBox="0 0 24 24" class="hoax-dna-title-icon" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -1489,10 +1489,6 @@
     </div>
 
     <!-- App Logic Scripts -->
-    <script src="app.js"></script>
-    <script src="js/hoax-dna.js"></script>
-    <script src="js/coach.js"></script>
-    <script src="js/tone-slider.js"></script>
-    <script src="js/dna-integrator.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

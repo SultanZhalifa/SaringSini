@@ -388,6 +388,10 @@
     box-shadow: 0 1px 3px rgba(61, 40, 23, 0.08);
 }
 
+.coach-msg.error {
+    border-left: 3px solid var(--danger);
+}
+
 .coach-msg.typing {
     align-self: flex-start;
     background: #ffffff;
