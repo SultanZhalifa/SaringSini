@@ -25,7 +25,7 @@ const readShellAssets = () => {
 
 test('the service worker precaches every script and stylesheet, so the app starts offline', () => {
   const shell = readShellAssets();
-  const needed = ['/', '/index.html', '/index.css', ...listFiles('css', 'js', 'fonts').filter((file) => !file.endsWith('.txt'))];
+  const needed = ['/', '/index.html', ...listFiles('css', 'js', 'fonts').filter((file) => !file.endsWith('.txt'))];
 
   for (const asset of needed) assert.ok(shell.includes(asset), `${asset} is missing from SHELL_ASSETS in public/sw.js`);
   assert.equal(new Set(shell).size, shell.length, 'SHELL_ASSETS lists a file twice');
@@ -77,6 +77,14 @@ test('browser modules talk through imports and events, not window globals', () =
     const source = fs.readFileSync(path.join(PUBLIC, file), 'utf8');
     assert.doesNotMatch(source, /window\.__\w+/, `${file} uses a window.__ global`);
   }
+});
+
+test('every stylesheet is linked from the page, and the page links no stylesheet that does not exist', () => {
+  const html = fs.readFileSync(path.join(PUBLIC, 'index.html'), 'utf8');
+  const linked = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map(([, href]) => `/${href}`);
+
+  assert.deepEqual([...linked].sort(), listFiles('css').sort());
+  assert.equal(new Set(linked).size, linked.length, 'a stylesheet is linked twice');
 });
 
 test('every font file referenced by the stylesheets exists and no stylesheet points off-site', () => {

@@ -1,3 +1,85 @@
+/* Scrollbars, micro-interactions and reduced-motion overrides. (moved from index.css), then the v2.3 polish layer. */
+
+/* ==========================================================================
+   PREMIUM CUSTOM SCROLLBARS & MICRO-INTERACTIONS (Production Polish)
+   ========================================================================== */
+
+/* Webkit Scrollbar Customizations - Hidden for premium mobile feel */
+.app-content::-webkit-scrollbar,
+.chat-messages-area::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.app-content,
+.chat-messages-area,
+body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Elegant Micro-interactions & Active States */
+.quick-action-card,
+.tab-btn,
+.sidebar-nav-btn,
+.bottom-nav-btn,
+.btn,
+.reply-card,
+.community-upvote-btn,
+.mitigation-btn,
+.copy-btn {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.15s ease, 
+                background-color 0.15s ease, 
+                border-color 0.15s ease,
+                color 0.15s ease;
+}
+
+.quick-action-card:active,
+.tab-btn:active,
+.sidebar-nav-btn:active,
+.bottom-nav-btn:active,
+.btn:active,
+.reply-card:active,
+.community-upvote-btn:active,
+.mitigation-btn:active,
+.copy-btn:active {
+    transform: scale(0.96) !important;
+}
+
+.quick-action-card:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.15);
+}
+
+.reply-card:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.35);
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 8px 20px -6px rgba(71, 85, 105, 0.15);
+}
+
+
+/* ============================================================
+   Accessibility: Respect reduced motion preferences
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 /* =========================================================
    v2.3 UX POLISH LAYER
    Apply on top of everything for truly delightful interactions

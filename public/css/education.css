@@ -1,0 +1,70 @@
+/* Literacy accordion. */
+
+/* Accordions */
+.literacy-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.accordion-item {
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.accordion-trigger {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    background-color: var(--bg-light);
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition);
+}
+
+.accordion-trigger:hover {
+    background-color: var(--bg-secondary);
+}
+
+.accordion-trigger span {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.accordion-chevron {
+    width: 14px;
+    height: 14px;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+}
+
+.accordion-item.active .accordion-chevron {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s cubic-bezier(0, 1, 0, 1);
+    background-color: #ffffff;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 100px;
+    transition: max-height 0.25s ease-in-out;
+}
+
+.accordion-content p {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    border-top: 1px solid var(--card-border);
+}
