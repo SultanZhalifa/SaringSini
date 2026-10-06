@@ -35,7 +35,7 @@ Ada banyak cara untuk membantu, tidak harus menulis kode:
 
 ## Menyiapkan Lingkungan Pengembangan
 
-**Prasyarat:** [Node.js](https://nodejs.org/) 18 atau lebih baru dan npm.
+**Prasyarat:** [Node.js](https://nodejs.org/) 22.13 atau lebih baru dan npm.
 
 ```bash
 # 1. Fork repo ini, lalu klon fork Anda
@@ -76,7 +76,7 @@ Buka <http://localhost:3000> di browser. Fitur AI membutuhkan `GEMINI_API_KEY` y
 
 - **Bahasa:** JavaScript (Node.js + Express) di backend, Vanilla JS ES6+ di frontend.
 - **Gaya:** ikuti gaya kode yang sudah ada di sekitarnya (indentasi 2 spasi, `const`/`let`, tanpa `var`).
-- **Tanpa dependensi berat baru** tanpa diskusi terlebih dahulu — proyek ini sengaja ringan.
+- **Tanpa dependensi baru** tanpa diskusi terlebih dahulu — proyek ini sengaja ringan.
 - **Keamanan:** jangan pernah meng-commit `.env`, API key, atau kredensial. Lihat [SECURITY.md](SECURITY.md).
 - **Aksesibilitas:** pertahankan ARIA roles, kontras, dan dukungan keyboard yang sudah ada.
 
@@ -85,12 +85,20 @@ Buka <http://localhost:3000> di browser. Fitur AI membutuhkan `GEMINI_API_KEY` y
 Sebelum membuka PR, jalankan pengecekan yang sama dengan CI:
 
 ```bash
-npm run check   # syntax check semua file JavaScript (node --check)
-npm run smoke   # nyalakan server dan verifikasi endpoint /api/health
-npm test        # menjalankan check + smoke sekaligus
+npm run lint       # ESLint, termasuk deteksi kode mati
+npm test           # unit, integrasi, dan smoke test
+npm run test:e2e   # browser Playwright; sekali saja: npx playwright install chromium
 ```
 
-Semua pengecekan harus lulus (hijau) sebelum PR dapat digabung.
+Test memakai Gemini palsu, jadi tidak membutuhkan API key atau jaringan. Jalankan `npm run test:e2e` bila perubahan Anda menyentuh `public/` atau header keamanan. Semua pengecekan harus lulus (hijau) sebelum PR dapat digabung.
+
+### Struktur kode
+
+- `src/routes/` — satu file per kelompok endpoint; hanya validasi, orkestrasi, dan respons.
+- `src/lib/` — logika murni (validasi, sanitasi, normalisasi keluaran AI) yang diuji unit.
+- `src/services/` — akses ke dunia luar (Gemini, penyimpanan). Gemini hanya diketahui oleh `services/gemini.js`.
+- `src/prompts/` — system instruction; input pengguna harus dibungkus dengan `asUntrustedBlock`.
+- `public/` — teks dari server atau pengguna hanya boleh masuk ke DOM melalui `textContent` (lihat helper `createElement` di `app.js`), tidak pernah lewat `innerHTML`.
 
 ## Panduan Pull Request
 
