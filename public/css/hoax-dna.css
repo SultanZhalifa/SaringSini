@@ -47,7 +47,7 @@
 }
 
 .hoax-dna-badge {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--sage));
     color: #ffffff;
     font-size: 0.58rem;
     font-weight: 900;
