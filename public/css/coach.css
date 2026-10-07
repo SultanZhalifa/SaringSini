@@ -17,7 +17,7 @@
     align-items: flex-start;
     gap: 1rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--border, var(--card-border));
+    border-bottom: 1px solid var(--card-border);
 }
 
 .coach-header-icon {
@@ -272,7 +272,7 @@
     align-items: center;
     gap: 0.85rem;
     padding: 0.85rem 1rem;
-    background: linear-gradient(135deg, var(--sage-dark, #436554) 0%, var(--secondary, #5C8374) 100%);
+    background: linear-gradient(135deg, var(--sage-dark) 0%, var(--sage) 100%);
     color: #ffffff;
     flex-shrink: 0;
 }
@@ -389,7 +389,7 @@
 }
 
 .coach-msg.error {
-    border-left: 3px solid var(--danger);
+    border-left: 3px solid var(--red);
 }
 
 .coach-msg.typing {
@@ -569,11 +569,11 @@
 }
 
 .coach-eval-positive {
-    color: var(--success);
+    color: var(--emerald);
 }
 
 .coach-eval-improve {
-    color: var(--warning);
+    color: var(--amber);
 }
 
 .coach-eval-list {
@@ -595,7 +595,7 @@
     width: 100%;
     padding: 0.85rem 1rem;
     background: linear-gradient(135deg, rgba(92, 131, 116, 0.12) 0%, rgba(92, 131, 116, 0.04) 100%);
-    border-left: 3px solid var(--secondary);
+    border-left: 3px solid var(--sage);
     border-radius: 10px;
     font-size: 0.84rem;
     color: var(--text-primary);

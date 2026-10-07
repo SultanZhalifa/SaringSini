@@ -11,6 +11,22 @@ test('boots under the strict CSP with no script errors or violations', async ({ 
   expect(problems).toEqual([]);
 });
 
+test('keyboard users can skip straight to the content', async ({ page, problems }) => {
+  await page.goto('/');
+
+  await page.keyboard.press('Tab');
+  const skipLink = page.locator('.skip-link');
+  await expect(skipLink).toBeFocused();
+  await expect(skipLink).toHaveCSS('opacity', '1');
+  await expect(skipLink).toBeInViewport();
+
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#main-content')).toBeFocused();
+  await page.keyboard.press('Tab');
+  expect(await page.evaluate(() => document.getElementById('main-content').contains(document.activeElement))).toBe(true);
+  expect(problems).toEqual([]);
+});
+
 test('everything, fonts included, comes from this origin', async ({ page, problems }) => {
   const origins = new Set();
   page.on('request', (request) => {
