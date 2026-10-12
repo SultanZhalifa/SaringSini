@@ -3,7 +3,7 @@
 # =============================================================
 
 # ---------- Stage 1: production dependencies ----------
-FROM node:24-alpine AS deps
+FROM node:26-alpine AS deps
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ RUN npm ci --omit=dev --omit=optional --no-audit --no-fund && \
     npm cache clean --force
 
 # ---------- Stage 2: runtime ----------
-FROM node:24-alpine AS runtime
+FROM node:26-alpine AS runtime
 
 # tini reaps zombies and forwards SIGTERM, which the app handles to flush its data.
 RUN apk add --no-cache tini
